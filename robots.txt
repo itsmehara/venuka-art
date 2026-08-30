@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Filled in automatically by:  node tools/set-domain.js https://your-address/
-# Sitemap: https://your-domain-here.example/sitemap.xml
+Sitemap: https://itsmehara.github.io/venuka-art/sitemap.xml

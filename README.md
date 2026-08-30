@@ -42,6 +42,7 @@ videos.html                  All 14 drawing videos — search, filters, click-to
 learn.html                   Learn & Create — ideas, steps, materials
 new-creations.html           Latest artwork and videos, newest first
 contact.html                 Contact form and links
+privacy.html                 Privacy and child-safety notice
 404.html                     Friendly not-found page
 
 assets/css/style.css         The whole design system
@@ -85,7 +86,7 @@ too, apart from a couple of browser quirks.
 node tools/check.js
 ```
 
-53 checks in about a second: JavaScript typos (it names the exact line), missing
+55 checks in about a second: JavaScript typos (it names the exact line), missing
 photos, unknown categories, duplicate entries, broken links, missing alt text
 and colour contrast. **If this says "All good", it is safe to push.**
 
@@ -134,7 +135,7 @@ Pages, Cloudflare Pages, Netlify, Vercel, or ordinary shared hosting. A
 This folder is its own git repository, kept separate from your other projects.
 `.gitignore` is the file that decides what is published.
 
-**Published — 51 files.** The nine pages, the styles, the scripts, the images,
+**Published — 54 files.** The ten pages, the styles, the scripts, the images,
 the checks, the deploy workflow and this documentation. Everything the website
 needs to run.
 

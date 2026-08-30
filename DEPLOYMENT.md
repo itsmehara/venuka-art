@@ -68,8 +68,8 @@ GitHub is scraped constantly). Five minutes now saves regret later.
 This folder sits *inside* `~/dev/claude_code`, which is a git repo holding your
 other projects. Venuka's site must not be part of that one. It already isn't:
 
-* this folder is now **its own git repository**, on the `main` branch
-  (`main` matters — the deploy workflow only publishes from `main`)
+* this folder is now **its own git repository**, on the `master` branch
+  (`master` matters — the deploy workflow only publishes from `master`)
 * the parent repo has been told to ignore it, so a `git add .` up there can
   never sweep Venuka's site into your personal repo
 
@@ -99,7 +99,7 @@ what is wrong and on which line. Fix that before pushing.
 
 #### What is in the repository, and what is not
 
-`.gitignore` decides this. 51 files are included — the nine pages, the styles,
+`.gitignore` decides this. 54 files are included — the ten pages, the styles,
 the scripts, the images, the checks and the documentation. Left out are things
 that belong only to this computer: `.DS_Store` files, editor settings, drafts
 you name starting with an underscore (`_draft.html`), and anything holding a
@@ -161,7 +161,7 @@ entirely, so nothing needs separating.
 
 ```bash
 git remote add origin https://github.com/your-username/venuka-website.git
-git push -u origin main
+git push -u origin master
 ```
 
 **Route B — a free Organization. Separate address, no domain needed.**
@@ -189,7 +189,7 @@ Names that were free when checked:
 
 ```bash
 git remote add origin https://github.com/venukaart/venukaart.github.io.git
-git push -u origin main
+git push -u origin master
 ```
 
 > Either route can have a custom domain later, and you can move a repository
@@ -269,7 +269,7 @@ Every push runs `tools/check.js` **before** publishing. If anything fails, the
 publish step never runs and the live site stays exactly as it was. GitHub emails
 you what broke.
 
-It runs 53 checks in about a second:
+It runs 55 checks in about a second:
 
 | Catches | Example |
 |---|---|

@@ -77,8 +77,8 @@ current status — instead of re-describing it or re-deriving it from the code.
 
 | Name | Location | Status | Admin | Details |
 |---|---|---|---|---|
-| Pre-deploy checks | `tools/check.js` (260 lines) | ✅ | | 53 checks, zero dependencies. Each failure class verified by deliberately breaking it. |
-| Contact email | `data.js` `emailAddress` (one const) | ✅ | ✔ | The single source of truth. Appears literally in exactly one place in the whole codebase. Drives the contact page, the footer pill and the footer enquiry link on all nine pages. |
+| Pre-deploy checks | `tools/check.js` | ✅ | | 55 checks, zero dependencies. Each failure class verified by deliberately breaking it. |
+| Contact email | `data.js` `emailAddress` (one const) | ✅ | ✔ | The single source of truth. Appears literally in exactly one place in the whole codebase. Drives the contact page, the footer pill and the footer enquiry link on all ten pages. |
 | Footer email rendering | `site.js` `initFooterContact()` | ✅ | | Upgrades `[data-contact-email]` and `[data-contact-email-enquiry]` slots at boot. The HTML ships the null state, so a null address or a failed `data.js` leaves a tidy "not added yet" pill rather than a link to nowhere. Verified both ways. |
 | Contact form receiver | `tools/google-sheet-form.gs` (157 lines) | 📝 | ✔ | Apps Script for a private Google Sheet. Honeypot check, required-field and email validation, 5,000-char trim, 20/hour rate limit, LockService against concurrent writes, optional email alert. Inert until `formEndpoint` is set. |
 | Form transport | `page-contact.js` | ✅ | | POSTs JSON as `text/plain;charset=utf-8` — `application/json` would trigger a CORS preflight that Apps Script cannot answer. Delivery is confirmed by parsing the body for `ok:false`, because Apps Script answers HTTP 200 even when it refuses. |
@@ -87,8 +87,8 @@ current status — instead of re-describing it or re-deriving it from the code.
 | Web address setter | `tools/set-domain.js` (84 lines) | ✅ | | Rewrites og:image/og:url/canonical across 9 pages + sitemap + robots. Idempotent. |
 | CI workflow | `.github/workflows/deploy.yml` | 📝 | | `check` job gates `deploy` via `needs:`. Valid, but unproven until the first push. |
 | Ignore rules | `.gitignore` (109 lines) | ✅ | | OS junk, editor dirs, `_*` drafts, secrets, archives, `originals/`. Underscore rules are per-extension (`_*.html`, `_*.js`…) **not** a bare `_*`, because `assets/img/video/_hIeRYpy_Ak.jpg` is a real thumbnail whose YouTube id starts with an underscore. |
-| Repository | this folder, `git init -b main` | ✅ | | Its own repo, separate from the parent `~/dev/claude_code`. Branch is `main` because the workflow only deploys from `main`. Parent `.gitignore` has `venuka_art_and_crafts/` so it cannot be swept into the personal repo. |
-| Published file set | `git ls-files` | ✅ | | 51 files, 1.6 MB. Only `.claude/` is excluded from what is on disk. First commit `89375e3`. No remote yet — nothing pushed. |
+| Repository | this folder on `master` | ✅ | | Public repository: `https://github.com/itsmehara/venuka-art`. The workflow deploys from the actual default branch, `master`. |
+| Published file set | `git ls-files` | ✅ | | 54 files after the pre-launch update. Private working notes, editor settings, secrets, and originals remain ignored. First commit `3c6bf46`. |
 | Personal-identity scrub | `DEPLOYMENT.md` | ✅ | | The owner's GitHub handle appeared in 5 places; replaced with `your-username`. Keeps the personal site and Venuka's site unlinked in public files. |
 | Jekyll opt-out | `.nojekyll` | ✅ | | Stops GitHub Pages from filtering files. |
 

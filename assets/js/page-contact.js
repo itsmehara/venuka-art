@@ -42,7 +42,8 @@
     { id: "cf-name",    label: "your name" },
     { id: "cf-email",   label: "your email address" },
     { id: "cf-subject", label: "a subject" },
-    { id: "cf-message", label: "a message" }
+    { id: "cf-message", label: "a message" },
+    { id: "cf-consent", label: "the privacy and parent/guardian agreement" }
   ];
 
   function setError(input, message) {
@@ -54,6 +55,10 @@
   }
 
   function validateField(input) {
+    if (input.type === "checkbox") {
+      return setError(input, input.checked ? "" :
+        "Please confirm the privacy and parent/guardian agreement.");
+    }
     var v = input.value.trim();
     if (!v) {
       var f = FIELDS.filter(function (x) { return x.id === input.id; })[0];
@@ -86,6 +91,12 @@
 
     var form = UI.$("#contact-form");
     if (!form) return;
+    var statusNote = UI.$("#form-status-note");
+    if (!D.formEndpoint && statusNote) {
+      statusNote.insertAdjacentHTML("beforeend",
+        "<br><br><strong>Sending is not connected yet:</strong> the form currently validates " +
+        "entries but does not save or send them.");
+    }
     var submit = UI.$("#cf-submit");
     var inputs = FIELDS.map(function (f) { return UI.$("#" + f.id); }).filter(Boolean);
 
@@ -99,6 +110,9 @@
     inputs.forEach(function (input) {
       input.addEventListener("blur", function () { if (input.value.trim()) validateField(input); });
       input.addEventListener("input", function () {
+        if (input.getAttribute("aria-invalid") === "true") validateField(input);
+      });
+      input.addEventListener("change", function () {
         if (input.getAttribute("aria-invalid") === "true") validateField(input);
       });
     });
@@ -164,7 +178,9 @@
           name: UI.$("#cf-name").value.trim(),
           email: UI.$("#cf-email").value.trim(),
           subject: UI.$("#cf-subject").value.trim(),
-          message: UI.$("#cf-message").value.trim()
+          message: UI.$("#cf-message").value.trim(),
+          consent: UI.$("#cf-consent").checked,
+          website: trap ? trap.value : ""
         })
       }).then(function (res) {
         if (!res.ok) throw new Error("HTTP " + res.status);

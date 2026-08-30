@@ -9,19 +9,33 @@
   <meta name="theme-color" content="#fffbf2">
   <meta name="author" content="Venuka">
 
-  <!-- Social preview. Once this site has its own web address, run
-       node tools/set-domain.js https://your-address/   to fill these in. -->
+  <!-- Social preview. Absolute addresses set by tools/set-domain.js
+       for https://itsmehara.github.io/venuka-art/ — re-run that script if the address changes. -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://itsmehara.github.io/venuka-art/">
   <meta property="og:site_name" content="Venuka — Happy Learning Kids">
   <meta property="og:title" content="Venuka — Drawings, Arts &amp; Crafts for Children | Happy Learning Kids">
   <meta property="og:description" content="Venuka's online art studio: children's drawings, colouring, arts and crafts, and step-by-step drawing videos from the Happy Learning Kids YouTube channel. Unleashing creativity, one stroke at a time.">
-  <meta property="og:image" content="assets/img/og-cover.jpg">
+  <meta property="og:image" content="https://itsmehara.github.io/venuka-art/assets/img/og-cover.jpg">
   <meta property="og:image:alt" content="A children's drawing of two green frogs and a yellow duckling by Venuka">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Venuka — Drawings, Arts &amp; Crafts for Children | Happy Learning Kids">
   <meta name="twitter:description" content="Venuka's online art studio: children's drawings, colouring, arts and crafts, and step-by-step drawing videos from the Happy Learning Kids YouTube channel. Unleashing creativity, one stroke at a time.">
-  <meta name="twitter:image" content="assets/img/og-cover.jpg">
+  <meta name="twitter:image" content="https://itsmehara.github.io/venuka-art/assets/img/og-cover.jpg">
 
+  <link rel="canonical" href="https://itsmehara.github.io/venuka-art/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Venuka",
+    "alternateName": "Happy Learning Kids",
+    "url": "https://itsmehara.github.io/venuka-art/",
+    "description": "A child-friendly online art studio with drawings, colouring, arts and crafts, and step-by-step drawing videos.",
+    "inLanguage": "en",
+    "sameAs": ["https://www.youtube.com/@hlearningkids"]
+  }
+  </script>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/img/logo.svg">
 
@@ -86,7 +100,12 @@
 
         <div class="hero-art">
           <figure class="art-frame">
-            <img src="assets/img/artwork/frog-and-duck-2023.jpg" width="1196" height="899"
+            <img src="assets/img/artwork/frog-and-duck-2023.jpg"
+                 srcset="assets/img/artwork/frog-and-duck-2023-384.jpg 384w,
+                         assets/img/artwork/frog-and-duck-2023-640.jpg 640w,
+                         assets/img/artwork/frog-and-duck-2023.jpg 1196w"
+                 sizes="(max-width:760px) calc(100vw - 4rem), (max-width:1100px) 44vw, 510px"
+                 width="1196" height="899"
                  fetchpriority="high" decoding="async"
                  alt="Sketchbook page headed &lsquo;Frog and duck&rsquo;: two round green frogs with big eyes and waving arms, and a small yellow duckling standing between them, drawn in black outline and filled in with green and yellow crayon.">
             <figcaption>&ldquo;Frog and Duck&rdquo; &middot; from Venuka&rsquo;s sketchbook, August 2023</figcaption>
@@ -256,6 +275,7 @@
           <li><a href="learn.html">Learn &amp; Create</a></li>
           <li><a href="new-creations.html">New Creations</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
         </ul>
       </nav>
     </div>

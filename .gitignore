@@ -57,6 +57,7 @@ _*.txt
 scratch/
 draft/
 drafts/
+notes/
 
 
 # ── Anything with a password or key in it ─────────────────────

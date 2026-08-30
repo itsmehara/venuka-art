@@ -156,7 +156,10 @@ function checkPages() {
     ['id="main"', "a <main id=\"main\"> landmark"],
     ['lang="en"', 'lang="en" on <html>'],
     ['name="description"', "a meta description"],
+    ['property="og:url"', "an Open Graph page URL"],
+    ['rel="canonical"', "a canonical URL"],
     ['rel="icon"', "a favicon"],
+    ['privacy.html', "a link to the privacy notice"],
     ["site-footer", "the shared footer"],
     ['id="scene-canvas"', "the background scene canvas"],
     ['id="scene-toggle"', "the scene pause button"],
@@ -197,6 +200,16 @@ function checkPages() {
     });
     ok();
   });
+
+  const sitemap = fs.readFileSync(path.join(ROOT, "sitemap.xml"), "utf8");
+  const robots = fs.readFileSync(path.join(ROOT, "robots.txt"), "utf8");
+  if (/your-domain-here\.example/.test(sitemap)) {
+    fail("seo", "sitemap.xml still contains the placeholder domain");
+  }
+  if (!/Sitemap:\s*https:\/\//.test(robots)) {
+    fail("seo", "robots.txt does not publish an HTTPS sitemap address");
+  }
+  ok();
 }
 
 /* ---------- 5. Colour contrast (WCAG AA) -------------------------------- */

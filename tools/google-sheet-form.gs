@@ -78,28 +78,27 @@ function doPost(e) {
     }
 
     /* Every field is required, and the email must at least look like one. */
-    var name    = String(data.name    || "").trim();
-    var email   = String(data.email   || "").trim();
-    var subject = String(data.subject || "").trim();
-    var message = String(data.message || "").trim();
+    var name    = clean(data.name, 100);
+    var email   = clean(data.email, 254);
+    var subject = clean(data.subject, 200);
+    var message = clean(data.message, 5000);
 
     if (!name || !email || !subject || !message) {
       return json({ ok: false, error: "Please fill in every box." }, 400);
+    }
+    if (data.consent !== true) {
+      return json({ ok: false, error: "Privacy agreement is required." }, 400);
     }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       return json({ ok: false, error: "That email address does not look right." }, 400);
     }
 
-    /* Long messages are almost always automated. Trim rather than refuse, so
-       a genuinely chatty person still gets through. */
-    if (message.length > 5000) message = message.slice(0, 5000) + " …[trimmed]";
-
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
 
     /* Write the column titles once, the first time a message arrives. */
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Received", "Name", "Email", "Subject", "Message"]);
-      sheet.getRange(1, 1, 1, 5).setFontWeight("bold");
+      sheet.appendRow(["Received", "Name", "Email", "Subject", "Message", "Consent"]);
+      sheet.getRange(1, 1, 1, 6).setFontWeight("bold");
       sheet.setFrozenRows(1);
     }
 
@@ -117,12 +116,17 @@ function doPost(e) {
       }
     }
 
-    sheet.appendRow([new Date(), name, email, subject, message]);
+    /* Prefix formula-like values so visitor text can never execute as a
+       spreadsheet formula when the owner opens the Sheet. */
+    sheet.appendRow([
+      new Date(), safeCell(name), safeCell(email), safeCell(subject),
+      safeCell(message), "Privacy notice accepted"
+    ]);
 
     if (NOTIFY) {
       MailApp.sendEmail({
         to: NOTIFY,
-        subject: "Venuka website — message from " + name,
+        subject: "Venuka website — message from " + oneLine(name),
         replyTo: email,
         body: name + " <" + email + "> wrote:\n\n" +
               "Subject: " + subject + "\n\n" + message + "\n\n" +
@@ -133,10 +137,26 @@ function doPost(e) {
     return json({ ok: true });
 
   } catch (err) {
-    return json({ ok: false, error: String(err) }, 500);
+    console.error(err);
+    return json({ ok: false, error: "The message could not be saved just now." }, 500);
   } finally {
     try { lock.releaseLock(); } catch (ignored) {}
   }
+}
+
+
+function clean(value, maxLength) {
+  return String(value || "").trim().slice(0, maxLength);
+}
+
+
+function safeCell(value) {
+  return /^[=+\-@]/.test(value) ? "'" + value : value;
+}
+
+
+function oneLine(value) {
+  return String(value).replace(/[\r\n]+/g, " ").slice(0, 100);
 }
 
 

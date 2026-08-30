@@ -971,7 +971,7 @@
   }
 
   /* ---------- 11. Engine --------------------------------------------------- */
-  var quality = 1, running = false, last = 0, rafId = 0;
+  var quality = 1, running = false, motionPending = false, last = 0, rafId = 0;
   /* Start past the crossfade window so the first thing a visitor sees is a
      fully sunny day, not the tail of the previous season blending in. */
   var elapsed = BLEND_SECONDS;
@@ -1010,12 +1010,14 @@
     DPR = Math.min(window.devicePixelRatio || 1, 2);
     W = canvas.clientWidth || window.innerWidth;
     H = canvas.clientHeight || window.innerHeight;
+    groundY = H * 0.845;
+    /* Read page geometry before resizing the drawing buffer. Keeping layout
+       reads ahead of canvas writes avoids a forced synchronous reflow. */
+    refreshSky();
     canvas.width = Math.round(W * DPR);
     canvas.height = Math.round(H * DPR);
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    groundY = H * 0.845;
-    refreshSky();                    /* measure the page first ... */
-    populate();                      /* ... then lay the scene out on it */
+    populate();
     if (S.skyTop) render(elapsed);   /* repaint at once: resizing clears the canvas */
   }
 
@@ -1055,7 +1057,7 @@
     else if (slowFrames > 0) slowFrames--;
 
     skyTick += dt;
-    if (skyTick > 0.22) { skyTick = 0; refreshSky(); }
+    if (skyTick > 0.75) { skyTick = 0; refreshSky(); }
 
     updateSeason(elapsed);
     updateWind(dt);
@@ -1208,10 +1210,11 @@
 
   function updateBadge() {
     if (!badge) return;
-    if (badgeIcon) badgeIcon.textContent = running ? S.icon : "⏸";
-    if (badgeText) badgeText.textContent = running ? S.name : "Scene paused";
-    badge.setAttribute("aria-pressed", String(running));
-    badge.setAttribute("title", running
+    var active = running || motionPending;
+    if (badgeIcon) badgeIcon.textContent = active ? S.icon : "⏸";
+    if (badgeText) badgeText.textContent = active ? S.name : "Scene paused";
+    badge.setAttribute("aria-pressed", String(active));
+    badge.setAttribute("title", active
       ? "Weather: " + S.name + ". Select to pause the moving background."
       : "The moving background is paused. Select to start it.");
   }
@@ -1225,7 +1228,7 @@
 
   if (badge) {
     badge.addEventListener("click", function () {
-      if (running) { stop(); store("off"); }
+      if (running || motionPending) { motionPending = false; stop(); store("off"); }
       else { start(); store("on"); }
       updateBadge();
     });
@@ -1259,6 +1262,23 @@
   updateClouds(0.016);
   updateWeather(0.016);
   render(elapsed);
-  if (shouldRun) start(); else staticFrame();
+  if (shouldRun) {
+    /* Give the page's text and hero artwork the first clear turn to paint.
+       The visitor still sees the complete static meadow immediately; motion
+       begins shortly after the window has finished loading. */
+    motionPending = true;
+    var beginMotion = function () {
+      setTimeout(function () {
+        if (!motionPending) return;
+        motionPending = false;
+        start();
+        updateBadge();
+      }, 1800);
+    };
+    if (document.readyState === "complete") beginMotion();
+    else window.addEventListener("load", beginMotion, { once: true });
+  } else {
+    staticFrame();
+  }
   updateBadge();
 })();

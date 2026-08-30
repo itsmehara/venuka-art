@@ -9,19 +9,21 @@
   <meta name="theme-color" content="#fffbf2">
   <meta name="author" content="Venuka">
 
-  <!-- Social preview. Once this site has its own web address, run
-       node tools/set-domain.js https://your-address/   to fill these in. -->
+  <!-- Social preview. Absolute addresses set by tools/set-domain.js
+       for https://itsmehara.github.io/venuka-art/ — re-run that script if the address changes. -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://itsmehara.github.io/venuka-art/contact.html">
   <meta property="og:site_name" content="Venuka — Happy Learning Kids">
   <meta property="og:title" content="Contact Venuka | Happy Learning Kids">
   <meta property="og:description" content="Get in touch with Venuka about a drawing, a handmade craft, or to say hello. Reach the Happy Learning Kids YouTube channel any time.">
-  <meta property="og:image" content="assets/img/og-cover.jpg">
+  <meta property="og:image" content="https://itsmehara.github.io/venuka-art/assets/img/og-cover.jpg">
   <meta property="og:image:alt" content="A children's drawing of two green frogs and a yellow duckling by Venuka">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Contact Venuka | Happy Learning Kids">
   <meta name="twitter:description" content="Get in touch with Venuka about a drawing, a handmade craft, or to say hello. Reach the Happy Learning Kids YouTube channel any time.">
-  <meta name="twitter:image" content="assets/img/og-cover.jpg">
+  <meta name="twitter:image" content="https://itsmehara.github.io/venuka-art/assets/img/og-cover.jpg">
 
+  <link rel="canonical" href="https://itsmehara.github.io/venuka-art/contact.html">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/img/logo.svg">
 
@@ -89,10 +91,12 @@
             <svg class="underline-swash" viewBox="0 0 200 12" aria-hidden="true" focusable="false" preserveAspectRatio="none"><path d="M3 8.5C34 3.5 66 2.5 100 4.5C134 6.5 168 8.5 197 4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
 
             <div class="form-note" id="form-status-note">
-              <strong>Please note:</strong> this form has no delivery service connected yet, so it
-              cannot actually send a message. Until one is set up, the quickest way to reach
-              Venuka is a comment on the
-              <a href="https://www.youtube.com/@hlearningkids" target="_blank" rel="noopener">Happy Learning Kids YouTube channel</a>.
+              <strong>Privacy and child safety:</strong> this form is for parents, guardians,
+              teachers, and other adults. Children should use it only with a parent or guardian.
+              Please do not include a child&rsquo;s school, address, phone number, or other private
+              details. When sending is enabled, the name, email address, subject, and message are
+              stored privately in a Google Sheet so the site owner can reply. Read the
+              <a href="privacy.html">privacy notice</a>.
             </div>
 
             <form class="form-card" id="contact-form" novalidate>
@@ -133,6 +137,17 @@
                           aria-describedby="cf-message-hint cf-message-error"></textarea>
                 <span class="hint" id="cf-message-hint">At least a sentence, please.</span>
                 <p class="field-error" id="cf-message-error" role="alert"></p>
+              </div>
+
+              <div class="field field--consent">
+                <label for="cf-consent">
+                  <input type="checkbox" id="cf-consent" name="consent" required
+                         aria-describedby="cf-consent-error">
+                  <span>I am an adult, or I am using this form with a parent or guardian, and I
+                    agree to the <a href="privacy.html">privacy notice</a>.
+                    <span class="req" aria-hidden="true">*</span></span>
+                </label>
+                <p class="field-error" id="cf-consent-error" role="alert"></p>
               </div>
 
               <button type="submit" class="btn btn--primary btn--block" id="cf-submit">Send message</button>
@@ -208,6 +223,7 @@
           <li><a href="learn.html">Learn &amp; Create</a></li>
           <li><a href="new-creations.html">New Creations</a></li>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
         </ul>
       </nav>
     </div>
