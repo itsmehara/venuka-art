@@ -174,7 +174,7 @@ const STATUS_DATA = {
     orgLabel: "VENUKA \u00b7 HAPPY LEARNING KIDS",
     pageTitle: "Venuka's website — what's built",
     markInitials: "V",
-    updatedLine: "Last updated 30 August 2026 \u2014 going live tomorrow. " +
+    updatedLine: "Last updated 30 August 2026 \u2014 repository ready, going live tomorrow. " +
       "A plain-language summary of what is finished, what still needs a decision, " +
       "and what is deliberately left for later.",
     footerNote: 'Exact files and line numbers are in <code>REGISTRY.md</code> in the ' +
@@ -298,8 +298,12 @@ const STATUS_DATA = {
           description: "Step-by-step notes covering the public-or-private choice, a parent checklist, custom domains and how to undo a bad change." },
         { name: "Guide for adding new work", status: "done", admin: false,
           description: "How to add a drawing, a craft or a video, with the exact shape of each entry." },
-        { name: "The repository itself", status: "gap", admin: false,
-          description: "Not created yet. The folder currently sits inside another project folder and needs to become its own." },
+        { name: "The repository itself", status: "done", admin: false,
+          description: "Created. This folder is now its own git repository on the main branch, with the first commit made. It is kept out of the parent project's repository, so nothing here can be swept into your personal one." },
+        { name: "What goes online, and what does not", status: "done", admin: false,
+          description: "51 files are published \u2014 the pages, styles, scripts, images, checks and notes. Everything else stays on your computer: Finder junk, editor settings, drafts named with a leading underscore, and anything holding a password. Run git ls-files to see the exact list." },
+        { name: "Your personal address kept separate", status: "done", admin: false,
+          description: "The publishing notes named your personal GitHub site in five places. Replaced with a placeholder, so Venuka's public files do not point back at your own site." },
       ],
     },
     {

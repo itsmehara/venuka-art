@@ -59,6 +59,7 @@ tools/set-domain.js          Fills in the real web address once you have one
 
 robots.txt, sitemap.xml      For search engines
 .nojekyll                    Tells GitHub Pages to serve the files untouched
+.gitignore                   What stays on your computer and never goes online
 
 README.md                    This file
 CONTENT-GUIDE.md             How to add a drawing, craft or video
@@ -127,6 +128,38 @@ Pages, Cloudflare Pages, Netlify, Vercel, or ordinary shared hosting. A
    work in WhatsApp, Facebook and X.
 2. In `sitemap.xml` and `robots.txt`, replace
    `https://your-domain-here.example/` with the real address.
+
+## What goes online, and what stays on your computer
+
+This folder is its own git repository, kept separate from your other projects.
+`.gitignore` is the file that decides what is published.
+
+**Published — 51 files.** The nine pages, the styles, the scripts, the images,
+the checks, the deploy workflow and this documentation. Everything the website
+needs to run.
+
+**Never published.** Things that belong only to this machine:
+
+| Left out | Why |
+|---|---|
+| `.DS_Store`, `._*`, `Thumbs.db` | Junk your computer creates by itself |
+| `.vscode/`, `.idea/`, `.claude/` | Your editor and tool settings |
+| `_draft.html`, `_notes.txt`, `scratch/` | Anything you name starting with an underscore is treated as a private draft |
+| `.env`, `*.pem`, `*.key`, `secrets.*` | Passwords and keys. There are none today — this is a seatbelt |
+| `originals/` | Full-size camera files. Put big originals here; only the resized copies in `assets/img/` go online |
+| `*.zip`, `*.log`, `*.bak` | Downloads and leftovers |
+
+To see the exact list of what would be published, at any time:
+
+```bash
+git ls-files
+```
+
+> **A note on `_hIeRYpy_Ak.jpg`.** One real video thumbnail is named starting
+> with an underscore, because that YouTube video's id does. The underscore
+> rules in `.gitignore` are deliberately written narrowly (`_*.html`, `_*.js`
+> and so on) rather than a plain `_*`, so that file is not swept away by
+> accident. If you ever widen that rule, a video thumbnail goes missing.
 
 ## Adding new drawings, crafts and videos
 

@@ -80,7 +80,10 @@ current status — instead of re-describing it or re-deriving it from the code.
 | Pre-deploy checks | `tools/check.js` (260 lines) | ✅ | | 53 checks, zero dependencies. Each failure class verified by deliberately breaking it. |
 | Web address setter | `tools/set-domain.js` (84 lines) | ✅ | | Rewrites og:image/og:url/canonical across 9 pages + sitemap + robots. Idempotent. |
 | CI workflow | `.github/workflows/deploy.yml` | 📝 | | `check` job gates `deploy` via `needs:`. Valid, but unproven until the first push. |
-| Ignore rules | `.gitignore` | ✅ | | Ignores `.DS_Store`, editor dirs and `_*.html` scratch files. |
+| Ignore rules | `.gitignore` (109 lines) | ✅ | | OS junk, editor dirs, `_*` drafts, secrets, archives, `originals/`. Underscore rules are per-extension (`_*.html`, `_*.js`…) **not** a bare `_*`, because `assets/img/video/_hIeRYpy_Ak.jpg` is a real thumbnail whose YouTube id starts with an underscore. |
+| Repository | this folder, `git init -b main` | ✅ | | Its own repo, separate from the parent `~/dev/claude_code`. Branch is `main` because the workflow only deploys from `main`. Parent `.gitignore` has `venuka_art_and_crafts/` so it cannot be swept into the personal repo. |
+| Published file set | `git ls-files` | ✅ | | 51 files, 1.6 MB. Only `.claude/` is excluded from what is on disk. First commit `89375e3`. No remote yet — nothing pushed. |
+| Personal-identity scrub | `DEPLOYMENT.md` | ✅ | | The owner's GitHub handle appeared in 5 places; replaced with `your-username`. Keeps the personal site and Venuka's site unlinked in public files. |
 | Jekyll opt-out | `.nojekyll` | ✅ | | Stops GitHub Pages from filtering files. |
 
 ## 6. Assets
@@ -124,5 +127,5 @@ current status — instead of re-describing it or re-deriving it from the code.
 
 ---
 
-*Snapshot taken 30 August 2026. This file is not continuously synced — refresh it alongside
+*Snapshot taken 30 August 2026 (repository set up, ignore rules written). This file is not continuously synced — refresh it alongside
 `STATUS.html` whenever the project changes materially.*

@@ -63,43 +63,58 @@ GitHub is scraped constantly). Five minutes now saves regret later.
 
 ## 3. Getting it live
 
-### Step 1 — give the site its own repository
+### Step 1 — its own repository ✅ already done
 
-Right now this folder sits *inside* `~/dev/claude_code`, which is already a git
-repo holding your other projects. It needs to be its own repo. Two ways:
+This folder sits *inside* `~/dev/claude_code`, which is a git repo holding your
+other projects. Venuka's site must not be part of that one. It already isn't:
 
-**Option A — move it out (cleanest):**
+* this folder is now **its own git repository**, on the `main` branch
+  (`main` matters — the deploy workflow only publishes from `main`)
+* the parent repo has been told to ignore it, so a `git add .` up there can
+  never sweep Venuka's site into your personal repo
+
+Nothing to do. To see it for yourself:
+
+```bash
+cd ~/dev/claude_code/venuka_art_and_crafts && git log --oneline
+```
+
+*Optional — if you would rather it did not live inside another project's folder
+at all, move it out. Everything keeps working; the repository travels with it:*
 
 ```bash
 mv ~/dev/claude_code/venuka_art_and_crafts ~/dev/venuka-website
-cd ~/dev/venuka-website
-git init
 ```
 
-**Option B — leave it where it is:**
+### Step 2 — the checks, and the first commit ✅ already done
 
-```bash
-cd ~/dev/claude_code/venuka_art_and_crafts
-git init
-echo "venuka_art_and_crafts/" >> ../.gitignore   # so the parent repo ignores it
-```
-
-Option A is tidier and avoids a repo inside a repo.
-
-### Step 2 — run the checks, then make the first commit
+The first commit is made. Before **every** push from now on, run the checks:
 
 ```bash
 node tools/check.js
 ```
 
-It must say **"All good. Safe to publish."** If it doesn't, it will tell you
-exactly what is wrong and on which line. Fix that first.
+It must say **"All good. Safe to publish."** If it doesn't, it names exactly
+what is wrong and on which line. Fix that before pushing.
+
+#### What is in the repository, and what is not
+
+`.gitignore` decides this. 51 files are included — the nine pages, the styles,
+the scripts, the images, the checks and the documentation. Left out are things
+that belong only to this computer: `.DS_Store` files, editor settings, drafts
+you name starting with an underscore (`_draft.html`), and anything holding a
+password or key.
+
+To see exactly what would go up, at any time:
 
 ```bash
-git add .
-git commit -m "Venuka website: first version"
-git branch -M main
+git ls-files
 ```
+
+> **One thing to know about your name.** Your commits are signed with your
+> GitHub email, so on a public repository your username is visible in the
+> commit history — that is true of any repo you own, and normal. What has been
+> kept out is any mention of your *personal site address* in Venuka's files.
 
 ### Step 3 — create the repository
 
