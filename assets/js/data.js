@@ -45,7 +45,7 @@ window.VENUKA = (function () {
      changes on the contact page and in the footer of all nine pages at once.
      Set it to null and every place that shows it falls back to a plain
      "not published yet" label instead of a broken link. */
-  const emailAddress = "kanthi.venuka@gmail.com";
+  const emailAddress = "hello@venuka.art";
 
   const contact = {
     youtube:   { label: "YouTube — Happy Learning Kids", value: site.channelUrl, href: site.channelUrl, icon: "▶️" },
