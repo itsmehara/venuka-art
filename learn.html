@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learn &amp; Create — Easy Drawing Ideas for Children | Venuka</title>
+  <meta name="description" content="Easy drawing ideas, colouring tricks, simple step-by-step drawing, beginner craft ideas and recommended materials — written simply for children who want to start creating.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#fffbf2">
+  <meta name="author" content="Venuka">
+
+  <!-- Social preview. Once this site has its own web address, run
+       node tools/set-domain.js https://your-address/   to fill these in. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Venuka — Happy Learning Kids">
+  <meta property="og:title" content="Learn &amp; Create — Easy Drawing Ideas for Children | Venuka">
+  <meta property="og:description" content="Easy drawing ideas, colouring tricks, simple step-by-step drawing, beginner craft ideas and recommended materials — written simply for children who want to start creating.">
+  <meta property="og:image" content="assets/img/og-cover.jpg">
+  <meta property="og:image:alt" content="A children's drawing of two green frogs and a yellow duckling by Venuka">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Learn &amp; Create — Easy Drawing Ideas for Children | Venuka">
+  <meta name="twitter:description" content="Easy drawing ideas, colouring tricks, simple step-by-step drawing, beginner craft ideas and recommended materials — written simply for children who want to start creating.">
+  <meta name="twitter:image" content="assets/img/og-cover.jpg">
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <canvas id="scene-canvas" class="scene-canvas" aria-hidden="true"></canvas>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="assets/img/logo.svg" alt="" width="42" height="42">
+        <span class="brand-text">
+          <span class="brand-name">Venuka</span>
+          <span class="brand-sub">Happy Learning Kids</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bars" aria-hidden="true"></span> Menu
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="drawings.html">Drawings</a></li>
+          <li><a href="crafts.html">Arts &amp; Crafts</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="learn.html" aria-current="page">Learn &amp; Create</a></li>
+          <li><a href="new-creations.html">New Creations</a></li>
+          <li><a href="contact.html" class="nav-cta">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="deco-layer" aria-hidden="true">
+        <svg class="deco deco--circle float" viewBox="0 0 100 100" focusable="false"><circle cx="50" cy="50" r="48"/></svg>
+        <svg class="deco deco--triangle float float--alt" viewBox="0 0 100 100" focusable="false"><path d="M50 5 97 90 3 90Z"/></svg>
+        <svg class="deco deco--square float float--slow" viewBox="0 0 100 100" focusable="false"><rect x="5" y="5" width="90" height="90" rx="18"/></svg>
+        <svg class="deco deco--diamond float float--alt" viewBox="0 0 100 100" focusable="false"><rect x="14" y="14" width="72" height="72" rx="12"/></svg>
+      </div>
+      <div class="wrap">
+        <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Learn &amp; Create</p>
+        <h1>Learn &amp; Create</h1>
+        <p>Simple ideas, gentle steps and a bit of encouragement. Grab a pencil &mdash;
+          that is honestly all you need to start.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:.5rem">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="section-kicker">Easy drawing ideas</span>
+          <h2>Six ideas to get you going</h2>
+          <svg class="underline-swash" viewBox="0 0 200 12" aria-hidden="true" focusable="false" preserveAspectRatio="none"><path d="M3 8.5C34 3.5 66 2.5 100 4.5C134 6.5 168 8.5 197 4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="grid grid--3" id="drawing-ideas"></div>
+      </div>
+    </section>
+
+    <section class="section section--sky">
+      <div class="wrap">
+        <div class="section-head section-head--center reveal">
+          <span class="section-kicker">Simple drawing steps</span>
+          <h2>How almost every drawing here was made</h2>
+          <svg class="underline-swash" viewBox="0 0 200 12" aria-hidden="true" focusable="false" preserveAspectRatio="none"><path d="M3 8.5C34 3.5 66 2.5 100 4.5C134 6.5 168 8.5 197 4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+          <p>Watch any of Venuka&rsquo;s videos and you will see the same five steps.</p>
+        </div>
+        <div class="wrap--narrow">
+          <div class="tile reveal">
+            <ol class="steps" style="font-size:var(--step-0)">
+              <li><strong>Start with the big shape.</strong> A circle for a head, an oval for a body.
+                Draw it lightly &mdash; you will change your mind.</li>
+              <li><strong>Add the small shapes.</strong> Ears, legs, a beak, a tail. Keep them simple;
+                you can always make them fancier later.</li>
+              <li><strong>Give it a face.</strong> Two eyes and a curved smile turn a shape into a
+                character. This is the moment it comes alive.</li>
+              <li><strong>Go over the good lines.</strong> Press a little harder on the lines you want
+                to keep, then rub out the rest.</li>
+              <li><strong>Colour it in.</strong> One direction, light first, darker after. Save the
+                background for last.</li>
+            </ol>
+            <p style="margin-top:1.2rem"><a class="link-arrow" href="videos.html">Watch these steps in a video</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="grid grid--2" style="gap:clamp(1.4rem,3.5vw,2.6rem);align-items:start">
+          <div class="reveal">
+            <span class="section-kicker">Colouring activities</span>
+            <h2>Five colouring tricks</h2>
+            <svg class="underline-swash" viewBox="0 0 200 12" aria-hidden="true" focusable="false" preserveAspectRatio="none"><path d="M3 8.5C34 3.5 66 2.5 100 4.5C134 6.5 168 8.5 197 4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+            <ul class="steps" id="colouring-tips" style="counter-reset:step"></ul>
+          </div>
+          <div class="reveal">
+            <span class="section-kicker">Recommended materials</span>
+            <h2>What to keep in the box</h2>
+            <svg class="underline-swash" viewBox="0 0 200 12" aria-hidden="true" focusable="false" preserveAspectRatio="none"><path d="M3 8.5C34 3.5 66 2.5 100 4.5C134 6.5 168 8.5 197 4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+            <ul class="contact-list" id="materials-list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--sun">
+      <div class="wrap">
+        <div class="section-head section-head--center reveal">
+          <span class="section-kicker">Beginner-friendly crafts</span>
+          <h2>Four crafts to try</h2>
+          <svg class="underline-swash" viewBox="0 0 200 12" aria-hidden="true" focusable="false" preserveAspectRatio="none"><path d="M3 8.5C34 3.5 66 2.5 100 4.5C134 6.5 168 8.5 197 4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+          <p>Simple enough for small hands, with a grown-up nearby for the scissors.</p>
+        </div>
+        <div class="grid grid--4" id="craft-ideas"></div>
+      </div>
+    </section>
+
+    <section class="section section--open">
+      <div class="wrap wrap--narrow">
+        <div class="section-head section-head--center reveal">
+          <span class="section-kicker">A little encouragement</span>
+          <h2>For every young artist</h2>
+          <svg class="underline-swash" viewBox="0 0 200 12" aria-hidden="true" focusable="false" preserveAspectRatio="none"><path d="M3 8.5C34 3.5 66 2.5 100 4.5C134 6.5 168 8.5 197 4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="stack" id="encouragements"></div>
+
+        <div class="state mt-3">
+          <span class="state-emoji" aria-hidden="true">&#128462;</span>
+          <h3>Printable activities coming soon</h3>
+          <p>Colouring sheets and practice pages you can print at home are planned for
+            this page. Nothing is available to download yet &mdash; when it is, it will
+            appear right here.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <img class="brand-mark" src="assets/img/logo.svg" alt="" width="42" height="42">
+          <span class="brand-text">
+            <span class="brand-name">Venuka</span>
+            <span class="brand-sub">Happy Learning Kids</span>
+          </span>
+        </a>
+        <p class="footer-blurb">Unleashing Creativity, One Stroke at a Time: Nurturing Unique Talents in the
+          Heart of Kids. Drawings, colouring, arts and crafts by Venuka.</p>
+        <div class="footer-social">
+          <a class="social-pill" href="https://www.youtube.com/@hlearningkids" target="_blank" rel="noopener">
+            <span aria-hidden="true">&#9654;&#65039;</span> YouTube<span class="visually-hidden"> — Happy Learning Kids channel (opens in a new tab)</span>
+          </a>
+          <span class="social-pill" aria-disabled="true"><span aria-hidden="true">&#128248;</span> Instagram — not added yet</span>
+          <span class="social-pill" aria-disabled="true"><span aria-hidden="true">&#128077;</span> Facebook — not added yet</span>
+          <span class="social-pill" aria-disabled="true"><span aria-hidden="true">&#128172;</span> WhatsApp — not added yet</span>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Venuka</a></li>
+          <li><a href="drawings.html">Drawings Gallery</a></li>
+          <li><a href="crafts.html">Arts &amp; Crafts</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-nav" aria-label="More pages">
+        <h3>More</h3>
+        <ul>
+          <li><a href="videos.html">Drawing Videos</a></li>
+          <li><a href="learn.html">Learn &amp; Create</a></li>
+          <li><a href="new-creations.html">New Creations</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="wrap footer-bottom">
+      <p class="mb-0">&copy; <span data-year>2026</span> Venuka &middot; Happy Learning Kids</p>
+      <p class="mb-0">Every drawing on this website is Venuka&rsquo;s own work.</p>
+    </div>
+  </footer>
+
+  <button type="button" class="scene-toggle" id="scene-toggle" aria-pressed="true">
+    <span class="scene-icon" data-scene-icon aria-hidden="true">&#9728;&#65039;</span>
+    <span class="visually-hidden">Moving background scene</span>
+    <span class="scene-label" data-scene-text>Sunny</span>
+  </button>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/site.js"></script>
+  <script src="assets/js/scene.js"></script>
+  <script src="assets/js/page-learn.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Venuka — Happy Learning Kids
+User-agent: *
+Allow: /
+
+# Filled in automatically by:  node tools/set-domain.js https://your-address/
+# Sitemap: https://your-domain-here.example/sitemap.xml

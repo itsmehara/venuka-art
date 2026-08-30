@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arts &amp; Crafts by Venuka | Happy Learning Kids</title>
+  <meta name="description" content="Handmade arts and crafts by Venuka, with materials and simple step-by-step instructions. Craft photographs are being added — plus easy craft ideas to try at home.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#fffbf2">
+  <meta name="author" content="Venuka">
+
+  <!-- Social preview. Once this site has its own web address, run
+       node tools/set-domain.js https://your-address/   to fill these in. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Venuka — Happy Learning Kids">
+  <meta property="og:title" content="Arts &amp; Crafts by Venuka | Happy Learning Kids">
+  <meta property="og:description" content="Handmade arts and crafts by Venuka, with materials and simple step-by-step instructions. Craft photographs are being added — plus easy craft ideas to try at home.">
+  <meta property="og:image" content="assets/img/og-cover.jpg">
+  <meta property="og:image:alt" content="A children's drawing of two green frogs and a yellow duckling by Venuka">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Arts &amp; Crafts by Venuka | Happy Learning Kids">
+  <meta name="twitter:description" content="Handmade arts and crafts by Venuka, with materials and simple step-by-step instructions. Craft photographs are being added — plus easy craft ideas to try at home.">
+  <meta name="twitter:image" content="assets/img/og-cover.jpg">
+
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <canvas id="scene-canvas" class="scene-canvas" aria-hidden="true"></canvas>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="assets/img/logo.svg" alt="" width="42" height="42">
+        <span class="brand-text">
+          <span class="brand-name">Venuka</span>
+          <span class="brand-sub">Happy Learning Kids</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bars" aria-hidden="true"></span> Menu
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="drawings.html">Drawings</a></li>
+          <li><a href="crafts.html" aria-current="page">Arts &amp; Crafts</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="learn.html">Learn &amp; Create</a></li>
+          <li><a href="new-creations.html">New Creations</a></li>
+          <li><a href="contact.html" class="nav-cta">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="deco-layer" aria-hidden="true">
+        <svg class="deco deco--circle float" viewBox="0 0 100 100" focusable="false"><circle cx="50" cy="50" r="48"/></svg>
+        <svg class="deco deco--triangle float float--alt" viewBox="0 0 100 100" focusable="false"><path d="M50 5 97 90 3 90Z"/></svg>
+        <svg class="deco deco--square float float--slow" viewBox="0 0 100 100" focusable="false"><rect x="5" y="5" width="90" height="90" rx="18"/></svg>
+        <svg class="deco deco--diamond float float--alt" viewBox="0 0 100 100" focusable="false"><rect x="14" y="14" width="72" height="72" rx="12"/></svg>
+      </div>
+      <div class="wrap">
+        <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Arts &amp; Crafts</p>
+        <h1>Arts &amp; Crafts</h1>
+        <p>Handmade projects by Venuka &mdash; the things that do not stay flat on the page.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:.5rem">
+      <div class="wrap">
+        <noscript><p class="noscript-note">This page needs JavaScript to show Venuka&rsquo;s work. You can also see everything on the <a href="https://www.youtube.com/@hlearningkids">Happy Learning Kids YouTube channel</a>.</p></noscript>
+        <div id="craft-grid"></div>
+
+        <div class="grid grid--2 mt-3" style="gap:clamp(1.2rem,3vw,2rem)">
+          <div class="tile reveal">
+            <div class="tile-icon" style="--accent-tint:var(--sun-tint)" aria-hidden="true">&#128295;</div>
+            <h3>What each craft will show</h3>
+            <p>The page is already built for them. When a craft is added it appears with:</p>
+            <ul style="color:var(--ink-soft);font-size:var(--step--1);margin-top:.5rem">
+              <li>A real photograph of the finished piece</li>
+              <li>Its title and a short description</li>
+              <li>The materials that went into it</li>
+              <li>Simple step-by-step instructions, where they help</li>
+              <li>A link to the video, if there is one</li>
+              <li>An <strong>Available on Request</strong> or <strong>Contact Me</strong> button</li>
+            </ul>
+          </div>
+          <div class="tile reveal">
+            <div class="tile-icon" style="--accent-tint:var(--green-tint)" aria-hidden="true">&#128140;</div>
+            <h3>Interested in a craft?</h3>
+            <p>If you would like to ask about a piece, request something handmade, or just
+              say hello, the contact page is the place. Venuka&rsquo;s YouTube channel is the
+              quickest way to reach her while the other links are being set up.</p>
+            <p style="margin-top:.9rem;display:flex;gap:.5rem;flex-wrap:wrap">
+              <a class="btn btn--green btn--sm" href="contact.html">Contact Me</a>
+              <a class="btn btn--yt btn--sm" href="https://www.youtube.com/@hlearningkids" target="_blank" rel="noopener">Happy Learning Kids<span class="visually-hidden"> (opens in a new tab)</span></a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--sky" id="craft-ideas-section">
+      <div class="wrap">
+        <div class="section-head section-head--center reveal">
+          <span class="section-kicker">While you wait</span>
+          <h2>Craft ideas to try at home</h2>
+          <svg class="underline-swash" viewBox="0 0 200 12" aria-hidden="true" focusable="false" preserveAspectRatio="none"><path d="M3 8.5C34 3.5 66 2.5 100 4.5C134 6.5 168 8.5 197 4" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+          <p>These are simple suggestions for children, not Venuka&rsquo;s finished pieces &mdash;
+            everything here can be made with paper, colour and a pair of safe scissors.</p>
+        </div>
+        <div class="grid grid--4" id="craft-ideas"></div>
+        <div class="section-foot">
+          <a class="btn btn--purple" href="learn.html">More on Learn &amp; Create</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <img class="brand-mark" src="assets/img/logo.svg" alt="" width="42" height="42">
+          <span class="brand-text">
+            <span class="brand-name">Venuka</span>
+            <span class="brand-sub">Happy Learning Kids</span>
+          </span>
+        </a>
+        <p class="footer-blurb">Unleashing Creativity, One Stroke at a Time: Nurturing Unique Talents in the
+          Heart of Kids. Drawings, colouring, arts and crafts by Venuka.</p>
+        <div class="footer-social">
+          <a class="social-pill" href="https://www.youtube.com/@hlearningkids" target="_blank" rel="noopener">
+            <span aria-hidden="true">&#9654;&#65039;</span> YouTube<span class="visually-hidden"> — Happy Learning Kids channel (opens in a new tab)</span>
+          </a>
+          <span class="social-pill" aria-disabled="true"><span aria-hidden="true">&#128248;</span> Instagram — not added yet</span>
+          <span class="social-pill" aria-disabled="true"><span aria-hidden="true">&#128077;</span> Facebook — not added yet</span>
+          <span class="social-pill" aria-disabled="true"><span aria-hidden="true">&#128172;</span> WhatsApp — not added yet</span>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Venuka</a></li>
+          <li><a href="drawings.html">Drawings Gallery</a></li>
+          <li><a href="crafts.html">Arts &amp; Crafts</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-nav" aria-label="More pages">
+        <h3>More</h3>
+        <ul>
+          <li><a href="videos.html">Drawing Videos</a></li>
+          <li><a href="learn.html">Learn &amp; Create</a></li>
+          <li><a href="new-creations.html">New Creations</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="wrap footer-bottom">
+      <p class="mb-0">&copy; <span data-year>2026</span> Venuka &middot; Happy Learning Kids</p>
+      <p class="mb-0">Every drawing on this website is Venuka&rsquo;s own work.</p>
+    </div>
+  </footer>
+
+  <button type="button" class="scene-toggle" id="scene-toggle" aria-pressed="true">
+    <span class="scene-icon" data-scene-icon aria-hidden="true">&#9728;&#65039;</span>
+    <span class="visually-hidden">Moving background scene</span>
+    <span class="scene-label" data-scene-text>Sunny</span>
+  </button>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/site.js"></script>
+  <script src="assets/js/scene.js"></script>
+  <script src="assets/js/page-crafts.js"></script>
+</body>
+</html>

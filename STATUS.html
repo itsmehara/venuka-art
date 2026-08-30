@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Venuka — website status</title>
+<style>
+/*
+  Token structure: bare :root = light theme (default). The dark-mode block is
+  guarded so an explicit light choice (data-theme="light") always wins, and
+  the data-theme="dark" block make the manual toggle win in the other
+  direction. Every color used anywhere below comes from one of these tokens —
+  never hardcode a color inline in the body content.
+
+  REPLACE THE ACCENT HEX VALUES with something drawn from the actual
+  project's own brand (its CSS custom properties, logo colors, existing
+  palette) before generating the page. --brand below is a neutral fallback
+  ONLY — using it unmodified for every project is what makes generated pages
+  look templated. Go find the real brand color first.
+*/
+:root{
+  --bg:#fffbf2; --surface:#ffffff; --surface-2:#fdf2dd;
+  --ink:#2e2740; --body:#5b5473; --muted:#8b84a3;
+  --line:#efe6d6; --line-soft:#f6f0e6;
+  --brand:#5b34c4; --brand-d:#4a27a8; --brand-l:#efe9ff;
+  --amber:#8a5900; --amber-l:#fff3d0;
+  --red:#b83e08; --red-l:#ffece0;
+  --slate:#0b6e9e; --slate-l:#e4f6fd;
+  --display:"Avenir Next","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --text:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1a1526; --surface:#241d33; --surface-2:#2e2740;
+    --ink:#f6f2ff; --body:#cfc7e6; --muted:#a79fc0;
+    --line:#383052; --line-soft:#2b2440;
+    --brand:#b598ff; --brand-d:#d9caff; --brand-l:#322554;
+    --amber:#ffc93c; --amber-l:#3a2c05;
+    --red:#ff9f55; --red-l:#3a1e10;
+    --slate:#7fd0f5; --slate-l:#10314a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1a1526; --surface:#241d33; --surface-2:#2e2740;
+  --ink:#f6f2ff; --body:#cfc7e6; --muted:#a79fc0;
+  --line:#383052; --line-soft:#2b2440;
+  --brand:#b598ff; --brand-d:#d9caff; --brand-l:#322554;
+  --amber:#ffc93c; --amber-l:#3a2c05;
+  --red:#ff9f55; --red-l:#3a1e10;
+  --slate:#7fd0f5; --slate-l:#10314a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--body);
+  font:16px/1.6 var(--text);-webkit-font-smoothing:antialiased}
+h1,h2,h3{color:var(--ink);font-family:var(--display);line-height:1.18;
+  margin:0;font-weight:750;letter-spacing:-.02em;text-wrap:balance}
+.wrap{max-width:940px;margin:0 auto;padding:44px 24px 90px}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+.top{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.mark{width:38px;height:38px;border-radius:10px;flex:none;
+  background:linear-gradient(135deg,var(--brand),var(--brand-d));
+  display:grid;place-items:center;color:#fff;font-size:19px;font-weight:800;font-family:var(--display)}
+.top-text p{margin:0;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);font-weight:700}
+.top-text h1{font-size:1.5rem}
+.updated{margin:18px 0 0;color:var(--muted);font-size:.88rem}
+
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;margin:34px 0}
+.summary>div{background:var(--surface);padding:20px 18px;text-align:center}
+.summary b{display:block;font-size:2rem;font-family:var(--display);color:var(--ink);
+  font-variant-numeric:tabular-nums;line-height:1}
+.summary span{display:block;margin-top:6px;font-size:.8rem;color:var(--muted);font-weight:600}
+.summary .n-done b{color:var(--brand)}
+.summary .n-draft b{color:var(--amber)}
+.summary .n-flag b{color:var(--red)}
+.summary .n-gap b{color:var(--slate)}
+
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:.82rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.i-done{background:var(--brand)}.i-draft{background:var(--amber)}
+.i-flag{background:var(--red)}.i-gap{background:var(--slate)}
+
+section{margin-top:52px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  margin-bottom:18px;flex-wrap:wrap}
+.sec-head h2{font-size:1.2rem}
+.sec-head p{margin:2px 0 0;color:var(--muted);font-size:.88rem}
+
+.decision{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--red);
+  border-radius:10px;padding:18px 20px;margin-bottom:12px}
+.decision h3{font-size:.98rem;margin-bottom:6px}
+.decision p{margin:0;font-size:.9rem;color:var(--body)}
+.decision .tag{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--red);background:var(--red-l);
+  padding:3px 9px;border-radius:999px;margin-bottom:9px}
+
+.list{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden}
+.row{display:flex;align-items:flex-start;gap:16px;padding:16px 20px;
+  border-bottom:1px solid var(--line-soft)}
+.row:last-child{border-bottom:0}
+.row-text{flex:1;min-width:0}
+.row-text h4{margin:0 0 3px;font-size:.96rem;font-weight:700;color:var(--ink);
+  font-family:var(--display)}
+.row-text p{margin:0;font-size:.86rem;color:var(--muted);line-height:1.5}
+.row-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.admin-badge{font-size:.68rem;font-weight:700;color:var(--slate);background:var(--slate-l);
+  padding:2px 8px;border-radius:999px;letter-spacing:.02em}
+.pill{flex:none;font-size:.72rem;font-weight:800;letter-spacing:.03em;
+  padding:5px 11px;border-radius:999px;white-space:nowrap;margin-top:1px}
+.pill-done{background:var(--brand-l);color:var(--brand-d)}
+.pill-draft{background:var(--amber-l);color:var(--amber)}
+.pill-gap{background:var(--slate-l);color:var(--slate)}
+
+footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);
+  font-size:.82rem;color:var(--muted)}
+footer code{background:var(--surface-2);padding:1px 6px;border-radius:4px;font-size:.85em}
+
+@media(max-width:640px){
+  .summary{grid-template-columns:1fr 1fr}
+  .row{flex-direction:column}
+  .pill{align-self:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="mark" id="markInitials">--</div>
+    <div class="top-text">
+      <p id="orgLabel">ORGANIZATION</p>
+      <h1 id="pageTitle">Project status</h1>
+    </div>
+  </div>
+  <p class="updated" id="updatedLine"></p>
+
+  <div class="summary" id="summaryStrip"></div>
+  <div class="legend">
+    <span><i class="i-done"></i> Done — built, tested, real data</span>
+    <span><i class="i-draft"></i> Draft — written, not yet confirmed</span>
+    <span><i class="i-flag"></i> Needs a decision — see below</span>
+    <span><i class="i-gap"></i> Left for later, on purpose</span>
+  </div>
+
+  <section id="decisionsSection" style="display:none">
+    <div class="sec-head">
+      <h2>Needs your decision</h2>
+      <p>Nothing breaks if these wait — but don't ship to real users until they're settled.</p>
+    </div>
+    <div id="decisionsList"></div>
+  </section>
+
+  <div id="groupsHost"></div>
+
+  <footer id="footerNote"></footer>
+</div>
+
+<script>
+/*
+ * ALL content below is data. Fill in STATUS_DATA and this page renders
+ * itself — including the summary strip counts, which are computed with
+ * Array.filter().length, never typed by hand. This is deliberate: a
+ * hand-typed summary count WILL eventually disagree with the actual row
+ * list the moment either one changes and the other doesn't. Making the
+ * count a derived value makes that entire bug class impossible.
+ */
+const STATUS_DATA = {
+  meta: {
+    orgLabel: "VENUKA \u00b7 HAPPY LEARNING KIDS",
+    pageTitle: "Venuka's website — what's built",
+    markInitials: "V",
+    updatedLine: "Last updated 30 August 2026 \u2014 going live tomorrow. " +
+      "A plain-language summary of what is finished, what still needs a decision, " +
+      "and what is deliberately left for later.",
+    footerNote: 'Exact files and line numbers are in <code>REGISTRY.md</code> in the ' +
+      'project folder. Step-by-step publishing instructions are in <code>DEPLOYMENT.md</code>. ' +
+      'This page is the plain-language summary and is a snapshot, not a live view.',
+  },
+
+  groups: [
+    {
+      title: "Pages",
+      description: "The nine pages a visitor can reach.",
+      items: [
+        { name: "Home", status: "done", admin: false,
+          description: "Welcome, featured drawings, latest videos, activities and the YouTube invitation." },
+        { name: "About Venuka", status: "done", admin: true,
+          description: "Her creative journey in her own words, and what drawing gives a child." },
+        { name: "Drawings gallery", status: "done", admin: false,
+          description: "All the drawings, with category buttons, a search box and a full-size viewer." },
+        { name: "Arts &amp; Crafts", status: "done", admin: false,
+          description: "Page is built and waiting. It says honestly that no craft has been photographed yet." },
+        { name: "Drawing videos", status: "done", admin: false,
+          description: "All 14 videos, with filters and search. Nothing loads from YouTube until you press play." },
+        { name: "Learn &amp; Create", status: "done", admin: true,
+          description: "Drawing ideas, colouring tricks, the five steps, craft ideas and what to keep in the box." },
+        { name: "New Creations", status: "done", admin: false,
+          description: "Newest work first. Updates itself whenever anything is added." },
+        { name: "Contact", status: "draft", admin: false,
+          description: "Form and links are built and tested. It cannot send a message yet — see the decision below." },
+        { name: "Page-not-found screen", status: "done", admin: false,
+          description: "A friendly screen if someone follows a broken link, instead of a browser error." },
+      ],
+    },
+    {
+      title: "Venuka's work",
+      description: "The drawings, videos and crafts themselves.",
+      items: [
+        { name: "\u201CFrog and Duck\u201D photograph", status: "done", admin: true,
+          description: "A real photograph of the sketchbook page, dated 30 August 2023 in her own handwriting. Used as the front-page picture and the link preview." },
+        { name: "13 drawings shown as video stills", status: "draft", admin: true,
+          description: "Real frames from her own videos, each clearly labelled \u201CStill from video\u201D. They can be swapped for proper photographs whenever the originals are photographed." },
+        { name: "14 drawing videos", status: "done", admin: true,
+          description: "Every title, date and thumbnail checked against the Happy Learning Kids channel." },
+        { name: "Eight gallery categories", status: "done", admin: true,
+          description: "Animals, Birds, Nature, Cute Characters, Pencil, Colour, Easy, and Special Artwork." },
+        { name: "\u201CSpecial Artwork\u201D category", status: "gap", admin: true,
+          description: "Deliberately empty. Selecting it shows an honest \u201Cnothing here yet\u201D message rather than padding it out." },
+        { name: "Craft projects", status: "gap", admin: true,
+          description: "Nothing added yet, because nothing has been photographed. The page is ready for the first one." },
+        { name: "Materials and difficulty notes", status: "draft", admin: true,
+          description: "Filled in for 5 of the 14 drawings. The rest honestly say \u201CNot recorded yet\u201D rather than guessing." },
+      ],
+    },
+    {
+      title: "Finding things",
+      description: "How a visitor gets to what they want.",
+      items: [
+        { name: "Category buttons with live counts", status: "done", admin: false,
+          description: "Each button shows how many drawings it holds, and the count updates itself." },
+        { name: "Search", status: "done", admin: false,
+          description: "Searches titles, descriptions and the picture descriptions on both the gallery and the videos." },
+        { name: "Full-size artwork viewer", status: "done", admin: false,
+          description: "Opens any drawing large, with its details. Arrow keys move between pictures, Escape closes." },
+        { name: "Click-to-play video", status: "done", admin: false,
+          description: "Shows a local picture until you press play, so the page stays fast and YouTube is not contacted before then." },
+        { name: "Newest-first ordering", status: "done", admin: false,
+          description: "The home page and New Creations sort themselves by date. Nothing to maintain by hand." },
+      ],
+    },
+    {
+      title: "The moving background",
+      description: "The meadow that runs behind every page.",
+      items: [
+        { name: "Seasons", status: "done", admin: false,
+          description: "Sunny, cloudy, rain and snow, thirty seconds each. Snow settles into drifts and melts when the sun returns." },
+        { name: "Butterflies", status: "done", admin: false,
+          description: "They fly, flap, wander, land on a flower, rest, and take off again. Measured: all wings flapping, gentle speeds, none stuck." },
+        { name: "Flowers that react", status: "done", admin: false,
+          description: "A flower dips under a landing butterfly and nods when one flies past. Measured: 8 of 13 flowers visibly moving." },
+        { name: "Pause button", status: "done", admin: false,
+          description: "The little weather badge in the corner names the season and pauses everything. The choice is remembered." },
+        { name: "Still picture for reduced motion", status: "done", admin: false,
+          description: "Anyone whose device asks for less motion gets a composed still scene, never a blank box." },
+        { name: "Carries between pages", status: "done", admin: false,
+          description: "The same flowers, butterflies and weather continue when you click to another page." },
+      ],
+    },
+    {
+      title: "Getting in touch",
+      items: [
+        { name: "Contact form and its checks", status: "done", admin: false,
+          description: "Name, email, subject and message, each checked properly with clear messages." },
+        { name: "YouTube channel link", status: "done", admin: true,
+          description: "The one verified way to reach Venuka. Appears on the contact page and in the footer." },
+        { name: "Email, Instagram, Facebook, WhatsApp", status: "gap", admin: true,
+          description: "Shown as clearly-labelled \u201Cnot published yet\u201D. Nothing was invented. Each becomes a real link the moment a genuine address is added." },
+      ],
+    },
+    {
+      title: "Learn &amp; Create content",
+      description: "Written for this website, as suggestions for children \u2014 not presented as Venuka's finished work.",
+      items: [
+        { name: "Six drawing ideas", status: "done", admin: true, description: "Start with a circle, sheep are just clouds, and so on." },
+        { name: "Five colouring tricks", status: "done", admin: true, description: "Practical tips a child can use straight away." },
+        { name: "The five drawing steps", status: "done", admin: true, description: "The same sequence you see in every one of her videos." },
+        { name: "Four craft ideas", status: "done", admin: true, description: "Paper shapes, handprints, blow painting, kitchen-roll animals." },
+        { name: "Recommended materials", status: "done", admin: true, description: "Six things worth keeping in the box, and why." },
+        { name: "Printable activities", status: "gap", admin: true, description: "Announced as coming. Nothing pretends to be downloadable yet." },
+      ],
+    },
+    {
+      title: "Publishing safely",
+      description: "What stops a small mistake from taking the live site down.",
+      items: [
+        { name: "Automatic checks", status: "done", admin: false,
+          description: "53 checks run in about a second: typos, missing photos, unknown categories, duplicates, broken links, missing picture descriptions and colour contrast. Tested by breaking each thing on purpose." },
+        { name: "Publish only if the checks pass", status: "draft", admin: false,
+          description: "Written and valid, but it cannot be proven until the first real push. If the checks fail, the site is simply not republished." },
+        { name: "One-command web address setter", status: "done", admin: false,
+          description: "Fills the full address into all nine pages, the sitemap and the search-engine file. Tested." },
+        { name: "Publishing instructions", status: "done", admin: false,
+          description: "Step-by-step notes covering the public-or-private choice, a parent checklist, custom domains and how to undo a bad change." },
+        { name: "Guide for adding new work", status: "done", admin: false,
+          description: "How to add a drawing, a craft or a video, with the exact shape of each entry." },
+        { name: "The repository itself", status: "gap", admin: false,
+          description: "Not created yet. The folder currently sits inside another project folder and needs to become its own." },
+      ],
+    },
+    {
+      title: "Quality",
+      items: [
+        { name: "Phone, tablet and desktop", status: "done", admin: false,
+          description: "Checked from 320 pixels wide up to 1500. Nothing overflows sideways at any size." },
+        { name: "Keyboard and screen readers", status: "done", admin: false,
+          description: "Menu, filters, search and the picture viewer all work without a mouse. Every image has a written description." },
+        { name: "Colour contrast", status: "done", admin: false,
+          description: "Every text colour measured against all four skies, plus grass, snow and the brightest flowers. The tightest passes with room to spare." },
+        { name: "Speed", status: "done", admin: false,
+          description: "1.5 MB in total. Pictures load only as you reach them, and the background pauses when the tab is hidden." },
+        { name: "Link previews and search listing", status: "gap", admin: false,
+          description: "Waiting on the final web address. One command fills them in once it is known." },
+      ],
+    },
+  ],
+
+  decisions: [
+    { tag: "Photo of Venuka",
+      title: "A photograph of her exists but has not been published",
+      body: "There is a photo on your machine. It was deliberately left out \u2014 publishing a " +
+        "photograph of a child is a family decision, not a build decision, and once the site is " +
+        "public it is public permanently. The About page holds a space for it. <b>Decide before " +
+        "the 31st</b>, because adding it later is easy but removing it later is not." },
+    { tag: "School year",
+      title: "Her school year and board were left off on purpose",
+      body: "The old Google Site listed her school year and board under Education. That was " +
+        "omitted here because it is an identifying detail about a child, combined with her first " +
+        "name and her drawings. Say the word and it goes back in \u2014 but it should be a choice." },
+    { tag: "Missing videos",
+      title: "Seven videos are on YouTube but not on the website",
+      body: "Checked against the live channel feed. Missing: a Jungle giraffe-and-cat pair, a duck " +
+        "drawing, a mermaid-and-fish colouring, a sheep/girl/ducks scene and others. The site does " +
+        "not watch YouTube \u2014 each video is added by hand. Decide whether to add these before going " +
+        "live, and whether you want the daily automatic sync." },
+    { tag: "Public or private",
+      title: "GitHub Pages will only publish a free site from a public repository",
+      body: "Publishing from a private repository needs a paid plan, and even then the website itself " +
+        "is still public \u2014 only the code is hidden. Nothing in this project needs hiding: no keys, " +
+        "no addresses, and your commit email is already GitHub's private one. The alternative, if you " +
+        "want the code private at no cost, is Cloudflare Pages." },
+    { tag: "Contact form",
+      title: "The form cannot deliver a message yet",
+      body: "No delivery service is connected, and the form says so honestly rather than pretending. " +
+        "Connecting one (Formspree, Basin, Netlify Forms) is a single line in the content file. " +
+        "Until then the YouTube channel is the only way to reach her \u2014 which may be exactly what " +
+        "you want for a child's website." },
+    { tag: "Web address",
+      title: "Whether to buy a domain name",
+      body: "The free address works and has HTTPS. A domain is optional polish, roughly a thousand " +
+        "rupees a year, and can be added at any time without rebuilding anything. Worth knowing: " +
+        "<b>venuka.art appears to be available</b>. You do not need to buy hosting \u2014 the site is " +
+        "hosted free either way." },
+  ],
+};
+
+(function render(){
+  const d = STATUS_DATA;
+  document.title = d.meta.pageTitle;
+  document.getElementById('orgLabel').textContent = d.meta.orgLabel;
+  document.getElementById('pageTitle').textContent = d.meta.pageTitle;
+  document.getElementById('markInitials').textContent = d.meta.markInitials;
+  document.getElementById('updatedLine').innerHTML = d.meta.updatedLine;
+  document.getElementById('footerNote').innerHTML = d.meta.footerNote;
+
+  const allItems = d.groups.flatMap(g => g.items);
+  const counts = {
+    done: allItems.filter(i => i.status === 'done').length,
+    draft: allItems.filter(i => i.status === 'draft').length,
+    gap: allItems.filter(i => i.status === 'gap').length,
+    flag: d.decisions.length,
+  };
+
+  document.getElementById('summaryStrip').innerHTML = `
+    <div class="n-done"><b>${counts.done}</b><span>Done</span></div>
+    <div class="n-draft"><b>${counts.draft}</b><span>Draft — needs review</span></div>
+    <div class="n-flag"><b>${counts.flag}</b><span>Needs your decision</span></div>
+    <div class="n-gap"><b>${counts.gap}</b><span>Left for later</span></div>
+  `;
+
+  if (d.decisions.length) {
+    document.getElementById('decisionsSection').style.display = '';
+    document.getElementById('decisionsList').innerHTML = d.decisions.map(x => `
+      <div class="decision">
+        <span class="tag">${esc(x.tag)}</span>
+        <h3>${esc(x.title)}</h3>
+        <p>${x.body}</p>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('groupsHost').innerHTML = d.groups.map(g => `
+    <section>
+      <div class="sec-head">
+        <h2>${esc(g.title)}</h2>
+        ${g.description ? `<p>${esc(g.description)}</p>` : ''}
+      </div>
+      <div class="list">
+        ${g.items.map(item => `
+          <div class="row">
+            <div class="row-text">
+              <h4>${esc(item.name)}</h4>
+              <p>${item.description}</p>
+              ${item.admin ? '<div class="row-badges"><span class="admin-badge">Good admin-panel candidate</span></div>' : ''}
+            </div>
+            <span class="pill pill-${item.status}">${statusLabel(item.status)}</span>
+          </div>
+        `).join('')}
+      </div>
+    </section>
+  `).join('');
+})();
+
+function statusLabel(s){
+  return { done: 'Done', draft: 'Draft', gap: 'Left for later' }[s] || s;
+}
+function esc(v){
+  return String(v ?? '').replace(/[&<>"']/g, c => (
+    { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]
+  ));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+# ─────────────────────────────────────────────────────────────
+#  What NOT to send to GitHub
+#
+#  Everything listed here stays on this computer only.
+#  Everything NOT listed here gets published.
+#
+#  Rule of thumb: if the website needs it to run, it is not here.
+# ─────────────────────────────────────────────────────────────
+
+
+# ── Junk your computer creates by itself ──────────────────────
+# macOS drops these into every folder you open in Finder.
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.AppleDouble
+.LSOverride
+Icon?
+
+# Windows and Linux equivalents, in case you ever work elsewhere.
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*~
+.directory
+
+
+# ── Editor and tool settings ──────────────────────────────────
+# These are about YOUR setup, not about the website.
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+
+# ── Your own scratch and draft files ──────────────────────────
+# Start any experiment with an underscore and it stays private.
+#   _test.html   _draft.html   _scratch.js   _notes.txt
+#
+# IMPORTANT: these patterns are deliberately narrow. Do NOT change
+# them to a plain "_*", because one real thumbnail the site needs is
+# named _hIeRYpy_Ak.jpg (that YouTube video's ID starts with an
+# underscore) and a wider rule would silently leave it behind.
+_*.html
+_*.js
+_*.css
+_*.md
+_*.txt
+scratch/
+draft/
+drafts/
+
+
+# ── Anything with a password or key in it ─────────────────────
+# There are none today. This is a seatbelt for later.
+.env
+.env.*
+*.pem
+*.key
+secrets.*
+credentials.*
+
+
+# ── Downloads and leftovers ───────────────────────────────────
+*.log
+*.tmp
+*.bak
+*.old
+*.orig
+*.rej
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.dmg
+
+
+# ── Programming leftovers ─────────────────────────────────────
+# This website has no dependencies and no build step, so none of
+# this should ever appear. Listed so an accidental "npm install"
+# or a stray Python script cannot pollute the repository.
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-error.log*
+.npm/
+dist/
+build/
+.cache/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+
+# ── Original photographs, before resizing ─────────────────────
+# Put the full-size camera files here and they stay off GitHub.
+# Only the resized copies inside assets/img/ get published.
+originals/
+_originals/
