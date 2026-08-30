@@ -107,6 +107,17 @@
       e.preventDefault();
       UI.$("#cf-result").innerHTML = "";
 
+      /* Spam trap, checked before anything else. A person cannot see or tab to
+         this box, so anything in it came from an automated script. Answer as
+         though it worked and stop: pointing out which boxes were wrong would
+         only tell whoever wrote the script how to get through next time. */
+      var trap = UI.$("#cf-website");
+      if (trap && trap.value) {
+        form.reset();
+        result("ok", "Message sent — thank you!", "It is on its way to Venuka.");
+        return;
+      }
+
       var ok = true, firstBad = null;
       inputs.forEach(function (input) {
         var good = validateField(input);
@@ -138,9 +149,17 @@
       submit.textContent = "Sending…";
       result("info", "Sending your message", "One moment please.");
 
+      /* Content-Type is text/plain on purpose, not application/json.
+         application/json makes the browser send a CORS preflight (an OPTIONS
+         request) first, and a Google Apps Script web app cannot answer one —
+         the message would fail every time. text/plain counts as a "simple
+         request", so no preflight is sent. The body is still JSON, and the
+         Apps Script reads it with JSON.parse(e.postData.contents).
+         Formspree and Basin accept this form too, so the endpoint can be
+         swapped later without touching this file. */
       fetch(D.formEndpoint, {
         method: "POST",
-        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        headers: { "Accept": "application/json", "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
           name: UI.$("#cf-name").value.trim(),
           email: UI.$("#cf-email").value.trim(),
@@ -149,6 +168,22 @@
         })
       }).then(function (res) {
         if (!res.ok) throw new Error("HTTP " + res.status);
+        /* A Google Apps Script web app always answers 200, even when it
+           refused the message, so res.ok alone is not proof of delivery.
+           Read the body and insist on {ok:true} before telling anyone their
+           message was sent. Services that do use status codes (Formspree)
+           have already failed above, and return no such field — so an
+           unreadable or fieldless body is treated as success only when the
+           status said so. */
+        return res.text().then(function (body) {
+          var answer = null;
+          try { answer = JSON.parse(body); } catch (ignored) {}
+          if (answer && answer.ok === false) {
+            throw new Error(answer.error || "rejected");
+          }
+          return answer;
+        });
+      }).then(function () {
         form.reset();
         result("ok", "Message sent — thank you!",
           "It is on its way to Venuka. You should get a reply at the email address you gave.");

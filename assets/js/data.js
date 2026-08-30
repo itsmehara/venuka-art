@@ -57,6 +57,25 @@ window.VENUKA = (function () {
      ---------------------------------------------------------------------- */
   const formEndpoint = null;
 
+  /* ---- Visitor counting (optional) --------------------------------------
+     Cloudflare Web Analytics. Free, unlimited, and it sets NO cookies, so
+     the site needs no consent banner and nothing pops up at the visitor.
+
+     It reports how many people came, which pages they read, where they came
+     from and roughly which country they were in. It cannot tell you who they
+     were, and it never asks them for anything.
+
+     null = switched off. Nothing is loaded and no request is made.
+
+     To switch it on:
+       1. dash.cloudflare.com  ->  Analytics & Logs  ->  Web Analytics
+       2. "Add a site", enter the website address
+       3. It shows a snippet containing  "token": "abc123..."
+       4. Paste just that token between the quotes below.
+     You do NOT need to host anything on Cloudflare for this to work.
+     ---------------------------------------------------------------------- */
+  const analytics = { cloudflareToken: null };
+
   /* ---- Drawing categories ----------------------------------------------- */
   const categories = [
     "Animal Drawings",
@@ -437,7 +456,7 @@ window.VENUKA = (function () {
   ];
 
   return {
-    site, contact, formEndpoint, categories,
+    site, contact, formEndpoint, analytics, categories,
     videos, artworks, crafts,
     drawingIdeas, colouringTips, craftIdeas, materialsList, encouragements
   };

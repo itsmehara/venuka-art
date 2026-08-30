@@ -96,6 +96,15 @@
             </div>
 
             <form class="form-card" id="contact-form" novalidate>
+              <!-- Spam trap. Positioned off-screen, hidden from screen readers and
+                   skipped by the Tab key, so no real person ever sees or reaches it.
+                   Automated scripts fill in every box they find, so any message that
+                   arrives with this one filled in is silently discarded. Keep it. -->
+              <div class="hp-wrap" aria-hidden="true">
+                <label for="cf-website">Do not fill this in</label>
+                <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off">
+              </div>
+
               <div class="field">
                 <label for="cf-name">Your name <span class="req" aria-hidden="true">*</span></label>
                 <input type="text" id="cf-name" name="name" required autocomplete="name"

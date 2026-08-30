@@ -687,6 +687,14 @@ a.contact-item:hover { border-color: var(--purple); color: inherit; }
 .footer-cta a:hover { color: #fff; }
 @media (max-width: 620px) { .footer-cta { padding: .9rem 0 1.3rem; } }
 
+/* The contact form's spam trap. Off-screen rather than display:none,
+   because a bot can detect display:none and skip the field, which would
+   defeat the whole point. */
+.hp-wrap {
+  position: absolute; left: -9999px; top: auto;
+  width: 1px; height: 1px; overflow: hidden;
+}
+
 /* ---------- 13. Decor & motion ------------------------------------------- */
 .blob { position: absolute; z-index: -1; pointer-events: none; opacity: .5; filter: blur(2px); }
 .blob--1 { top: -70px; left: -90px; width: 320px; color: var(--sky); }

@@ -487,6 +487,21 @@
     $$("[data-year]").forEach((el) => { el.textContent = String(new Date().getFullYear()); });
   }
 
+  /* Cloudflare Web Analytics, loaded only if a token is set in data.js.
+     Cookieless, so there is no consent banner and nothing to dismiss. With no
+     token nothing is requested at all — no third party learns the visitor was
+     here. The script is added last and deferred so it never delays the page. */
+  function initAnalytics() {
+    const token = DATA && DATA.analytics && DATA.analytics.cloudflareToken;
+    if (!token) return;
+    if (document.querySelector("[data-cf-beacon]")) return;
+    const s = document.createElement("script");
+    s.defer = true;
+    s.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    s.setAttribute("data-cf-beacon", JSON.stringify({ token: token }));
+    document.body.appendChild(s);
+  }
+
   /* Artwork tiles open the lightbox. Delegated so it works after re-render. */
   function initArtworkTiles() {
     document.addEventListener("click", function (e) {
@@ -548,6 +563,7 @@
     initArtworkTiles();
     guardImages(document);
     checkData();
+    initAnalytics();
   });
 
   /* Public surface used by the per-page scripts. */

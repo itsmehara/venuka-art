@@ -78,6 +78,10 @@ current status — instead of re-describing it or re-deriving it from the code.
 | Name | Location | Status | Admin | Details |
 |---|---|---|---|---|
 | Pre-deploy checks | `tools/check.js` (260 lines) | ✅ | | 53 checks, zero dependencies. Each failure class verified by deliberately breaking it. |
+| Contact form receiver | `tools/google-sheet-form.gs` (157 lines) | 📝 | ✔ | Apps Script for a private Google Sheet. Honeypot check, required-field and email validation, 5,000-char trim, 20/hour rate limit, LockService against concurrent writes, optional email alert. Inert until `formEndpoint` is set. |
+| Form transport | `page-contact.js` | ✅ | | POSTs JSON as `text/plain;charset=utf-8` — `application/json` would trigger a CORS preflight that Apps Script cannot answer. Delivery is confirmed by parsing the body for `ok:false`, because Apps Script answers HTTP 200 even when it refuses. |
+| Spam trap | `contact.html` + `.hp-wrap` in `style.css` | ✅ | | Off-screen (not `display:none`, which bots detect), `aria-hidden`, `tabindex="-1"`. Checked before field validation so a bot is never told which boxes to fix. Verified: honeypot submissions never reach the network. |
+| Visitor analytics | `data.js` `analytics`, `site.js` `initAnalytics()` | 📝 | ✔ | Cloudflare Web Analytics, injected only when a token is set. Cookieless, so no consent banner. Nothing is requested at all while the token is null. |
 | Web address setter | `tools/set-domain.js` (84 lines) | ✅ | | Rewrites og:image/og:url/canonical across 9 pages + sitemap + robots. Idempotent. |
 | CI workflow | `.github/workflows/deploy.yml` | 📝 | | `check` job gates `deploy` via `needs:`. Valid, but unproven until the first push. |
 | Ignore rules | `.gitignore` (109 lines) | ✅ | | OS junk, editor dirs, `_*` drafts, secrets, archives, `originals/`. Underscore rules are per-extension (`_*.html`, `_*.js`…) **not** a bare `_*`, because `assets/img/video/_hIeRYpy_Ak.jpg` is a real thumbnail whose YouTube id starts with an underscore. |

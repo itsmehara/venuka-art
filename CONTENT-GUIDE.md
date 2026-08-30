@@ -220,6 +220,40 @@ means more meadow showing through, higher means more solid.
 
 ---
 
+## Switching on the contact form and the visitor counter
+
+Both are off until you paste in one value each. Both live in `assets/js/data.js`.
+
+### Messages into a private Google Sheet
+
+Full step-by-step instructions are in the comment block at the top of
+[`tools/google-sheet-form.gs`](tools/google-sheet-form.gs). In short:
+
+1. `sheets.new` → a new private Sheet. **Do not share it with anyone.**
+2. Extensions → Apps Script → paste that whole file → Save
+3. Deploy → New deployment → **Web app**, Execute as **Me**, access **Anyone**
+4. Copy the `/exec` URL it gives you
+5. In `data.js`, change `const formEndpoint = null;` to that URL in quotes
+
+Every message then arrives as a row in your Sheet. Only you can read it.
+
+### Counting visitors
+
+1. `dash.cloudflare.com` → Analytics & Logs → Web Analytics → Add a site
+2. It shows a snippet containing `"token": "abc123…"` — copy just the token
+3. In `data.js`, put it in `const analytics = { cloudflareToken: null };`
+
+No cookies, so no consent banner and nothing pops up at your visitors. You see
+page views, popular pages, where people came from and roughly which country.
+You never see who they are.
+
+**What is private, and what is not.** The messages and the visitor figures are
+private to you. The form's `/exec` address is not — a visitor's browser has to
+know where to send the form, so it sits in the page source. That is true of
+every website of this kind. It lets someone send you junk; it does not let
+anyone read what other people sent. A hidden spam trap on the form and a limit
+of 20 messages an hour in the script deal with the junk.
+
 ## 7. Checking your change
 
 **Always do this first.** One command, one second, no installing anything:
