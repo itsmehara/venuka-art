@@ -22,8 +22,15 @@
         '<span><span class="ci-label">' + UI.esc(c.label) + "</span>";
       if (c.href) {
         inner += '<span class="ci-value">' + UI.esc(c.value) + "</span></span>";
-        return '<li><a class="contact-item" href="' + UI.esc(c.href) + '" target="_blank" rel="noopener">' +
-          inner + '<span class="visually-hidden"> (opens in a new tab)</span></a></li>';
+        /* A mailto: hands over to the mail app rather than opening a tab, so it
+           gets neither target="_blank" nor the "opens in a new tab" note — that
+           announcement would simply be untrue for a screen-reader user. */
+        var isMail = /^mailto:/i.test(c.href);
+        return '<li><a class="contact-item" href="' + UI.esc(c.href) + '"' +
+          (isMail ? "" : ' target="_blank" rel="noopener"') + ">" + inner +
+          '<span class="visually-hidden">' +
+          (isMail ? " (opens your email app)" : " (opens in a new tab)") +
+          "</span></a></li>";
       }
       inner += '<span class="ci-value is-placeholder">' + UI.esc(c.placeholder || "Not published yet") +
         "</span></span>";

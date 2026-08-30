@@ -43,7 +43,7 @@ window.VENUKA = (function () {
      ---------------------------------------------------------------------- */
   const contact = {
     youtube:   { label: "YouTube — Happy Learning Kids", value: site.channelUrl, href: site.channelUrl, icon: "▶️" },
-    email:     { label: "Email",     value: null, href: null, icon: "✉️", placeholder: "Email address not published yet" },
+    email:     { label: "Email",     value: "kanthi.venuka@gmail.com", href: "mailto:kanthi.venuka@gmail.com", icon: "✉️" },
     instagram: { label: "Instagram", value: null, href: null, icon: "📸", placeholder: "Instagram link not published yet" },
     facebook:  { label: "Facebook",  value: null, href: null, icon: "👍", placeholder: "Facebook link not published yet" },
     whatsapp:  { label: "WhatsApp",  value: null, href: null, icon: "💬", placeholder: "WhatsApp number not published yet" }

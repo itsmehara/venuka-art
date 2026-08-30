@@ -672,6 +672,21 @@ a.contact-item:hover { border-color: var(--purple); color: inherit; }
   font-size: var(--step--1); color: #a79fc0;
 }
 
+/* The last line on every page: an offer to build a site for someone else.
+   Deliberately quiet — it sits below the copyright, reads as a footnote
+   rather than an advertisement, and never competes with Venuka's work. */
+.footer-cta {
+  border-top: 1px solid rgba(255, 255, 255, .10);
+  padding: 1rem 0 1.5rem; text-align: center;
+  font-size: var(--step--1); color: #a79fc0;
+}
+.footer-cta a {
+  color: #d9cffb; font-weight: 700; text-decoration: underline;
+  text-underline-offset: 3px; text-decoration-thickness: 1px;
+}
+.footer-cta a:hover { color: #fff; }
+@media (max-width: 620px) { .footer-cta { padding: .9rem 0 1.3rem; } }
+
 /* ---------- 13. Decor & motion ------------------------------------------- */
 .blob { position: absolute; z-index: -1; pointer-events: none; opacity: .5; filter: blur(2px); }
 .blob--1 { top: -70px; left: -90px; width: 320px; color: var(--sky); }
