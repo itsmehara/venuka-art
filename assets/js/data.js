@@ -63,7 +63,7 @@ window.VENUKA = (function () {
      "https://formspree.io/f/xxxxxxx" (or any endpoint that accepts a POST)
              = the form really submits and shows a real success/error state.
      ---------------------------------------------------------------------- */
-  const formEndpoint = null;
+  const formEndpoint = "https://script.google.com/macros/s/AKfycbxgbSUabmhoUB97cUA5If2Dvy_NWGh_mo6nnfB5QIw9rZBYp7iOSz2s_ARWBcR-NLIctg/exec";
 
   /* ---- Visitor counting (optional) --------------------------------------
      Cloudflare Web Analytics. Free, unlimited, and it sets NO cookies, so
