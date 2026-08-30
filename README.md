@@ -335,5 +335,17 @@ Neither of these is required by anything on the site.
 
 ## Licence and credit
 
-All drawings, photographs and videos are Venuka's own work.
-Please do not reuse the artwork without the family's permission.
+Two sets of terms, because this repository holds two different kinds of work.
+Full text in **[LICENSE](LICENSE)**.
+
+**The code — all rights reserved.** The HTML, CSS, JavaScript, checks and
+documentation may not be copied, reused or republished. Being public on GitHub
+makes it readable; it does not make it free to take.
+
+**The artwork — [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).**
+Every drawing, craft photograph and video still is Venuka's own work. You are
+welcome to share it as long as you credit her and link back, do not sell it,
+and do not alter it. A teacher or a child sharing her drawings: yes, gladly.
+Anyone selling them or passing them off as their own: no.
+
+For anything else, just ask through the contact page.

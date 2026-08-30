@@ -78,6 +78,8 @@ current status — instead of re-describing it or re-deriving it from the code.
 | Name | Location | Status | Admin | Details |
 |---|---|---|---|---|
 | Pre-deploy checks | `tools/check.js` (260 lines) | ✅ | | 53 checks, zero dependencies. Each failure class verified by deliberately breaking it. |
+| Contact email | `data.js` `emailAddress` (one const) | ✅ | ✔ | The single source of truth. Appears literally in exactly one place in the whole codebase. Drives the contact page, the footer pill and the footer enquiry link on all nine pages. |
+| Footer email rendering | `site.js` `initFooterContact()` | ✅ | | Upgrades `[data-contact-email]` and `[data-contact-email-enquiry]` slots at boot. The HTML ships the null state, so a null address or a failed `data.js` leaves a tidy "not added yet" pill rather than a link to nowhere. Verified both ways. |
 | Contact form receiver | `tools/google-sheet-form.gs` (157 lines) | 📝 | ✔ | Apps Script for a private Google Sheet. Honeypot check, required-field and email validation, 5,000-char trim, 20/hour rate limit, LockService against concurrent writes, optional email alert. Inert until `formEndpoint` is set. |
 | Form transport | `page-contact.js` | ✅ | | POSTs JSON as `text/plain;charset=utf-8` — `application/json` would trigger a CORS preflight that Apps Script cannot answer. Delivery is confirmed by parsing the body for `ok:false`, because Apps Script answers HTTP 200 even when it refuses. |
 | Spam trap | `contact.html` + `.hp-wrap` in `style.css` | ✅ | | Off-screen (not `display:none`, which bots detect), `aria-hidden`, `tabindex="-1"`. Checked before field validation so a bot is never told which boxes to fix. Verified: honeypot submissions never reach the network. |

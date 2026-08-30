@@ -487,6 +487,39 @@
     $$("[data-year]").forEach((el) => { el.textContent = String(new Date().getFullYear()); });
   }
 
+  /* The footer email link, on every page, from the one address in data.js.
+
+     The HTML ships the "not added yet" state, so this only ever upgrades it.
+     That way a null address, or a data.js that failed to load, leaves a tidy
+     placeholder rather than a link to nowhere — and the markup stays honest
+     for anyone reading the page without JavaScript. */
+  function initFooterContact() {
+    const email = DATA && DATA.contact && DATA.contact.email;
+    const address = email && email.value;
+    if (!address) return;
+
+    /* The pill beside YouTube. Becomes a real link, worded as it was before. */
+    $$("[data-contact-email]").forEach((slot) => {
+      const a = document.createElement("a");
+      a.className = "social-pill";
+      a.href = email.href || "mailto:" + address;
+      a.innerHTML =
+        '<span aria-hidden="true">&#9993;&#65039;</span> Email' +
+        '<span class="visually-hidden"> Venuka at ' + esc(address) +
+        " (opens your email app)</span>";
+      slot.replaceWith(a);
+    });
+
+    /* The "would you like a website like this one?" line, last on the page.
+       Same wording, now carrying the enquiry subject. */
+    $$("[data-contact-email-enquiry]").forEach((slot) => {
+      const a = document.createElement("a");
+      a.href = "mailto:" + address + "?subject=" + encodeURIComponent("Website enquiry");
+      a.textContent = slot.textContent;
+      slot.replaceWith(a);
+    });
+  }
+
   /* Cloudflare Web Analytics, loaded only if a token is set in data.js.
      Cookieless, so there is no consent banner and nothing to dismiss. With no
      token nothing is requested at all — no third party learns the visitor was
@@ -561,6 +594,7 @@
     initReveal();
     initYear();
     initArtworkTiles();
+    initFooterContact();
     guardImages(document);
     checkData();
     initAnalytics();

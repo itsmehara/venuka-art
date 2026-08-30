@@ -41,9 +41,17 @@ window.VENUKA = (function () {
      null so the site shows a clearly-labelled placeholder instead of a made-up
      address. Fill a value in and it becomes a real, working link.
      ---------------------------------------------------------------------- */
+  /* THE contact email address for the whole website. Change it here and it
+     changes on the contact page and in the footer of all nine pages at once.
+     Set it to null and every place that shows it falls back to a plain
+     "not published yet" label instead of a broken link. */
+  const emailAddress = "kanthi.venuka@gmail.com";
+
   const contact = {
     youtube:   { label: "YouTube — Happy Learning Kids", value: site.channelUrl, href: site.channelUrl, icon: "▶️" },
-    email:     { label: "Email",     value: "kanthi.venuka@gmail.com", href: "mailto:kanthi.venuka@gmail.com", icon: "✉️" },
+    email:     { label: "Email",     value: emailAddress,
+                 href: emailAddress ? "mailto:" + emailAddress : null,
+                 icon: "✉️", placeholder: "Email address not published yet" },
     instagram: { label: "Instagram", value: null, href: null, icon: "📸", placeholder: "Instagram link not published yet" },
     facebook:  { label: "Facebook",  value: null, href: null, icon: "👍", placeholder: "Facebook link not published yet" },
     whatsapp:  { label: "WhatsApp",  value: null, href: null, icon: "💬", placeholder: "WhatsApp number not published yet" }
