@@ -1,0 +1,573 @@
+/* =========================================================================
+   Venuka — Sketchbook
+   -------------------------------------------------------------------------
+   A paper sketchbook: a plate on the left leaf, its notes on the right, and
+   a single sheet that turns between them the way a real page does.
+
+   Loaded only by drawings.html, because no other page needs it.
+   Original CSS. No images are used for the paper, the grain or the curl —
+   every texture here is drawn with gradients so there is nothing to download.
+
+   Sections: 1 Tokens  2 Desk & book  3 Paper  4 Leaves  5 Plate  6 Notes
+             7 Page turn  8 Tools  9 Index  10 Responsive
+   ========================================================================= */
+
+/* ---------- 1. Tokens ---------------------------------------------------- */
+.sketchbook {
+  /* Warmer and browner than the site palette: this is paper, not screen. */
+  --sb-paper:      #f6efe1;
+  --sb-paper-lit:  #fdf9f0;
+  --sb-paper-dim:  #e9dfcb;
+  --sb-ink:        #2b2721;
+  --sb-ink-soft:   #6b6152;
+  --sb-ink-faint:  #8c8272;
+  --sb-rule:       #d9cdb4;
+  --sb-edge:       #cbbb9c;
+  --sb-accent:     #b8552c;
+
+  --sb-serif: "Instrument Serif", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sb-note:  "Newsreader", Georgia, "Times New Roman", serif;
+
+  --sb-turn: .46s;   /* one leaf; a full turn is two of these, back to back */
+  --sb-ease: cubic-bezier(.42, .04, .24, 1);
+
+  container-type: inline-size;
+}
+
+/* ---------- 2. Desk & book ----------------------------------------------- */
+/* The book carries its own shadow and its own paper, so the site's usual
+   section card behind it only boxed it in. On this page the section steps
+   out of the way and the book sits directly on the scene. */
+.section--bare {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Above 1180px the site floats each section as a column inset by 5rem, so the
+   meadow and butterflies stay visible down both sides. That is worth keeping
+   — but the book needs more of the window than a column of text does, so the
+   inset is narrowed here rather than dropped, and the border goes with the
+   card it belonged to. */
+@media (min-width: 1180px) {
+  main > .section--bare {
+    width: min(100% - 2rem, 1480px);
+    border: 0;
+  }
+}
+
+/* Wider than the site's usual reading column, and with a narrower gutter,
+   since this section holds a book rather than paragraphs. */
+.section--bare > .wrap {
+  max-width: 1340px;
+  padding-inline: clamp(.75rem, 2vw, 1.5rem);
+}
+
+/* Anything that is not the book still needs something to sit on. The callout
+   is built to be laid over a solid section card, so at its usual 18% opacity
+   it all but vanished once that card was taken away. */
+.section--bare .callout {
+  background: var(--cream);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
+}
+
+/* Text that now sits directly on the moving scene rather than on a card,
+   in the darker ink the palette keeps for exactly that. */
+.section--bare .sb-counter,
+.section--bare .sb-hint { color: var(--ink-strong); }
+.section--bare .sb-hint { font-weight: 600; }
+
+/* No table under the book. It sits straight on the page, so the only thing
+   between the drawings and the sky behind them is the book's own shadow. */
+.sb-desk {
+  position: relative;
+  padding: clamp(.5rem, 2vw, 1.25rem) 0;
+  background: transparent;
+}
+
+.sb-stage { perspective: 2200px; perspective-origin: 50% 42%; }
+
+/* The book takes as much room as the window will give it, in both directions
+   at once. The last term works back from the height the window has left, so a
+   short wide monitor gets a book that still fits rather than one that runs
+   off the bottom — but it is floored, because a laptop's 900px of height
+   would otherwise have made the book smaller than it used to be, and a little
+   scrolling is a fairer price than a shrunken page. */
+.sb-book {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  aspect-ratio: 16 / 10;
+  width: min(100%, 1320px, max(1180px, (100vh - 12rem) * 1.7));
+  margin-inline: auto;
+  transform-style: preserve-3d;
+  /* A whisper of a tilt, as if the book lies open just off-square. */
+  transform: rotateX(1.6deg);
+  filter: drop-shadow(0 26px 34px rgba(60, 46, 26, .3));
+}
+
+/* The block of unturned pages, peeking out along both outer edges. */
+.sb-book::before,
+.sb-book::after {
+  content: "";
+  position: absolute;
+  top: 1.2%;
+  bottom: 1.2%;
+  width: 10px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(180deg, var(--sb-paper-dim) 0 2px, #dbceb2 2px 3px);
+  box-shadow: 0 6px 14px rgba(60, 46, 26, .22);
+}
+.sb-book::before { left: -9px; }
+.sb-book::after  { right: -9px; }
+
+/* ---------- 3. Paper ----------------------------------------------------- */
+/* One recipe, used by every leaf: warm wash, a faint fibre grain, and a
+   gutter shadow that darkens towards whichever edge meets the spine. */
+.sb-leaf {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(80% 60% at 30% 20%, rgba(255, 255, 255, .5), transparent 70%),
+    linear-gradient(160deg, var(--sb-paper-lit), var(--sb-paper) 55%, var(--sb-paper-dim));
+  box-shadow: inset 0 0 60px rgba(140, 118, 78, .13);
+}
+
+/* Grain: two very low-contrast gradient meshes crossing each other. Cheap,
+   and it stops the paper reading as flat colour. */
+.sb-leaf::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .5;
+  background-image:
+    repeating-linear-gradient(94deg,  rgba(150, 128, 90, .05) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(176deg, rgba(150, 128, 90, .04) 0 1px, transparent 1px 3px);
+}
+
+.sb-leaf--left  { border-radius: 5px 2px 2px 5px; }
+.sb-leaf--right { border-radius: 2px 5px 5px 2px; }
+
+/* The gutter: pages curve down into the spine, so they are darker there. */
+.sb-leaf--left::after,
+.sb-leaf--right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 13%;
+  pointer-events: none;
+}
+.sb-leaf--left::after {
+  right: 0;
+  background: linear-gradient(90deg, transparent, rgba(96, 76, 44, .19));
+}
+.sb-leaf--right::after {
+  left: 0;
+  background: linear-gradient(270deg, transparent, rgba(96, 76, 44, .19));
+}
+
+/* The stitched spine itself. */
+.sb-spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 16px;
+  transform: translateX(-50%);
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+    rgba(92, 72, 40, .30), rgba(92, 72, 40, .06) 42%,
+    rgba(255, 255, 255, .30) 50%,
+    rgba(92, 72, 40, .06) 58%, rgba(92, 72, 40, .30));
+}
+/* Thread. */
+.sb-spine::after {
+  content: "";
+  position: absolute;
+  inset: 7% 45%;
+  border-radius: 2px;
+  background: repeating-linear-gradient(180deg,
+    rgba(120, 96, 60, .55) 0 10px, transparent 10px 22px);
+}
+
+/* ---------- 5. Plate (the drawing) --------------------------------------- */
+.sb-plate {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  margin: 0;
+  padding: clamp(.7rem, 2cqi, 1.35rem) clamp(1.1rem, 3cqi, 1.9rem)
+           clamp(.6rem, 1.8cqi, 1.1rem) clamp(.7rem, 2cqi, 1.35rem);
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+}
+
+.sb-plate-frame {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  /* Both tracks are capped rather than auto. An auto track sizes itself to
+     its content, which leaves the image's own sizing resolving against
+     nothing — it then overflows the frame and lands on the caption. */
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  overflow: hidden;
+  /* A plain pointer. The zoom-in cursor draws a magnifying glass over every
+     drawing, which reads as an image-search affordance rather than as "this
+     opens bigger". */
+  cursor: pointer;
+  /* Pencil rule around the plate, the way a sketchbook page is boxed off. */
+  outline: 1px solid var(--sb-rule);
+  outline-offset: clamp(4px, 1.1cqi, 8px);
+}
+
+/* The plate takes the shape of whatever it holds, rather than the drawing
+   being letterboxed inside a fixed box. Venuka's work comes in two shapes —
+   the photographed originals are portrait, the stills from her videos are
+   sixteen-by-nine — so any one fixed frame would have pillarboxed half of
+   them and sliced the other half in two. Sized this way there are no bars at
+   all, and each drawing is as large as its page can carry.
+
+   The slight scale-up then trims the outermost edge of the photograph, where
+   the picture frame and mount Venuka photographed the drawing in would
+   otherwise eat into the page. It is kept small on purpose: enough to tighten
+   the framing, not enough to cut into the drawing. */
+.sb-plate-frame img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  transform: scale(1.06);
+  /* Warmed very slightly towards the paper so it belongs to the page. Blend
+     modes were tempting here, but multiply crushes the drawings Venuka
+     photographed against a dark frame into a black rectangle. */
+  filter: saturate(.98) contrast(1.02) sepia(.05);
+  box-shadow: inset 0 0 40px rgba(60, 46, 26, .12);
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.sb-plate-caption {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--sb-note);
+  font-size: clamp(.7rem, 1.6cqi, .84rem);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--sb-ink-faint);
+}
+
+/* ---------- 6. Notes (the facing page) ----------------------------------- */
+.sb-notes {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1.1rem, 3.4cqi, 2.4rem) clamp(1rem, 3cqi, 2.2rem)
+           clamp(1.1rem, 3.4cqi, 2.4rem) clamp(1.5rem, 4.4cqi, 3rem);
+  color: var(--sb-ink);
+  font-family: var(--sb-note);
+}
+
+.sb-notes-kicker {
+  margin: 0 0 .35rem;
+  font-family: var(--sb-note);
+  font-size: clamp(.68rem, 1.6cqi, .8rem);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--sb-ink-faint);
+}
+
+.sb-notes h3 {
+  margin: 0 0 .1rem;
+  font-family: var(--sb-serif);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 5cqi, 2.5rem);
+  line-height: 1.08;
+  letter-spacing: .01em;
+  color: var(--sb-ink);
+}
+
+.sb-notes-date {
+  margin: 0 0 .9rem;
+  font-size: clamp(.78rem, 1.9cqi, .95rem);
+  font-style: italic;
+  color: var(--sb-ink-soft);
+}
+
+/* Hand-drawn divider: a line that thins towards both ends. */
+.sb-rule {
+  height: 1px;
+  margin: 0 0 1rem;
+  border: 0;
+  background: linear-gradient(90deg, transparent, var(--sb-edge) 12%, var(--sb-edge) 78%, transparent);
+}
+
+.sb-notes-desc {
+  margin: 0 0 1.15rem;
+  font-size: clamp(.92rem, 2.3cqi, 1.12rem);
+  line-height: 1.62;
+  color: var(--sb-ink);
+}
+
+.sb-notes-meta {
+  margin: 0 0 1.15rem;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: .42rem;
+  font-size: clamp(.82rem, 2cqi, .98rem);
+}
+.sb-notes-meta li {
+  display: grid;
+  grid-template-columns: 8.2em 1fr;
+  gap: .6rem;
+  align-items: baseline;
+}
+.sb-notes-meta .k {
+  font-size: .82em;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--sb-ink-faint);
+}
+.sb-notes-meta .v { color: var(--sb-ink); }
+.sb-notes-meta .v.is-missing { color: var(--sb-ink-faint); font-style: italic; }
+
+.sb-notes-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  margin-bottom: 1.1rem;
+}
+.sb-notes-tags span {
+  padding: .16rem .6rem;
+  border: 1px solid var(--sb-edge);
+  border-radius: var(--r-pill);
+  font-size: clamp(.7rem, 1.7cqi, .82rem);
+  color: var(--sb-ink-soft);
+  background: rgba(255, 255, 255, .4);
+}
+
+.sb-notes-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+/* Buttons that belong to the paper, not to the site chrome. */
+.sb-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .42rem .9rem;
+  border: 1px solid var(--sb-edge);
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, .55);
+  color: var(--sb-ink);
+  font: inherit;
+  font-size: clamp(.8rem, 1.9cqi, .93rem);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.sb-link:hover { background: #fff; border-color: var(--sb-ink-faint); }
+.sb-link:focus-visible { outline: 3px solid var(--sky-deep); outline-offset: 2px; }
+
+/* ---------- 7. Page turn -------------------------------------------------- */
+/* One sheet of paper, hinged on the spine, exactly as a real book turns:
+   you lift the right-hand page, carry it up through the vertical and lay it
+   down on the left. The sheet has two faces — the page you were reading on
+   the front, the page you are turning to on the back — so a single sweep
+   crosses the whole book instead of two halves taking turns. */
+.sb-sheet {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 3;
+  display: none;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.sb-sheet.is-visible { display: block; }
+
+/* Where the sheet starts, and therefore which edge it pivots on. */
+.sb-sheet.from-right { left: 50%;  transform-origin: left center; }
+.sb-sheet.from-left  { right: 50%; transform-origin: right center; }
+
+.sb-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 14px 34px -12px rgba(60, 46, 26, .5);
+}
+.sb-face--back { transform: rotateY(180deg); }
+
+.sb-face > .sb-leaf { position: absolute; inset: 0; }
+
+/* Shading that moves with the sweep: the face turning away darkens, the one
+   arriving lightens. Opacity is animated from script alongside the sheet. */
+.sb-face-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(96, 76, 44, .05), rgba(70, 56, 34, .55));
+}
+.sb-sheet.from-left .sb-face-shade {
+  background: linear-gradient(270deg, rgba(96, 76, 44, .05), rgba(70, 56, 34, .55));
+}
+
+/* ---------- 8. Tools ------------------------------------------------------ */
+/* Back and Next are pinned to their own columns. Laid out in a row they
+   slid about as the plate number changed width, which made the buttons feel
+   loose under the hand. */
+.sb-tools {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: .75rem;
+  margin-top: 1.25rem;
+}
+.sb-tools-side { display: flex; }
+.sb-tools-side--start { justify-content: flex-end; }
+.sb-tools-side--end   { justify-content: flex-start; }
+
+
+/* These sit on the scene now, not on a card, so they are opaque, warmly
+   tinted and carry a shadow — otherwise they read as text, not as something
+   you can press. */
+.sb-tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: .5rem 1.15rem;
+  border: 1px solid var(--sb-edge);
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, #fffdf8, var(--sb-paper));
+  color: var(--sb-ink);
+  font-family: var(--sb-note);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(120, 96, 60, .22), 0 6px 14px -6px rgba(60, 46, 26, .45);
+  transition: background var(--dur) var(--ease), transform var(--dur) var(--ease),
+              border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.sb-tool:hover:not(:disabled) {
+  background: linear-gradient(180deg, #fff, #fffdf6);
+  border-color: var(--sb-ink-faint);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 rgba(120, 96, 60, .24), 0 10px 20px -8px rgba(60, 46, 26, .5);
+}
+.sb-tool:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 rgba(120, 96, 60, .22), 0 4px 10px -6px rgba(60, 46, 26, .4);
+}
+.sb-tool:focus-visible { outline: 3px solid var(--sky-deep); outline-offset: 2px; }
+.sb-tool:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+/* Only the numbers, and tabular ones at that, so this never changes width.
+   The drawing's title is already the heading on the facing page. */
+.sb-counter {
+  margin: 0;
+  min-width: 9.5rem;
+  text-align: center;
+  font-family: var(--sb-note);
+  font-size: .95rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+
+.sb-hint {
+  margin: .85rem 0 0;
+  text-align: center;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+/* ---------- 9. Index ----------------------------------------------------- */
+.sb-index {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .4rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.sb-index button {
+  display: flex;
+  align-items: baseline;
+  gap: .45rem;
+  padding: .42rem .85rem;
+  border: 1px solid var(--sb-edge);
+  border-radius: var(--r-pill);
+  background: rgba(255, 253, 247, .82);
+  color: var(--sb-ink);
+  font-family: var(--sb-note);
+  font-size: .94rem;
+  cursor: pointer;
+  box-shadow: 0 2px 6px -3px rgba(60, 46, 26, .35);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.sb-index button:hover {
+  background: #fff;
+  border-color: var(--sb-ink-faint);
+  box-shadow: 0 4px 10px -4px rgba(60, 46, 26, .45);
+}
+.sb-index button:focus-visible { outline: 3px solid var(--sky-deep); outline-offset: 2px; }
+.sb-index button[aria-current="true"] {
+  border-color: var(--sb-ink);
+  background: var(--sb-ink);
+  color: var(--sb-paper-lit);
+}
+.sb-index button[aria-current="true"] .n { color: rgba(253, 249, 240, .7); }
+.sb-index button[aria-current="true"]:hover {
+  background: var(--sb-ink);
+  color: var(--sb-paper-lit);
+}
+.sb-index .n {
+  font-size: .78em;
+  font-variant-numeric: tabular-nums;
+  color: var(--sb-ink-faint);
+}
+
+/* ---------- 10. Responsive ------------------------------------------------ */
+/* Under 720px the two leaves stop being side by side: the plate keeps the
+   paper and the notes sit beneath it, still on paper, still one sheet. */
+@media (max-width: 720px) {
+  .sb-book {
+    grid-template-columns: 1fr;
+    aspect-ratio: auto;
+    width: 100%;
+    transform: none;
+  }
+  .sb-leaf--left  { border-radius: 5px 5px 0 0; }
+  .sb-leaf--right { border-radius: 0 0 5px 5px; }
+  .sb-leaf--left::after,
+  .sb-leaf--right::after { display: none; }
+  .sb-spine { display: none; }
+  .sb-book::before, .sb-book::after { display: none; }
+  /* Tall enough for a portrait drawing, wide enough for a video still. */
+  .sb-plate-frame { aspect-ratio: 1 / 1; }
+  .sb-notes { overflow: visible; }
+  .sb-sheet { display: none !important; }
+}
+
+/* A turning page is delightful; it is also motion. Respect the setting. */
+@media (prefers-reduced-motion: reduce) {
+  .sb-sheet { display: none !important; }
+}

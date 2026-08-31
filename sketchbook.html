@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Sketchbook — Turn Through Venuka&rsquo;s Drawings | Venuka</title>
+  <meta name="description" content="Turn through Venuka's drawings one page at a time in an online sketchbook. Each page shows one of her drawings with her notes about it.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#fffbf2">
+  <meta name="author" content="Venuka">
+
+  <!-- Social preview. Absolute addresses set by tools/set-domain.js
+       for https://itsmehara.github.io/venuka-art/ — re-run that script if the address changes. -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://itsmehara.github.io/venuka-art/sketchbook.html">
+  <meta property="og:site_name" content="Venuka — Happy Learning Kids">
+  <meta property="og:title" content="The Sketchbook — Turn Through Venuka&rsquo;s Drawings | Venuka">
+  <meta property="og:description" content="Turn through Venuka's drawings one page at a time in an online sketchbook. Each page shows one of her drawings with her notes about it.">
+  <meta property="og:image" content="https://itsmehara.github.io/venuka-art/assets/img/og-cover.jpg">
+  <meta property="og:image:alt" content="A children's drawing of two green frogs and a yellow duckling by Venuka">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Sketchbook — Turn Through Venuka&rsquo;s Drawings | Venuka">
+  <meta name="twitter:description" content="Turn through Venuka's drawings one page at a time in an online sketchbook. Each page shows one of her drawings with her notes about it.">
+  <meta name="twitter:image" content="https://itsmehara.github.io/venuka-art/assets/img/og-cover.jpg">
+
+  <link rel="canonical" href="https://itsmehara.github.io/venuka-art/sketchbook.html">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,400&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Only the sketchbook page needs the paper and the page turn. -->
+  <link rel="stylesheet" href="assets/css/sketchbook.css">
+</head>
+<body>
+  <canvas id="scene-canvas" class="scene-canvas" aria-hidden="true"></canvas>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="assets/img/logo.svg" alt="" width="42" height="42">
+        <span class="brand-text">
+          <span class="brand-name">Venuka</span>
+          <span class="brand-sub">Happy Learning Kids</span>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bars" aria-hidden="true"></span> Menu
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="drawings.html">Drawings</a></li>
+          <li><a href="sketchbook.html" aria-current="page">Sketchbook</a></li>
+          <li><a href="crafts.html">Arts &amp; Crafts</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="learn.html">Learn &amp; Create</a></li>
+          <li><a href="new-creations.html">New Creations</a></li>
+          <li><a href="contact.html" class="nav-cta">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="deco-layer" aria-hidden="true">
+        <svg class="deco deco--circle float" viewBox="0 0 100 100" focusable="false"><circle cx="50" cy="50" r="48"/></svg>
+        <svg class="deco deco--triangle float float--alt" viewBox="0 0 100 100" focusable="false"><path d="M50 5 97 90 3 90Z"/></svg>
+        <svg class="deco deco--square float float--slow" viewBox="0 0 100 100" focusable="false"><rect x="5" y="5" width="90" height="90" rx="18"/></svg>
+        <svg class="deco deco--diamond float float--alt" viewBox="0 0 100 100" focusable="false"><rect x="14" y="14" width="72" height="72" rx="12"/></svg>
+      </div>
+      <div class="wrap">
+        <p class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Sketchbook</p>
+        <h1>The Sketchbook</h1>
+        <p>Venuka&rsquo;s drawings, gathered into a book you can turn through one page
+          at a time. The drawing sits on the left, her notes about it on the right.
+          Select any drawing to see it full size.</p>
+      </div>
+    </section>
+
+    <section class="section section--bare" style="padding-top:.5rem">
+      <div class="wrap">
+        <h2 class="visually-hidden">Venuka&rsquo;s sketchbook</h2>
+        <noscript><p class="noscript-note">The sketchbook needs JavaScript to turn its pages.
+          Every drawing is also in the <a href="drawings.html">drawings gallery</a>,
+          which you can search and filter.</p></noscript>
+        <div class="sketchbook" id="sketchbook"></div>
+
+        <div class="callout mt-3">
+          <div>
+            <h3 class="mt-0"><span aria-hidden="true">&#128218;</span> Looking for one particular drawing?</h3>
+            <p>The sketchbook is for turning through at your leisure. If you would rather
+              search for an animal, or filter by category, the
+              <a href="drawings.html">drawings gallery</a> has every one of these pictures
+              laid out in a grid.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <img class="brand-mark" src="assets/img/logo.svg" alt="" width="42" height="42">
+          <span class="brand-text">
+            <span class="brand-name">Venuka</span>
+            <span class="brand-sub">Happy Learning Kids</span>
+          </span>
+        </a>
+        <p class="footer-blurb">Unleashing Creativity, One Stroke at a Time: Nurturing Unique Talents in the
+          Heart of Kids. Drawings, colouring, arts and crafts by Venuka.</p>
+        <div class="footer-social">
+          <a class="social-pill" href="https://www.youtube.com/@hlearningkids" target="_blank" rel="noopener">
+            <span aria-hidden="true">&#9654;&#65039;</span> YouTube<span class="visually-hidden"> — Happy Learning Kids channel (opens in a new tab)</span>
+          </a>
+          <span class="social-pill" data-contact-email aria-disabled="true"><span aria-hidden="true">&#9993;&#65039;</span> Email — not added yet</span>
+          <span class="social-pill" aria-disabled="true"><span aria-hidden="true">&#128248;</span> Instagram — not added yet</span>
+          <span class="social-pill" aria-disabled="true"><span aria-hidden="true">&#128077;</span> Facebook — not added yet</span>
+          <span class="social-pill" aria-disabled="true"><span aria-hidden="true">&#128172;</span> WhatsApp — not added yet</span>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Venuka</a></li>
+          <li><a href="drawings.html">Drawings Gallery</a></li>
+          <li><a href="sketchbook.html">The Sketchbook</a></li>
+          <li><a href="crafts.html">Arts &amp; Crafts</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-nav" aria-label="More pages">
+        <h3>More</h3>
+        <ul>
+          <li><a href="videos.html">Drawing Videos</a></li>
+          <li><a href="learn.html">Learn &amp; Create</a></li>
+          <li><a href="new-creations.html">New Creations</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="wrap footer-bottom">
+      <p class="mb-0">&copy; <span data-year>2026</span> Venuka &middot; Happy Learning Kids</p>
+      <p class="mb-0">Every drawing on this website is Venuka&rsquo;s own work.</p>
+    </div>
+
+    <!-- Sits last on every page, below everything else. -->
+    <div class="wrap footer-cta">
+      <p class="mb-0">
+        <span aria-hidden="true">&#10024;</span>
+        Would you like a website like this one?
+        <span data-contact-email-enquiry>Contact us to create your website</span>
+        &mdash; hand-built, fast, and yours to keep.
+      </p>
+    </div>
+  </footer>
+
+  <button type="button" class="scene-toggle" id="scene-toggle" aria-pressed="true">
+    <span class="scene-icon" data-scene-icon aria-hidden="true">&#9728;&#65039;</span>
+    <span class="visually-hidden">Moving background scene</span>
+    <span class="scene-label" data-scene-text>Sunny</span>
+  </button>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/site.js"></script>
+  <script src="assets/js/scene.js"></script>
+  <script src="assets/js/sketchbook.js"></script>
+</body>
+</html>
