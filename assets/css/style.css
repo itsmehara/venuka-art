@@ -196,7 +196,11 @@ li { margin-bottom: .35em; }
 }
 .site-nav .nav-cta:hover { background: var(--purple-deep); color: #fff; }
 
-@media (max-width: 1060px) {
+/* The horizontal nav needs about 1100px for the brand and nine items. Below
+   that the header cannot fit its own contents: the last item spills past the
+   right edge and the brand gets squashed onto three lines. Collapse to the
+   Menu button before that happens rather than after. */
+@media (max-width: 1200px) {
   .site-nav {
     position: absolute; inset: 100% 0 auto 0;
     background: var(--cream); border-bottom: 1px solid var(--line);
@@ -209,7 +213,7 @@ li { margin-bottom: .35em; }
   .site-nav a { padding: .75em 1em; font-size: var(--step-0); }
   .site-nav .nav-cta { margin-left: 0; margin-top: .4rem; text-align: center; }
 }
-@media (min-width: 1061px) { .nav-toggle { display: none; } }
+@media (min-width: 1201px) { .nav-toggle { display: none; } }
 @media (max-width: 400px) {
   .header-inner { gap: .5rem; min-height: 64px; }
   .brand-mark { width: 36px; height: 36px; }
