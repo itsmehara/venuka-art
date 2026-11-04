@@ -1,275 +1,227 @@
 # Putting the Venuka website online
 
 Everything you need to go live, in order. Written to be followed straight
-through — about 20 minutes start to finish.
+through.
+
+> **This document is never published.** `tools/build.js` copies only the
+> website into `dist/`, and `dist/` is what the host serves. This file, along
+> with `STATUS.html`, `REGISTRY.md`, `CONTENT-GUIDE.md`, `README.md` and
+> `notes/`, stays in the repository and off the web. Verified: they return 404
+> on the built site.
 
 ---
 
-## 1. The one decision to make first: public or private?
+## 1. The two decisions, already made
 
-This decides everything else, so settle it before you start.
+### The repository is **private**
 
-**GitHub Pages on a free personal account can only publish from a _public_
-repository.** Publishing from a private repo needs GitHub Pro (paid). And even
-on Pro, only the *source code* is hidden — the website itself is still public
-either way. There is no free way to have both a private repo and a GitHub Pages
-site.
+Not because anything in it is dangerous — there are no passwords or keys, and
+every contact field is deliberately `null` — but because the working notes in
+it discuss a child: whether to publish her photograph, whether to name her
+school year. Those are family conversations, and they do not belong in a
+window strangers can read.
 
-| | Public repo + GitHub Pages | Private repo + GitHub Pro | Private repo + Cloudflare Pages |
+That choice rules out free GitHub Pages. GitHub Pages publishes from a private
+repository only on a **paid** plan (GitHub Pro, about $4 a month); on a free
+account the repository must be public. So the host changes.
+
+### The host is **Cloudflare Pages**
+
+| | GitHub Pages | GitHub Pro | **Cloudflare Pages** |
 |---|---|---|---|
-| Cost | **Free** | ~$4/month | **Free** |
-| Source code visible to anyone? | Yes | No | No |
-| The website itself | Public | Public | Public |
-| Automatic checks before publishing | Ready to go | Ready to go | Set build command to `node tools/check.js` |
-| Accounts needed | GitHub | GitHub + card | GitHub + Cloudflare |
-| Setup time | ~15 min | ~15 min | ~25 min |
+| Private repository | ✗ | ✓ | **✓** |
+| Cost | Free | ~$4/month | **Free** |
+| Runs the checks before publishing | ✓ | ✓ | **✓** (it *is* the build command) |
+| Custom subdomain, DNS staying at GoDaddy | ✓ | ✓ | **✓** |
+| Free HTTPS certificate | ✓ | ✓ | **✓** |
 
-### Recommended: public repo + GitHub Pages
+Cloudflare Pages is free, has no public-repository condition, and reaches India
+quickly. Nothing is lost by moving.
 
-Nothing in this project needs hiding:
+### The address is **artbyvenuka.nischayacreativesoft.com**
 
-* There are **no passwords, keys or addresses** in the code — every contact
-  field is deliberately empty (`null`).
-* The drawings and videos are **already public** on the Happy Learning Kids
-  YouTube channel and on the old Google Site.
-* Your git email is already GitHub's private `@users.noreply.github.com`
-  address, so your real email will **not** appear in the commit history.
+A subdomain of the company domain. It costs nothing — GoDaddy does not charge
+for DNS records — and it does not disturb `nischayacreativesoft.com` itself,
+which stays exactly where it is, on GitHub Pages. The apex and the subdomain
+are independent records; they can live on different hosts and never meet.
 
-Pick the private route only if you would rather people could not read the code.
-It changes nothing a visitor sees.
+**The nameservers stay at GoDaddy.** Cloudflare Pages does not need the domain
+moved to Cloudflare in order to serve a *subdomain* of it — one CNAME record at
+GoDaddy is enough. Moving nameservers would mean touching the live company
+site, and there is no reason to.
 
 ---
 
-## 2. Before you push — the parent checklist
+## 2. Before you go live — the parent checklist
 
-Once the repo is public, it is public permanently (git keeps history, and
-GitHub is scraped constantly). Five minutes now saves regret later.
-
-- [ ] **The photo of Venuka.** Still deliberately left out. If you add it, it is
-      public forever. This is the one worth sleeping on.
-- [ ] **Her school year and board.** The old Google Site listed her school year and board. Left out here on
-      purpose — identifying details about a child. Decide before going live, not after.
+- [ ] **The photo of Venuka.** Still deliberately left out. If you add it, the
+      *website* is public even though the repository is not — so it is public
+      forever. This is the one worth sleeping on.
+- [ ] **Her school year and board.** The old Google Site listed both. Left out
+      here on purpose — identifying details about a child.
 - [ ] **Turn off Issues, Wiki and Discussions** on the repo (Settings → General
-      → Features). Otherwise strangers get a comment box on a child's website.
-- [ ] **Check the contact page.** It currently publishes only the YouTube
-      channel. If you add an email or WhatsApp number to `data.js`, that number
-      is then public and scrapeable. A separate address kept for this is wiser
-      than your personal one.
+      → Features). A private repo makes this less urgent, but do it anyway in
+      case it is ever made public.
+- [ ] **The contact page** publishes only the YouTube channel plus the form. If
+      you add an email or WhatsApp number to `data.js`, it becomes public and
+      scrapeable. A separate address kept for this is wiser than your personal
+      one.
 - [ ] **Accept that the drawings become downloadable.** Anyone can right-click
       and save them. They already can on YouTube, so this changes little — but
       it should be a decision, not a surprise.
 
 ---
 
-## 3. Getting it live
+## 3. Making the repository private
 
-### Step 1 — its own repository ✅ already done
+The site is currently public at `https://itsmehara.github.io/venuka-art/`.
+Three things to do, in this order.
 
-This folder sits *inside* `~/dev/claude_code`, which is a git repo holding your
-other projects. Venuka's site must not be part of that one. It already isn't:
+**1. Flip the repository to private.**
+`venuka-art` → Settings → General → scroll to **Danger Zone** → *Change
+repository visibility* → **Private**.
 
-* this folder is now **its own git repository**, on the `master` branch
-  (`master` matters — the deploy workflow only publishes from `master`)
-* the parent repo has been told to ignore it, so a `git add .` up there can
-  never sweep Venuka's site into your personal repo
+**2. Switch GitHub Pages off**, so no stale public copy is left behind.
+Settings → Pages → **Source: None**. On a free account the publish would stop
+working anyway once the repo is private, but leaving it half-on is untidy and
+confusing later.
 
-Nothing to do. To see it for yourself:
-
-```bash
-cd ~/dev/claude_code/venuka_art_and_crafts && git log --oneline
-```
-
-*Optional — if you would rather it did not live inside another project's folder
-at all, move it out. Everything keeps working; the repository travels with it:*
+**3. Delete the old workflow.** Its deploy step needs GitHub Pages and will now
+fail on every push, emailing you a red X each time:
 
 ```bash
-mv ~/dev/claude_code/venuka_art_and_crafts ~/dev/venuka-website
+git rm .github/workflows/deploy.yml
+git commit -m "Move publishing to Cloudflare Pages"
 ```
 
-### Step 2 — the checks, and the first commit ✅ already done
+> **One thing to know.** The old `itsmehara.github.io/venuka-art/` address will
+> stop working. If you have already shared that link with anyone, send them the
+> new one when it is live.
 
-The first commit is made. Before **every** push from now on, run the checks:
+---
+
+## 4. Connecting Cloudflare Pages
+
+A Cloudflare account is free and takes a minute to make.
+
+1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** →
+   **Connect to Git**.
+2. Authorise the Cloudflare GitHub App. When it asks which repositories,
+   choose **Only select repositories** and pick `venuka-art` alone — not "All
+   repositories". Cloudflare then has read access to this one repo and nothing
+   else of yours.
+3. Pick `venuka-art`, production branch **`master`**.
+4. Build settings:
+
+   | Field | Value |
+   |---|---|
+   | Framework preset | **None** |
+   | Build command | `node tools/check.js && node tools/build.js` |
+   | Build output directory | `dist` |
+
+5. **Save and Deploy.**
+
+You get a free address immediately — `venuka-art.pages.dev` — which keeps
+working forever alongside the custom domain. Open it and check the site loads.
+
+### Why that build command matters
+
+`tools/check.js` runs the 66 content checks. If a comma is missing in
+`data.js`, the command fails, the deploy never happens, and the live site stays
+exactly as it was — the same safety the GitHub workflow gave you.
+
+`tools/build.js` then copies **only the website** into `dist/`: the eleven
+pages, `assets/`, `robots.txt`, `sitemap.xml`. Everything else — this file,
+`STATUS.html`, `REGISTRY.md`, `CONTENT-GUIDE.md`, `README.md`, `notes/`,
+`tools/` — is left behind. It allows a short list rather than excluding one, so
+a private note added next month is left out by default rather than needing to
+be remembered.
+
+Run both yourself any time:
 
 ```bash
-node tools/check.js
+node tools/check.js && node tools/build.js
 ```
 
-It must say **"All good. Safe to publish."** If it doesn't, it names exactly
-what is wrong and on which line. Fix that before pushing.
+---
 
-#### What is in the repository, and what is not
+## 5. Pointing the subdomain at it
 
-`.gitignore` decides this. 54 files are included — the ten pages, the styles,
-the scripts, the images, the checks and the documentation. Left out are things
-that belong only to this computer: `.DS_Store` files, editor settings, drafts
-you name starting with an underscore (`_draft.html`), and anything holding a
-password or key.
+**Order matters here.** Add the domain in Cloudflare *first*. A CNAME created
+before Cloudflare knows about the domain resolves to a Cloudflare address that
+has not been told what to serve, and visitors get **error 522** until it
+catches up.
 
-To see exactly what would go up, at any time:
+**1. In Cloudflare.** Your Pages project → **Custom domains** → *Set up a
+domain* → type `artbyvenuka.nischayacreativesoft.com` → Continue. Cloudflare
+sees the domain is not on this account and shows you the CNAME to create.
+
+**2. At GoDaddy.** Domains → `nischayacreativesoft.com` → **DNS** → Add record:
+
+| Type | Name | Value | TTL |
+|---|---|---|---|
+| CNAME | `artbyvenuka` | `venuka-art.pages.dev` | 1 hour |
+
+No `https://`, no trailing dot, no trailing slash. **Leave the `@` and `www`
+records alone** — those are the company site, on GitHub Pages, and must not
+change. Current records, for reference, so you can see nothing else is touched:
+
+```
+@      A      185.199.108.153 / .109.153 / .110.153 / .111.153   <- company site
+www    CNAME  itsmehara.github.io                                 <- company site
+@      TXT    google-site-verification=...                        <- leave alone
+```
+
+**3. Wait.** Cloudflare verifies the record and issues the HTTPS certificate —
+usually a few minutes, occasionally an hour. The Custom domains panel shows
+**Active** when it is done.
+
+**4. Tell the site its own address**, so WhatsApp previews, the sitemap and the
+canonical links point at the new home:
 
 ```bash
-git ls-files
+node tools/set-domain.js https://artbyvenuka.nischayacreativesoft.com/
+node tools/check.js && node tools/build.js
+git add . && git commit -m "Move to artbyvenuka.nischayacreativesoft.com" && git push
 ```
 
-> **One thing to know about your name.** Your commits are signed with your
-> GitHub email, so on a public repository your username is visible in the
-> commit history — that is true of any repo you own, and normal. What has been
-> kept out is any mention of your *personal site address* in Venuka's files.
+The push triggers a Cloudflare build, and about a minute later the site is on
+its real address.
 
-### Step 3 — create the repository
+> **If you ever delete the Pages project**, delete the GoDaddy CNAME in the
+> same sitting. A CNAME left pointing at a Cloudflare project that no longer
+> exists can be claimed by someone else — a subdomain of your company domain
+> serving a stranger's content. It takes ten seconds and prevents something
+> genuinely unpleasant.
 
-**First, clear up a common confusion.** GitHub has two completely separate
-things, and they are easy to mix up:
+---
 
-| | Limit |
-|---|---|
-| **Accounts** (your login) | One free personal account per person — you already have yours. |
-| **Websites** you can host from it | **Unlimited.** One per repository, and repositories are unlimited. |
+## 6. Check it over
 
-So from your single account you can host **as many public websites as you like**
-— yours, Venuka's, a friend's, a dozen more. There is no limit and no cost:
-
-```
-your-username.github.io                    <- your personal site  (only ONE of these)
-your-username.github.io/venuka-website/    <- Venuka's
-your-username.github.io/friends-site/      <- someone else's
-your-username.github.io/anything-else/     <- and so on
-```
-
-Only that first root-level address is limited to one. Everything else is a
-"project site" and there is no cap.
-
-**Once you attach a custom domain, the address changes completely** and your
-username disappears from it:
-
-```
-venuka.art        -> the venuka-website repository
-friendsite.com    -> the friends-site repository
-```
-
-Visitors never see `your-username.github.io` at all.
-
-#### So which route?
-
-**Route A — one repository under your own account. Simplest.**
-
-Choose this if you are buying a domain. The domain hides the GitHub address
-entirely, so nothing needs separating.
-
-* github.com → **New repository**
-* Name: `venuka-website` · Visibility: **Public** · do not add a README
-
-```bash
-git remote add origin https://github.com/your-username/venuka-website.git
-git push -u origin master
-```
-
-**Route B — a free Organization. Separate address, no domain needed.**
-
-Choose this if you want a clean short address *without* buying a domain, so that
-Venuka's site is not at `your-username.github.io/...`.
-
-An organization is free, allows unlimited public repositories, includes Pages,
-and gets **its own** root-level address — so it does not use up the one attached
-to your personal account.
-
-* github.com → profile menu → **Your organizations** → **New organization** → **Free**
-* Then create the repository *inside it*, named exactly `<org>.github.io`
-
-Names that were free when checked:
-
-| Organization | Address you get |
-|---|---|
-| `venukaart` | `https://venukaart.github.io/` |
-| `venuka-art` | `https://venuka-art.github.io/` |
-| `hlearningkids` | `https://hlearningkids.github.io/` — matches her YouTube handle |
-| `kidsartmagic` | `https://kidsartmagic.github.io/` — matches her hashtag |
-
-(`venuka` and `happylearningkids` are taken by other GitHub users.)
-
-```bash
-git remote add origin https://github.com/venukaart/venukaart.github.io.git
-git push -u origin master
-```
-
-> Either route can have a custom domain later, and you can move a repository
-> between your account and an organization at any time without losing anything.
-
-#### One thing neither route changes
-
-Your **commits** carry your name and GitHub username in the repository history,
-whichever route you pick. That is honest — you are the author — and most people
-leave it alone.
-
-If you would rather the history not point back at your profile, set a different
-identity for this one repository, before your first commit:
-
-```bash
-git config user.name "Happy Learning Kids"
-git config user.email "hlk@example.invalid"
-```
-
-It affects only this folder; your other projects keep your normal identity.
-
-> **A quiet advantage of Route B:** when Venuka is older, an organization
-> transfers to her own GitHub account in a couple of clicks, history and site
-> included. A repository inside your personal account is more awkward to hand over.
-
-### Step 4 — turn on GitHub Pages
-
-Repo → **Settings** → **Pages** → under **Build and deployment**, set
-**Source** to **GitHub Actions**.
-
-That is all. The workflow already in `.github/workflows/deploy.yml` takes over.
-Watch it run under the **Actions** tab. First publish takes 1–2 minutes.
-
-Your address will be:
-
-```
-https://venukaart.github.io/
-```
-
-(If you named the repo something else, it will be
-`https://venukaart.github.io/that-repo-name/` instead — both work, the first is
-just shorter.)
-
-### Step 5 — tell the site its own address
-
-Link previews in WhatsApp and Facebook need the **full** address of the preview
-image; a relative path shows no picture at all. One command fixes all nine
-pages, the sitemap and robots.txt:
-
-```bash
-node tools/set-domain.js https://venukaart.github.io/
-node tools/check.js
-git add . && git commit -m "Set the site address" && git push
-```
-
-Skip this and the site works fine — but sharing a link on WhatsApp shows a bare
-link instead of Venuka's frog-and-duck drawing.
-
-### Step 6 — check it over
-
-Open the live address and confirm:
+Open `https://artbyvenuka.nischayacreativesoft.com/` and confirm:
 
 - [ ] The meadow scene is moving and butterflies are flying
 - [ ] Drawings gallery loads; filters, search and full-size view work
 - [ ] A video plays when you press play
 - [ ] Open it on a phone
-- [ ] Paste the link into a WhatsApp message to yourself — the drawing should
-      appear in the preview
-- [ ] Visit a wrong address on purpose, e.g. `…/nope.html`,
-      and check the friendly "This page went off the page" screen appears
+- [ ] Paste the link into a WhatsApp message to yourself — Venuka's
+      frog-and-duck drawing should appear in the preview
+- [ ] Visit a wrong address on purpose, e.g. `…/nope.html` — the friendly
+      "This page went off the page" screen should appear
+- [ ] `https://artbyvenuka.nischayacreativesoft.com/STATUS.html` returns **404**
+      — the working documents are not on the web
+- [ ] `https://nischayacreativesoft.com/` still loads, unchanged
 
 ---
 
-## 4. What the automatic checks do
+## 7. What the automatic checks do
 
-Every push runs `tools/check.js` **before** publishing. If anything fails, the
-publish step never runs and the live site stays exactly as it was. GitHub emails
-you what broke.
+Every push runs `tools/check.js` **before** the site is assembled. If anything
+fails, the build stops, nothing is published, and the live site stays exactly
+as it was. Cloudflare shows the failure in the project's Deployments tab and
+emails you.
 
-It runs 55 checks in about a second:
+It runs 66 checks in about a second:
 
 | Catches | Example |
 |---|---|
@@ -283,109 +235,114 @@ It runs 55 checks in about a second:
 | Accessibility | An image with no alt text |
 | Colour contrast | Text that would fail WCAG AA against the moving scene |
 
-**Run it yourself before pushing** — it is the same command, and it is instant:
+**Run it yourself before pushing** — same command, instant:
 
 ```bash
-node tools/check.js
+node tools/check.js && node tools/build.js
 ```
 
 Nothing to install. It uses only Node, which you already have.
 
 ---
 
-## 5. Publishing a change, day to day
+## 8. Publishing a change, day to day
 
 ```bash
 # 1. add the drawing/craft/video to assets/js/data.js and drop the image in
-node tools/check.js                       # 2. make sure it is happy
+node tools/check.js && node tools/build.js    # 2. make sure it is happy
 git add .
-git commit -m "Add butterfly drawing"     # 3. describe what you added
-git push                                  # 4. live in about a minute
+git commit -m "Add butterfly drawing"         # 3. describe what you added
+git push                                      # 4. live in about a minute
 ```
 
-That is the whole loop. See **CONTENT-GUIDE.md** for what to write in `data.js`.
+That is the whole loop. See **CONTENT-GUIDE.md** for what to write in
+`data.js`.
 
 ---
 
-## 6. If something goes wrong
+## 9. If something goes wrong
 
 **The checks failed, so nothing published.** Good — that is the system working.
 Read the message, fix it, push again. The live site was never touched.
 
-**Something bad got published anyway.** Undo the last commit and push:
+**Something bad got published anyway.** Either revert and push:
 
 ```bash
 git revert HEAD
 git push
 ```
 
-The site rebuilds from the previous good state in about a minute.
+…or, faster, use Cloudflare's own rollback: project → **Deployments** → find
+the last good one → **Rollback to this deployment**. It is instant and needs no
+rebuild.
 
 **The site looks unchanged after a push.** Your browser is showing its cached
 copy. Hard-refresh: **Cmd+Shift+R** (Mac) or **Ctrl+F5** (Windows).
 
-**The Actions tab shows a red X.** Click into the run — the failing step shows
-the exact error. It is nearly always `data.js`.
+**The deployment shows a red X.** Click into it — the build log shows the exact
+error. It is nearly always `data.js`.
 
 ---
 
-## 7. A custom domain (optional, later)
-
-If you ever buy something like `venuka.art`:
-
-1. Repo → Settings → Pages → **Custom domain** → enter it → Save.
-2. At your domain registrar, add these DNS records:
-   - Four `A` records for `@` → `185.199.108.153`, `185.199.109.153`,
-     `185.199.110.153`, `185.199.111.153`
-   - One `CNAME` for `www` → `venukaart.github.io`
-3. Wait for DNS (minutes to a few hours), then tick **Enforce HTTPS**.
-4. Re-run `node tools/set-domain.js https://venuka.art/`, commit, push.
-
-GitHub issues the HTTPS certificate free and renews it automatically.
-
----
-
-## 8. Limits and cost
+## 10. Limits and cost
 
 Free, and not close to any limit:
 
-| Limit | Allowed | This site |
+| Cloudflare Pages free plan | Allowed | This site |
 |---|---|---|
-| Published site size | 1 GB | 1.5 MB |
-| Bandwidth | 100 GB/month (soft) | ~1.5 MB per visitor |
-| Builds | 10/hour (soft) | A few per week |
-| Actions minutes | Unlimited on public repos | ~30 seconds per push |
+| Files per site | 20,000 | 56 |
+| Size of any one file | 25 MB | 166 KB |
+| Builds | 500 per month | A few per week |
+| Build time | 20 minutes each | About 30 seconds |
+| Requests / bandwidth | No charge, no stated cap | — |
 
-At 1.5 MB per visit, 100 GB/month is roughly **65,000 visits a month** before
-anyone at GitHub would even notice.
+Plus: GoDaddy charges nothing for the DNS record, and the HTTPS certificate is
+free and renews itself.
+
+### Free visitor counting, while you are there
+
+`data.js` already has the hook: `analytics: { cloudflareToken: null }`. You are
+now in the Cloudflare dashboard anyway — **Web Analytics** → add your site →
+copy the token into that one line. It is cookieless, so it needs no consent
+banner, and nothing is requested at all while the token is `null`.
 
 ---
 
-## 9. Quick troubleshooting
+## 11. Quick troubleshooting
 
 | Symptom | Cause | Fix |
 |---|---|---|
+| **Error 522** on the subdomain | CNAME added before the domain was added in Cloudflare | Add it in Cloudflare's Custom domains panel; it resolves itself within minutes |
+| Certificate warning / "not secure" | Certificate not issued yet | Wait — Custom domains shows **Active** when ready |
 | Gallery shows "This part could not be loaded" | `data.js` has a typo | `node tools/check.js` names the line |
-| Page loads but has no styling | Wrong repo path | Check Pages source is **GitHub Actions** |
-| Images missing | Filename case | GitHub is case-sensitive; `Cow.jpg` ≠ `cow.jpg` |
-| WhatsApp link shows no picture | Step 5 not done | Run `tools/set-domain.js` |
+| Page loads but has no styling | Build output directory wrong | It must be `dist`, not `/` |
+| A working document is reachable on the site | `build.js` not in the build command | Build command must be `node tools/check.js && node tools/build.js` |
+| Images missing | Filename case | Linux is case-sensitive; `Cow.jpg` ≠ `cow.jpg` |
+| WhatsApp link shows no picture | `set-domain.js` not run for this address | Section 5, step 4 |
 | Video won't play | Video is private/removed on YouTube | Check it plays on YouTube |
 | Changes not showing | Browser cache | Cmd+Shift+R |
 
 ---
 
-## 10. If you choose the private route instead
+## 12. The address itself — what you are accepting
 
-**Cloudflare Pages** (free, works with a private repo):
+The subdomain is free, fits cleanly beside the company site, and can be changed
+later. Worth knowing what it costs in other ways:
 
-1. Push to a **private** GitHub repo as in Step 1–3 above.
-2. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git.
-3. Authorise GitHub and pick the repo.
-4. Build settings:
-   - Framework preset: **None**
-   - Build command: `node tools/check.js`
-   - Build output directory: `/`
-5. Deploy. You get `venuka-website.pages.dev`, with the same check-before-publish
-   safety because the build command *is* the check.
+* **It is long.** 37 characters, awkward to read out or write on a school form.
+  `venuka.nischayacreativesoft.com` is six shorter if you prefer it.
+* **It reads as a company project** rather than as Venuka's own site. That may
+  be exactly what you want.
+* **It is tied to the company domain.** If that domain lapses or moves, this
+  address goes with it, and it cannot follow Venuka to her own account when she
+  is older.
+* **Search engines treat a subdomain as a separate site**, so it inherits none
+  of the company domain's standing. Irrelevant at this size.
 
-Delete `.github/workflows/deploy.yml` if you go this way — you do not need both.
+Moving to a dedicated domain later is the same steps with a different name.
+For an apex domain such as `venuka.art`, the domain must be a **zone on your
+Cloudflare account** — a CNAME at GoDaddy is not enough for a bare apex, so
+that one would mean moving the nameservers. A subdomain never does.
+
+Links already shared on WhatsApp would die in a move, so leave a one-line
+redirect page at the old address if you ever do it.

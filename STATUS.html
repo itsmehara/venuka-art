@@ -174,7 +174,9 @@ const STATUS_DATA = {
     orgLabel: "VENUKA \u00b7 HAPPY LEARNING KIDS",
     pageTitle: "Venuka's website — what's built",
     markInitials: "V",
-    updatedLine: "Last updated 30 August 2026 \u2014 repository ready, going live tomorrow. " +
+    updatedLine: "Last updated 3 November 2026 \u2014 the site is live, and the way it is " +
+      "published is now decided: a private repository, hosted free on Cloudflare Pages, at " +
+      "artbyvenuka.nischayacreativesoft.com. " +
       "A plain-language summary of what is finished, what still needs a decision, " +
       "and what is deliberately left for later.",
     footerNote: 'Exact files and line numbers are in <code>REGISTRY.md</code> in the ' +
@@ -350,11 +352,15 @@ const STATUS_DATA = {
         "not watch YouTube \u2014 each video is added by hand. Decide whether to add these before going " +
         "live, and whether you want the daily automatic sync." },
     { tag: "Public or private",
-      title: "GitHub Pages will only publish a free site from a public repository",
-      body: "Publishing from a private repository needs a paid plan, and even then the website itself " +
-        "is still public \u2014 only the code is hidden. Nothing in this project needs hiding: no keys, " +
-        "no addresses, and your commit email is already GitHub's private one. The alternative, if you " +
-        "want the code private at no cost, is Cloudflare Pages." },
+      title: "Settled \u2014 the repository goes private, which is why the host changes",
+      body: "Not because anything in it is dangerous. There are no passwords or keys, and every " +
+        "contact field is deliberately empty. It is because the working notes in the repository " +
+        "discuss a child \u2014 whether to publish her photograph, whether to name her school year \u2014 " +
+        "and those are family conversations, not something strangers should be able to read. " +
+        "<b>The website itself is public either way; only the notes and the code are hidden.</b> " +
+        "GitHub publishes a free site only from a <i>public</i> repository, so this choice rules " +
+        "out GitHub Pages unless you pay about $4 a month. That is the whole reason for moving to " +
+        "Cloudflare Pages, which is free and has no such condition." },
     { tag: "Contact form",
       title: "The form cannot deliver a message yet",
       body: "No delivery service is connected, and the form says so honestly rather than pretending. " +
@@ -362,11 +368,30 @@ const STATUS_DATA = {
         "Until then the YouTube channel is the only way to reach her \u2014 which may be exactly what " +
         "you want for a child's website." },
     { tag: "Web address",
-      title: "Whether to buy a domain name",
-      body: "The free address works and has HTTPS. A domain is optional polish, roughly a thousand " +
-        "rupees a year, and can be added at any time without rebuilding anything. Worth knowing: " +
-        "<b>venuka.art appears to be available</b>. You do not need to buy hosting \u2014 the site is " +
-        "hosted free either way." },
+      title: "Decided \u2014 artbyvenuka.nischayacreativesoft.com on Cloudflare Pages, free",
+      body: "The site is live now on its free GitHub address, and that address will stop working " +
+        "when the repository goes private. The permanent home is " +
+        "<b>artbyvenuka.nischayacreativesoft.com</b>, a subdomain of the company domain, served by " +
+        "<b>Cloudflare Pages</b>. Everything about it is free: Cloudflare Pages hosting, the HTTPS " +
+        "certificate, and the DNS record at GoDaddy. <b>The company site is not touched</b> \u2014 " +
+        "nischayacreativesoft.com stays exactly where it is, the nameservers stay at GoDaddy, and " +
+        "the new subdomain is one extra record beside it. The two are independent and can sit on " +
+        "different hosts. Five things are pending: make the repository private, switch GitHub Pages " +
+        "off, delete the old workflow, connect Cloudflare Pages, and add the one CNAME record. The " +
+        "steps are in <code>DEPLOYMENT.md</code>, in order, and the order matters \u2014 the DNS " +
+        "record goes in <i>after</i> Cloudflare knows about the domain, or visitors see an error " +
+        "until it settles. The trade-off to accept: 37 characters is long to read out, and the " +
+        "address belongs to the company, so it cannot follow Venuka to her own account later. A " +
+        "short domain such as venuka.art stays an option \u2014 though an address like that must sit " +
+        "on Cloudflare's own nameservers, which a subdomain never needs." },
+    { tag: "Working notes",
+      title: "The project documents are kept off the website on purpose",
+      body: "This page, the registry, the publishing guide and the private notes live in the " +
+        "repository but are never served to visitors. <code>tools/build.js</code> copies only the " +
+        "website \u2014 the eleven pages, the pictures, the styles \u2014 into a clean folder, and that " +
+        "folder is what gets published. It works by allowing a short list rather than by excluding " +
+        "one, so a private note added next month is left out automatically instead of having to be " +
+        "remembered. Checked on the running site: every document returns a 404." },
   ],
 };
 

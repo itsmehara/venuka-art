@@ -85,12 +85,15 @@ current status — instead of re-describing it or re-deriving it from the code.
 | Spam trap | `contact.html` + `.hp-wrap` in `style.css` | ✅ | | Off-screen (not `display:none`, which bots detect), `aria-hidden`, `tabindex="-1"`. Checked before field validation so a bot is never told which boxes to fix. Verified: honeypot submissions never reach the network. |
 | Visitor analytics | `data.js` `analytics`, `site.js` `initAnalytics()` | 📝 | ✔ | Cloudflare Web Analytics, injected only when a token is set. Cookieless, so no consent banner. Nothing is requested at all while the token is null. |
 | Web address setter | `tools/set-domain.js` (84 lines) | ✅ | | Rewrites og:image/og:url/canonical across 9 pages + sitemap + robots. Idempotent. |
-| CI workflow | `.github/workflows/deploy.yml` | 📝 | | `check` job gates `deploy` via `needs:`. Valid, but unproven until the first push. |
+| Site assembler | `tools/build.js` (113 lines) | ✅ | | Copies the website — 11 pages, `assets/`, `robots.txt`, `sitemap.xml`, `.nojekyll` — into a fresh `dist/`. **Allow-list, not deny-list**: a new private file is left out by default. Mirrors `check.js`'s `INTERNAL_HTML` set and its `_`-prefix rule. Refuses to finish if a working document or `index.html` is missing from the result. Verified by serving `dist/` — 56 files, 1.92 MB, and `STATUS.html`, the `.md` documents and `tools/` all 404. |
+| Web address | GoDaddy DNS + Cloudflare Pages | 🚧 | | **Decided: `artbyvenuka.nischayacreativesoft.com` on Cloudflare Pages.** Verified live: the apex carries four GitHub `A` records, `www` CNAMEs to `itsmehara.github.io`, one Google verification TXT, **no MX** and no other subdomains — so the subdomain is additive and the company site is untouched. Nameservers stay at GoDaddy; Cloudflare Pages needs a zone on its own account only for a bare apex, not for a subdomain. Pending: repo→private, Pages off, workflow deleted, Cloudflare project connected, CNAME `artbyvenuka` → `venuka-art.pages.dev` (**after** the domain is added in Cloudflare, or error 522), `set-domain.js` run. Steps in `DEPLOYMENT.md`. |
+| CI workflow | `.github/workflows/deploy.yml` | 🚧 | | Served the live GitHub Pages site and is proven, but its `deploy` job needs GitHub Pages, which a private repository cannot use for free. **To be deleted** when the repo goes private; Cloudflare's build command replaces it. |
+| Cloudflare build | build command on the Pages project | 🚧 | | `node tools/check.js && node tools/build.js`, output directory `dist`. The checks are the gate — a failing check fails the build, so nothing is published and the live site is untouched. Not yet connected. |
 | Ignore rules | `.gitignore` (109 lines) | ✅ | | OS junk, editor dirs, `_*` drafts, secrets, archives, `originals/`. Underscore rules are per-extension (`_*.html`, `_*.js`…) **not** a bare `_*`, because `assets/img/video/_hIeRYpy_Ak.jpg` is a real thumbnail whose YouTube id starts with an underscore. |
-| Repository | this folder on `master` | ✅ | | Public repository: `https://github.com/itsmehara/venuka-art`. The workflow deploys from the actual default branch, `master`. |
+| Repository | this folder on `master` | 🚧 | | `https://github.com/itsmehara/venuka-art`, branch `master`. Currently **public**; to be made **private**, which is what forces the move off GitHub Pages. |
 | Published file set | `git ls-files` | ✅ | | 54 files after the pre-launch update. Private working notes, editor settings, secrets, and originals remain ignored. First commit `3c6bf46`. |
-| Personal-identity scrub | `DEPLOYMENT.md` | ✅ | | The owner's GitHub handle appeared in 5 places; replaced with `your-username`. Keeps the personal site and Venuka's site unlinked in public files. |
-| Jekyll opt-out | `.nojekyll` | ✅ | | Stops GitHub Pages from filtering files. |
+| Personal-identity scrub | `DEPLOYMENT.md` | ✅ | | Moot once the repository is private and the address is the subdomain: the handle appears in neither. `DEPLOYMENT.md` now uses the real repo and account names, because it is private and `build.js` keeps it off the website. The published `og:url`/`canonical` tags still carry the `…github.io` address until `set-domain.js` is re-run. |
+| Jekyll opt-out | `.nojekyll` | ✅ | | Stopped GitHub Pages filtering files. Harmless and unused on Cloudflare Pages; copied into `dist/` anyway. |
 
 ## 6. Assets
 
@@ -111,8 +114,10 @@ current status — instead of re-describing it or re-deriving it from the code.
 | School year / board | Omitted from About | 🚧 | On the old Google Site; left out as an identifying detail about a child. |
 | 7 videos missing | `data.js` `videos` | 🚧 | Present on the channel feed, absent from the site. Ids in the session notes. |
 | Craft photographs | `crafts` is `[]` | 🚧 | Page and card component both ready. |
-| Form delivery | `formEndpoint: null` | 🚧 | One line to switch on. |
-| Link previews / sitemap | 9 pages + `sitemap.xml` | 🚧 | Run `tools/set-domain.js` once the address is known. |
+| Form delivery | `formEndpoint` | ✅ | Connected to the private Google Sheet Apps Script endpoint. |
+| Link previews / sitemap | 9 pages + `sitemap.xml` | 📝 | Set to the free GitHub address. Re-run `tools/set-domain.js` when the subdomain is live. |
+| Web address | GoDaddy DNS + Cloudflare | 🚧 | `artbyvenuka.nischayacreativesoft.com` on Cloudflare Pages — decided, and free. Five steps pending, in order — see `DEPLOYMENT.md`. |
+| Repository visibility | GitHub settings | 🚧 | Going private. Kills the current `…github.io/venuka-art/` address; send anyone who has it the new one. |
 | "Special Artwork" | Gallery filter | 🚧 | Intentionally empty; shows an honest empty state. |
 | Materials / difficulty | 9 of 14 drawings | 📝 | Blank fields render "Not recorded yet" rather than a guess. |
 
