@@ -1,0 +1,144 @@
+{
+  "updated": "4 November 2026, 11:00 IST",
+  "note": "The website itself is finished. Everything left is either moving it to its permanent home, or filling in work that only the family can supply — photographs, and two decisions about what to say about Venuka. Items marked 'on hold' are not counted in the progress figure; they are things worth doing one day, not things holding anything up.",
+
+  "phases": [
+    { "id": "P1", "title": "Move to its permanent home", "dates": "decided 3–4 Nov 2026 · not yet carried out" },
+    { "id": "P2", "title": "Fill in the collection", "dates": "ongoing, as new work is made" },
+    { "id": "P3", "title": "The family decisions", "dates": "open since 30 Aug 2026" },
+    { "id": "P4", "title": "Worth doing one day", "dates": "no date" }
+  ],
+
+  "tasks": [
+    {
+      "id": "T1", "phase": "P1", "title": "Decide where the site should live", "area": "Hosting", "who": "Hara",
+      "doneWhen": "The address and the host are settled, and the reasoning is written down where it can be checked later.",
+      "subs": [
+        { "t": "Weigh a subdomain against buying a domain", "s": "c", "n": "Hara asked, 3 Nov 2026. Settled on artbyvenuka.nischayacreativesoft.com — free, and the company domain was already in hand." },
+        { "t": "Check what the company domain is actually doing today", "s": "c", "n": "Read live on 3 Nov: GitHub's four addresses on the bare domain, www pointing at the same account, one Google verification line, no email records, no other subdomains. The new subdomain sits beside all of it and disturbs none of it." },
+        { "t": "Settle whether the repository should be private", "s": "c", "n": "Hara decided private, 4 Nov 2026, so the working notes about Venuka are not readable by strangers." },
+        { "t": "Confirm what a private repository costs on GitHub", "s": "c", "n": "Checked against GitHub's own documentation, 4 Nov: free accounts can publish a website only from a public repository. Hence the move to Cloudflare." },
+        { "t": "Confirm Cloudflare can serve a subdomain without moving the domain", "s": "c", "n": "Checked against Cloudflare's own documentation, 4 Nov: a subdomain needs only one record at GoDaddy. The nameservers stay where they are." },
+        { "t": "Write the decision and the steps down", "s": "c", "n": "DEPLOYMENT.md rewritten end to end, 4 Nov, and committed." }
+      ]
+    },
+    {
+      "id": "T2", "phase": "P1", "title": "Keep the working notes off the website", "area": "Safety", "who": "Hara",
+      "doneWhen": "The published site contains the eleven pages and nothing else, and that is true automatically rather than by anyone remembering.",
+      "subs": [
+        { "t": "Write something that copies only the website", "s": "c", "n": "Done 4 Nov. It works from a list of what belongs, so anything new is left out by default rather than needing to be noticed." },
+        { "t": "Prove it by actually serving the result", "s": "c", "n": "Served it and asked for each document by name: all of them returned 'not found'. The site itself rendered correctly with no errors." },
+        { "t": "Make it part of the real publishing step", "s": "n", "n": "Waits on Cloudflare being connected — it goes in as the build command there." }
+      ]
+    },
+    {
+      "id": "T3", "phase": "P1", "title": "Make the repository private", "area": "Hosting", "who": "Hara",
+      "doneWhen": "The code and notes are private, and no half-switched-off publishing is left behind.",
+      "subs": [
+        { "t": "Switch the repository to private", "s": "n" },
+        { "t": "Switch GitHub Pages off", "s": "n", "n": "Otherwise a stale public copy is left sitting there." },
+        { "t": "Remove the old publishing step", "s": "n", "n": "It needs GitHub Pages and would now fail on every single change, sending a failure email each time." },
+        { "t": "Tell anyone who has the old link", "s": "n", "n": "The current github.io address stops working the moment the repository goes private." }
+      ]
+    },
+    {
+      "id": "T4", "phase": "P1", "title": "Connect Cloudflare Pages", "area": "Hosting", "who": "Hara",
+      "doneWhen": "A change pushed from the computer appears on Cloudflare's own free address a minute later, with the checks having run first.",
+      "subs": [
+        { "t": "Make a Cloudflare account", "s": "n" },
+        { "t": "Connect it to the repository, that one only", "s": "n", "n": "Choose 'only select repositories' rather than all of them, so Cloudflare can read this project and nothing else." },
+        { "t": "Set the build command and the output folder", "s": "n", "n": "The checks and the assembler as the command; the assembled folder as the output." },
+        { "t": "Deploy once and open the free address", "s": "n" }
+      ]
+    },
+    {
+      "id": "T5", "phase": "P1", "title": "Point the subdomain at it", "area": "Hosting", "who": "Hara",
+      "doneWhen": "artbyvenuka.nischayacreativesoft.com loads the site over a secure connection, and the company site is unchanged.",
+      "subs": [
+        { "t": "Add the domain in Cloudflare first", "s": "n", "n": "Order matters. Creating the record at GoDaddy before Cloudflare knows about the domain gives visitors an error until it settles." },
+        { "t": "Add the one record at GoDaddy", "s": "n", "n": "A CNAME on 'artbyvenuka'. The bare domain and www records are the company site and must not be touched." },
+        { "t": "Wait for the secure certificate", "s": "n", "n": "Usually minutes. Cloudflare shows 'Active' when it is ready." },
+        { "t": "Check the company site still loads", "s": "n" }
+      ]
+    },
+    {
+      "id": "T6", "phase": "P1", "title": "Tell the site its new address", "area": "Hosting", "who": "Hara",
+      "doneWhen": "Pasting the link into WhatsApp shows Venuka's frog-and-duck drawing.",
+      "subs": [
+        { "t": "Run the address setter", "s": "n", "n": "Best left until the subdomain actually answers, so the site does not spend days pointing at an address that is not there yet." },
+        { "t": "Run the checks and publish", "s": "n" },
+        { "t": "Paste the link into WhatsApp and look", "s": "n" }
+      ]
+    },
+    {
+      "id": "T7", "phase": "P1", "title": "Check it over after the move", "area": "Hosting", "who": "Hara",
+      "doneWhen": "Every item on the list in the publishing guide passes on the real address.",
+      "subs": [
+        { "t": "The scene moves and the butterflies fly", "s": "n" },
+        { "t": "Search, filters and full-size view all work", "s": "n" },
+        { "t": "A video plays", "s": "n" },
+        { "t": "Open it on a phone", "s": "n" },
+        { "t": "A wrong address shows the friendly page", "s": "n" },
+        { "t": "Asking for a working document returns 'not found'", "s": "n", "n": "The one that matters most. If this fails, the notes are on the web." }
+      ]
+    },
+
+    {
+      "id": "T8", "phase": "P2", "title": "Photograph the crafts", "area": "Content", "who": "Family",
+      "doneWhen": "At least one craft photograph is on the site and the empty state is gone.",
+      "subs": [
+        { "t": "Photograph a finished craft", "s": "b", "n": "Waiting on the family. The page, the card and the folder are all ready and have been since 30 August." },
+        { "t": "Add it to the content file", "s": "b", "n": "One short entry; the guide explains each field." }
+      ]
+    },
+    {
+      "id": "T9", "phase": "P2", "title": "Re-count the videos on the channel", "area": "Content", "who": "Hara",
+      "doneWhen": "The number of videos on the channel but not on the site is known again, and each one is either added or deliberately left out.",
+      "subs": [
+        { "t": "Compare the channel against the site", "s": "n", "n": "Last counted 30 August: seven missing. The collection has grown from 14 drawings to 23 since, so that number is stale." },
+        { "t": "Add the ones worth adding", "s": "n" },
+        { "t": "Decide about a daily automatic check", "s": "n", "n": "Would remove the counting by hand, but it is machinery to maintain for a site that gains a video every few weeks." }
+      ]
+    },
+    {
+      "id": "T10", "phase": "P2", "title": "Fill the gaps in the drawing entries", "area": "Content", "who": "Family",
+      "doneWhen": "Every drawing has a date, and materials where they are known.",
+      "subs": [
+        { "t": "Four drawings have no date", "s": "n", "n": "Starry Night with Moon, Rainbow by the Lake, Pink Flowers on Blue, Colourful Landscape Layers. They sort to the end of 'newest first' until dated." },
+        { "t": "Nine drawings have no materials listed", "s": "n", "n": "They show 'Not recorded yet' rather than a guess — honest, but a real answer is better." },
+        { "t": "Photograph the 13 drawings that only have a video still", "s": "h", "n": "They look fine as they are. Worth doing slowly, a few at a time, not as a job." }
+      ]
+    },
+
+    {
+      "id": "T11", "phase": "P3", "title": "The photograph of Venuka", "area": "Decision", "who": "Family",
+      "doneWhen": "The family has decided either way, and the About page reflects it.",
+      "subs": [
+        { "t": "Decide whether to publish it", "s": "b", "n": "Open since 30 August. A private repository does not change this — the website is public either way." },
+        { "t": "Add it, if the answer is yes", "s": "b", "n": "The space is already on the page." }
+      ]
+    },
+    {
+      "id": "T12", "phase": "P3", "title": "Her school year and board", "area": "Decision", "who": "Family",
+      "doneWhen": "A decision is made, rather than it staying off the page by default.",
+      "subs": [
+        { "t": "Decide whether they go back on the About page", "s": "b", "n": "On the old Google Site; left out here because it identifies a child alongside her first name and her drawings." }
+      ]
+    },
+
+    {
+      "id": "T13", "phase": "P4", "title": "Count the visitors", "area": "Nice to have", "who": "Hara",
+      "doneWhen": "The page shows how many people visit, without cookies and without a consent banner.",
+      "subs": [
+        { "t": "Add the Cloudflare analytics key", "s": "h", "n": "One line in the content file. You will be in the Cloudflare dashboard anyway for the hosting move, so it costs about a minute then." }
+      ]
+    },
+    {
+      "id": "T14", "phase": "P4", "title": "Instagram, Facebook, WhatsApp", "area": "Nice to have", "who": "Family",
+      "doneWhen": "Either the links are published, or the slots are removed for good.",
+      "subs": [
+        { "t": "Decide whether the site should have them at all", "s": "h", "n": "The slots exist and say plainly that nothing is published yet. For a child's site, the YouTube channel and the form may be enough." }
+      ]
+    }
+  ]
+}

@@ -5,9 +5,10 @@ through.
 
 > **This document is never published.** `tools/build.js` copies only the
 > website into `dist/`, and `dist/` is what the host serves. This file, along
-> with `STATUS.html`, `REGISTRY.md`, `CONTENT-GUIDE.md`, `README.md` and
-> `notes/`, stays in the repository and off the web. Verified: they return 404
-> on the built site.
+> with `STATUS.html` and the files it is built from (`status-data.json`,
+> `TASKS.json`, `diagrams.py`), `REGISTRY.md`, `CONTENT-GUIDE.md`, `README.md`
+> and `notes/`, stays in the repository and off the web. Verified: they return
+> 404 on the built site.
 
 ---
 

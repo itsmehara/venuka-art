@@ -92,6 +92,7 @@ SITE_DIRS.forEach((d) => {
 const MUST_NOT_SHIP = [
   "STATUS.html", "REGISTRY.md", "DEPLOYMENT.md",
   "CONTENT-GUIDE.md", "README.md", "LICENSE", "notes", "tools", ".github",
+  "status-data.json", "TASKS.json", "diagrams.py",
 ];
 const leaked = MUST_NOT_SHIP.filter((f) => fs.existsSync(path.join(DIST, f)));
 

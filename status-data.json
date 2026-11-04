@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "orgLabel": "VENUKA · HAPPY LEARNING KIDS",
+    "pageTitle": "Venuka's website — what's built",
+    "markInitials": "V",
+    "updatedLine": "Last updated 4 November 2026. The website is finished and live; what is left is where it lives. Everything below was re-checked against the code on the day, not carried over from the last version of this page. Open a section to see inside it — nothing is open to begin with, so the first view stays an overview.",
+    "footerNote": "Exact files and line numbers are in <code>REGISTRY.md</code>. Step-by-step publishing instructions are in <code>DEPLOYMENT.md</code>. This page is built from <code>status-data.json</code>, <code>TASKS.json</code> and <code>diagrams.py</code> — edit those and rebuild, never this file."
+  },
+
+  "groups": [
+    {
+      "title": "The moving scene behind every page",
+      "description": "A drawn meadow that runs quietly behind all eleven pages. It is not a video or a picture — it is drawn fresh as you watch, so it never repeats.",
+      "items": [
+        { "name": "The meadow and the sky", "status": "done", "description": "Grass, a horizon and a sky that is painted afresh every frame. Every other piece of the scene sits on top of this." },
+        { "name": "Four seasons, changing on their own", "status": "done", "description": "Sunny, Cloudy, Rain and Snow follow one another and fade between each other, so the sky is never quite the same twice.", "admin": true },
+        { "name": "Rain and snow falling", "status": "done", "description": "Drops and flakes fall at a speed and thickness that match whichever season is running." },
+        { "name": "Snow settling on the ground", "status": "done", "description": "During the snow season it gathers into a depth along the ground, and melts away as the season turns." },
+        { "name": "The sun crossing the sky", "status": "done", "description": "It moves, and its colour and height change with the season." },
+        { "name": "Clouds drifting across", "status": "done", "description": "Each one is a different shape, and how many there are depends on the season." },
+        { "name": "Flowers swaying in the wind", "status": "done", "description": "Drawn at different distances, so the near ones are bigger and move more than the far ones." },
+        { "name": "Butterflies that avoid the writing", "status": "done", "description": "They fly across the page but steer around the text panels, so they never sit on top of something you are reading." },
+        { "name": "Wind and gusts", "status": "done", "description": "A steady breeze with occasional stronger gusts; the flowers, clouds and butterflies all respond to it." },
+        { "name": "The weather badge in the corner", "status": "done", "description": "Shows the season with a small picture, and switching the scene off is remembered the next time you visit.", "admin": true },
+        { "name": "Stillness for anyone who needs it", "status": "done", "description": "If the visitor's device asks for less movement, the scene holds still without being asked twice." }
+      ]
+    },
+
+    {
+      "title": "On every page",
+      "description": "The furniture shared by all eleven pages. Built once, so a change to any of it changes everywhere.",
+      "items": [
+        { "name": "The top menu", "status": "done", "description": "Links to all nine main pages, with the page you are on marked." },
+        { "name": "The menu button on a phone", "status": "done", "description": "On a narrow screen the menu folds into a button that opens and closes it." },
+        { "name": "Skip to the content", "status": "done", "description": "A link that appears when you press Tab, so someone using a keyboard can jump past the menu." },
+        { "name": "The footer", "status": "done", "description": "The site's pages again, the YouTube channel, the hashtag, and a short line about the site." },
+        { "name": "The email pill in the footer", "status": "done", "description": "Shows an email address when one is added, and a tidy 'not added yet' message when there is none. Both states have been checked.", "admin": true },
+        { "name": "The year, kept current", "status": "done", "description": "The footer year updates itself; nobody has to remember it in January." },
+        { "name": "The full-size picture viewer", "status": "done", "description": "Clicking any drawing opens it large, with its title and notes beside it, and closes on Escape." },
+        { "name": "The honest placeholder", "status": "done", "description": "When a photograph has not been taken yet, or fails to load, the page says so plainly instead of showing a blank box. No stock picture is ever put in its place." },
+        { "name": "The 'could not be loaded' message", "status": "done", "description": "If the file holding all the content ever breaks, each gallery says so in plain words rather than showing an empty page." },
+        { "name": "Grey loading blocks", "status": "done", "description": "While a gallery is being filled in, grey shapes hold the space so the page does not jump about." }
+      ]
+    },
+
+    {
+      "title": "Home page",
+      "items": [
+        { "name": "The headline", "status": "done", "description": "'Unleashing Creativity, One Stroke at a Time', with a supporting line beneath it.", "admin": true },
+        { "name": "Three buttons", "status": "done", "description": "Explore Drawings, Watch Videos, About Venuka." },
+        { "name": "The framed drawing", "status": "done", "description": "The frog-and-duck photograph in a frame, captioned with where it came from and when.", "admin": true },
+        { "name": "The welcome ribbon", "status": "done", "description": "'Happy Learning to all Children and all Visitors!' across the foot of the opening screen.", "admin": true },
+        { "name": "A little about Venuka", "status": "done", "description": "A short paragraph, with a link on to the About page.", "admin": true },
+        { "name": "Fresh from the sketchbook", "status": "done", "description": "The four newest drawings, picked automatically by date — nothing to update by hand." },
+        { "name": "Draw along with Venuka", "status": "done", "description": "The most recent videos from the channel, shown as cards that play where they are." }
+      ]
+    },
+
+    {
+      "title": "Drawings gallery",
+      "items": [
+        { "name": "All 23 drawings", "status": "done", "description": "Every drawing in the collection, newest first." },
+        { "name": "The search box", "status": "done", "description": "Types as you go and narrows the drawings immediately, with a button to clear it." },
+        { "name": "Category buttons with counts", "status": "done", "description": "Eight categories, each showing how many drawings it holds, so an empty one is obvious before you press it." },
+        { "name": "The 'showing X of Y' line", "status": "done", "description": "Says how many drawings are on screen out of the whole collection." },
+        { "name": "Opening a drawing full size", "status": "done", "description": "Click any drawing for the large version, its title, its notes, and a link to the video where there is one." },
+        { "name": "When nothing matches", "status": "done", "description": "A friendly message suggesting a different search rather than an empty screen." }
+      ]
+    },
+
+    {
+      "title": "The sketchbook",
+      "description": "The pretty way through the same drawings. The gallery remains the real, searchable listing, so nothing is only reachable here.",
+      "items": [
+        { "name": "A sketchbook that turns its pages", "status": "done", "description": "A sheet lifts from one side and lays itself down on the other, the way a real sketchbook does." },
+        { "name": "Drawing on the left, notes on the right", "status": "done", "description": "Each opening shows one drawing and what is known about it." },
+        { "name": "Page numbers", "status": "done", "description": "So it reads as a book rather than a list." },
+        { "name": "Opens full size on a click", "status": "done", "description": "Uses the same large viewer as the rest of the site." },
+        { "name": "A still version", "status": "done", "description": "For anyone whose device asks for less movement, the pages change without the turning animation." }
+      ]
+    },
+
+    {
+      "title": "Videos",
+      "items": [
+        { "name": "All 14 videos", "status": "done", "description": "Each with its own thumbnail picture, title and description." },
+        { "name": "Playing without leaving the page", "status": "done", "description": "Press play and the video runs in place, through YouTube's privacy-friendly player, which does not set tracking cookies until you press play." },
+        { "name": "Tag buttons", "status": "done", "description": "Colouring, Animals, Birds, Nature, Cute Characters, Step by step, Easy — each with a live count." },
+        { "name": "The search box", "status": "done", "description": "Same behaviour as the drawings gallery." }
+      ]
+    },
+
+    {
+      "title": "Arts & crafts",
+      "items": [
+        { "name": "The crafts gallery", "status": "gap", "description": "Built and working, but there is not one craft photograph yet, so it shows its empty state. The moment a photograph is added it appears here." },
+        { "name": "Four craft ideas to try at home", "status": "done", "description": "Written out, each with what it needs and what to do.", "admin": true },
+        { "name": "The empty state", "status": "done", "description": "Says plainly that the crafts are still to be photographed, rather than pretending the page is finished." }
+      ]
+    },
+
+    {
+      "title": "New creations",
+      "items": [
+        { "name": "Most recent drawings", "status": "done", "description": "Fills itself from the dates on the drawings." },
+        { "name": "Most recent from the channel", "status": "done", "description": "The newest videos, in the order they were published." },
+        { "name": "'What this page is waiting for'", "status": "done", "description": "A short, honest note saying these sections are built and empty, and will fill as new work is added.", "admin": true }
+      ]
+    },
+
+    {
+      "title": "Learn & Create",
+      "items": [
+        { "name": "Six ideas to get you going", "status": "done", "description": "Starting points for a child with a blank page.", "admin": true },
+        { "name": "How almost every drawing here was made", "status": "done", "description": "The method Venuka uses, written as steps.", "admin": true },
+        { "name": "Five colouring tricks", "status": "done", "description": "Short, practical tips.", "admin": true },
+        { "name": "What to keep in the box", "status": "done", "description": "Six materials worth having to hand.", "admin": true },
+        { "name": "Four encouragements", "status": "done", "description": "Short lines of the 'keep going' kind, shown around the learning pages.", "admin": true }
+      ]
+    },
+
+    {
+      "title": "About Venuka",
+      "items": [
+        { "name": "A creative journey", "status": "done", "description": "How the drawing started and where it has gone.", "admin": true },
+        { "name": "Loving drawing and colouring", "status": "done", "description": "What she enjoys most.", "admin": true },
+        { "name": "Animals, nature and characters", "status": "done", "description": "What she draws most often.", "admin": true },
+        { "name": "A message from the family", "status": "done", "description": "A quote, signed '~ By My Dad'.", "admin": true },
+        { "name": "What drawing gives a child", "status": "done", "description": "A short piece for visiting parents.", "admin": true },
+        { "name": "The space for her photograph", "status": "gap", "description": "The page holds a place for it. Deliberately empty — see the decision below." },
+        { "name": "A link to the old Google Site", "status": "done", "description": "So the earlier site is not simply lost.", "admin": true }
+      ]
+    },
+
+    {
+      "title": "Say hello — the contact page",
+      "items": [
+        { "name": "Name, email, subject and message", "status": "done", "description": "Four boxes, each explaining what is wanted and each checked before anything is sent." },
+        { "name": "The consent tickbox", "status": "done", "description": "Must be ticked; the message cannot be sent without it." },
+        { "name": "The hidden spam trap", "status": "done", "description": "An extra box no person can see. A machine filling it in is quietly ignored, and is never told which boxes it got wrong." },
+        { "name": "Error messages, box by box", "status": "done", "description": "Each problem is shown beside the box that caused it, in words rather than in red alone." },
+        { "name": "Where a message goes", "status": "done", "description": "Into a private Google Sheet only the family can open. Confirmed working." },
+        { "name": "What it says afterwards", "status": "done", "description": "It reports a real success or a real failure. It never claims a message was sent when it was not." },
+        { "name": "The YouTube channel link", "status": "done", "description": "The other way to reach her, published on the page.", "admin": true },
+        { "name": "Instagram, Facebook and WhatsApp", "status": "gap", "description": "Slots exist and are empty. Each says plainly that it is not published yet rather than showing a dead link.", "admin": true }
+      ]
+    },
+
+    {
+      "title": "Privacy notice and the wrong-address page",
+      "items": [
+        { "name": "The privacy notice", "status": "done", "description": "Who should use the form, what is collected, why, where it is kept, for how long, cookies and video embeds, and what choices a visitor has.", "admin": true },
+        { "name": "The wrong-address page", "status": "done", "description": "'This page went off the page' — a friendly screen with the way back, shown for any address that does not exist." }
+      ]
+    },
+
+    {
+      "title": "The collection itself",
+      "description": "What is actually in the website today, counted from the content file rather than remembered.",
+      "items": [
+        { "name": "23 drawings", "status": "done", "description": "Up from 14 at the end of August." },
+        { "name": "10 photographed originals", "status": "done", "description": "Drawings photographed from the paper, shown as the real thing." },
+        { "name": "13 drawings shown with their video still", "status": "done", "description": "Not yet photographed, so the gallery uses the picture from the video. Honest, but a photograph would be better." },
+        { "name": "14 videos", "status": "done", "description": "Each matched to a thumbnail picture held on the site." },
+        { "name": "Eight categories", "status": "done", "description": "Animal Drawings, Birds, Nature, Cartoon and Cute Characters, Pencil Drawings, Colour Drawings, Easy Drawings for Kids, Special Artwork. All eight now have drawings in them.", "admin": true },
+        { "name": "No crafts yet", "status": "gap", "description": "Nothing has been photographed. The page handles it gracefully." },
+        { "name": "Four drawings without a date", "status": "draft", "description": "Starry Night with Moon, Rainbow by the Lake, Pink Flowers on Blue, and Colourful Landscape Layers. They sort to the end of 'newest first' until a date is added.", "admin": true },
+        { "name": "Nine drawings without materials listed", "status": "draft", "description": "Those entries show 'Not recorded yet' rather than a guess at what was used.", "admin": true }
+      ]
+    },
+
+    {
+      "title": "Pictures and files",
+      "items": [
+        { "name": "The frog-and-duck photograph", "status": "done", "description": "In three sizes, so a phone downloads a small one and a laptop a large one. Dated in her own handwriting, August 2023." },
+        { "name": "Nine more photographed originals", "status": "done", "description": "Saved in a modern format that keeps the quality at a fraction of the size." },
+        { "name": "14 video thumbnails", "status": "done", "description": "About 62 KB each." },
+        { "name": "The sharing picture", "status": "done", "description": "What appears when the link is pasted into WhatsApp or Facebook — a crop of the frog-and-duck drawing." },
+        { "name": "Logo and tab icon", "status": "done", "description": "Both drawn as shapes rather than photographs, so they stay sharp at any size and weigh almost nothing." },
+        { "name": "The crafts picture folder", "status": "gap", "description": "Empty, waiting for the first craft photograph." }
+      ]
+    },
+
+    {
+      "title": "Publishing and safety",
+      "description": "How a change gets from the family's computer to the web, and what stops a mistake getting there.",
+      "items": [
+        { "name": "66 automatic checks", "status": "done", "description": "Run before anything is published. They catch a missing comma, a drawing with no title, a picture that is not there, a broken link, an image with no description for screen readers, and text too faint to read. If one fails, nothing is published and the live site is untouched." },
+        { "name": "The site assembler", "status": "done", "description": "Copies the website, and only the website, into a clean folder for publishing. It works from a short list of what belongs, so a private note added later is left out without anyone having to remember. Checked by serving the result: every working document returns 'not found'." },
+        { "name": "The web-address setter", "status": "done", "description": "One command updates the address inside all nine pages plus the sitemap, so WhatsApp previews and search engines point at the right place." },
+        { "name": "The old GitHub publishing step", "status": "gap", "description": "Served the site until now. It needs GitHub Pages, which a private repository cannot use without paying, so it is being removed." },
+        { "name": "Cloudflare Pages", "status": "gap", "description": "The new home. Free, works with a private repository, and runs the same checks before publishing. Not connected yet." },
+        { "name": "A private repository", "status": "gap", "description": "So the working notes about Venuka are not readable by strangers. The website itself stays public either way. Not done yet." },
+        { "name": "Visitor counting", "status": "gap", "description": "A line is ready for it. Cookieless, so it needs no consent banner, and nothing at all is requested while it is switched off." }
+      ]
+    }
+  ],
+
+  "decisions": [
+    {
+      "tag": "Photo of Venuka",
+      "title": "A photograph of her exists but has not been published",
+      "body": "There is a photo on your machine. It was deliberately left out — publishing a photograph of a child is a family decision, not a build decision. Making the repository private does <b>not</b> change this: the website is public either way, so the moment the photograph goes on the About page it is public permanently. The page holds a space for it. Adding it later is easy; removing it later is not."
+    },
+    {
+      "tag": "School year",
+      "title": "Her school year and board were left off on purpose",
+      "body": "The old Google Site listed both under Education. They were omitted here because it is an identifying detail about a child, sitting next to her first name and her drawings. Say the word and they go back in — but it should be a choice, not an oversight."
+    },
+    {
+      "tag": "Missing videos",
+      "title": "Seven videos were on the channel but not on the website",
+      "body": "Counted against the live channel feed on 30 August: a Jungle giraffe-and-cat pair, a duck drawing, a mermaid-and-fish colouring, a sheep/girl/ducks scene and others. <b>This has not been re-counted since</b>, and the collection has grown from 14 drawings to 23 in the meantime, so the real number today may be different. The site does not watch YouTube — each video is added by hand. Two things to settle: whether to add the missing ones, and whether you want a daily automatic check."
+    },
+    {
+      "tag": "Form address",
+      "title": "The form's delivery address is readable in the page source",
+      "body": "The contact form posts to a Google Apps Script address, and anyone who views the page source can see it. That is normal and unavoidable for a form on a static site, and the sheet behind it stays private — but it means a determined person could send messages straight to the script, bypassing the page. The script already defends itself: it rejects anything missing required fields, trims very long messages, allows twenty per hour, and ignores anything that trips the spam trap. Worth knowing it is there, and worth replacing the address if the sheet ever starts filling with rubbish."
+    },
+    {
+      "tag": "Email address",
+      "title": "No email address is published anywhere on the site",
+      "body": "Every contact field is deliberately empty, and the footer and contact page both show an honest 'not added yet' rather than a dead link. The form plus the YouTube channel are the only ways to reach her — which may be exactly right for a child's website. If you do add one, it becomes public and scrapeable, so a separate address kept for this is wiser than a personal one."
+    }
+  ]
+}

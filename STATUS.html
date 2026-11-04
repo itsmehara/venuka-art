@@ -1,54 +1,39 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Venuka — website status</title>
+<title><!--PROJECT_TITLE--></title>
 <style>
 /*
-  Token structure: bare :root = light theme (default). The dark-mode block is
-  guarded so an explicit light choice (data-theme="light") always wins, and
-  the data-theme="dark" block make the manual toggle win in the other
-  direction. Every color used anywhere below comes from one of these tokens —
-  never hardcode a color inline in the body content.
-
-  REPLACE THE ACCENT HEX VALUES with something drawn from the actual
-  project's own brand (its CSS custom properties, logo colors, existing
-  palette) before generating the page. --brand below is a neutral fallback
-  ONLY — using it unmodified for every project is what makes generated pages
-  look templated. Go find the real brand color first.
+  Theme: DARK BY DEFAULT, always. The <html> tag carries data-theme="dark" and the bare
+  :root holds the dark forest-green palette, so the page opens dark whatever the viewer's
+  system preference is. The only light palette is the explicit [data-theme="light"] block,
+  used when someone presses a Light button on purpose. Never make light the default and
+  never key the default on prefers-color-scheme. Every colour below comes from these tokens.
 */
-:root{
-  --bg:#fffbf2; --surface:#ffffff; --surface-2:#fdf2dd;
-  --ink:#2e2740; --body:#5b5473; --muted:#8b84a3;
-  --line:#efe6d6; --line-soft:#f6f0e6;
-  --brand:#5b34c4; --brand-d:#4a27a8; --brand-l:#efe9ff;
-  --amber:#8a5900; --amber-l:#fff3d0;
-  --red:#b83e08; --red-l:#ffece0;
-  --slate:#0b6e9e; --slate-l:#e4f6fd;
+:root,:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0c1711; --surface:#122019; --surface-2:#17281f;
+  --ink:#e9f1ea; --body:#bfcfc3; --muted:#92a498;
+  --line:#23362b; --line-soft:#1b2b22;
+  --brand:#4ea772; --brand-d:#9adcb1; --brand-l:#16301f;
+  --amber:#dcaa4a; --amber-l:#33280f;
+  --red:#e2907f; --red-l:#351f1b;
+  --slate:#8fb3a7; --slate-l:#1e2f29;
   --display:"Avenir Next","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
   --text:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --radius:14px;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#1a1526; --surface:#241d33; --surface-2:#2e2740;
-    --ink:#f6f2ff; --body:#cfc7e6; --muted:#a79fc0;
-    --line:#383052; --line-soft:#2b2440;
-    --brand:#b598ff; --brand-d:#d9caff; --brand-l:#322554;
-    --amber:#ffc93c; --amber-l:#3a2c05;
-    --red:#ff9f55; --red-l:#3a1e10;
-    --slate:#7fd0f5; --slate-l:#10314a;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#1a1526; --surface:#241d33; --surface-2:#2e2740;
-  --ink:#f6f2ff; --body:#cfc7e6; --muted:#a79fc0;
-  --line:#383052; --line-soft:#2b2440;
-  --brand:#b598ff; --brand-d:#d9caff; --brand-l:#322554;
-  --amber:#ffc93c; --amber-l:#3a2c05;
-  --red:#ff9f55; --red-l:#3a1e10;
-  --slate:#7fd0f5; --slate-l:#10314a;
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#faf8f4; --surface:#ffffff; --surface-2:#f3f1ea;
+  --ink:#17231b; --body:#4c5750; --muted:#7c8880;
+  --line:#e4e0d4; --line-soft:#ece9df;
+  --brand:#1f7a40; --brand-d:#155429; --brand-l:#e8f3ec;
+  --amber:#c9840f; --amber-l:#faf0dd;
+  --red:#b23b3b; --red-l:#f7e9e7;
+  --slate:#5b6b8f; --slate-l:#eaedf5;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--body);
@@ -85,7 +70,6 @@ h1,h2,h3{color:var(--ink);font-family:var(--display);line-height:1.18;
 .i-done{background:var(--brand)}.i-draft{background:var(--amber)}
 .i-flag{background:var(--red)}.i-gap{background:var(--slate)}
 
-section{margin-top:52px}
 .sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
   margin-bottom:18px;flex-wrap:wrap}
 .sec-head h2{font-size:1.2rem}
@@ -121,11 +105,119 @@ footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);
   font-size:.82rem;color:var(--muted)}
 footer code{background:var(--surface-2);padding:1px 6px;border-radius:4px;font-size:.85em}
 
+/* ---------- Tabs: Status / Tasks / Diagrams (Tasks and Diagrams appear only when data is given) ---------- */
+.tabs{display:flex;gap:6px;margin:26px 0 4px;border-bottom:1px solid var(--line)}
+.tabs[hidden]{display:none}
+.tabs button{font:inherit;font-weight:700;font-size:.95rem;color:var(--muted);background:none;border:0;
+  border-bottom:3px solid transparent;padding:10px 14px;margin-bottom:-1px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--brand)}
+.tabs button span{display:inline-block;font-weight:800;font-size:.74rem;color:var(--brand-d);background:var(--brand-l);
+  border:1px solid var(--brand);padding:2px 8px;border-radius:999px;margin-left:8px;font-variant-numeric:tabular-nums}
+.panel[hidden]{display:none}
+/* ---------- Fold: everything opens as one line (title + counts); the viewer expands on need ---------- */
+.fold-bar{display:flex;gap:8px;justify-content:flex-end;margin:18px 0 8px}
+.fold-bar button{font:inherit;font-size:.8rem;font-weight:700;padding:5px 12px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--line);background:var(--surface);color:var(--body)}
+.fold-bar button:hover{border-color:var(--brand)}
+details.fold{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:0 0 8px;padding:0}
+details.fold[open]{border-color:var(--brand)}
+details.fold>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;align-items:center;
+  gap:6px 12px;padding:12px 16px}
+details>summary::-webkit-details-marker{display:none}
+details.fold>summary::before,.tk-phase>summary .tk-ph-title::before{content:'';flex:none;width:7px;height:7px;
+  border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg);transition:transform .15s}
+details.fold[open]>summary::before,.tk-phase[open]>summary .tk-ph-title::before{transform:rotate(45deg)}
+details.fold>summary h2{font-size:1.02rem;margin:0}
+.fold-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);font-weight:700;
+  font-variant-numeric:tabular-nums}
+.chip{padding:2px 8px;border-radius:999px;white-space:nowrap}
+.chip.done,.chip.c{background:var(--brand-l);color:var(--brand-d)}.chip.draft,.chip.p{background:var(--amber-l);color:var(--amber)}
+.chip.gap,.chip.h{background:var(--slate-l);color:var(--slate)}.chip.flag,.chip.b{background:var(--red-l);color:var(--red)}
+.chip.n{background:var(--surface-2);color:var(--ink);border:1px solid var(--line)}
+.bar{display:flex;height:6px;width:90px;border-radius:99px;overflow:hidden;background:var(--line)}
+.bar i{display:block;height:100%}
+.bar .done,.bar .c{background:var(--brand)}.bar .draft,.bar .p{background:var(--amber)}
+.bar .gap{background:var(--slate)}.bar .b{background:var(--red)}
+.fold-body{padding:4px 16px 16px;border-top:1px solid var(--line-soft)}
+.fold-body>p.desc{margin:10px 0 12px;color:var(--muted);font-size:.88rem}
+.fold-body .list{margin-top:8px}
+/* ---------- Tasks tab ---------- */
+.tk-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);
+  border-radius:var(--radius);overflow:hidden;margin:26px 0 14px}
+.tk-summary>div{background:var(--surface);padding:16px 12px;text-align:center}
+.tk-summary b{display:block;font-size:1.8rem;font-family:var(--display);color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+.tk-summary span{display:block;margin-top:6px;font-size:.8rem;color:var(--muted);font-weight:600}
+.tk-overall{display:flex;align-items:center;gap:12px}
+.tk-overall .bar{flex:1;width:auto;height:10px}
+.tk-overall b{font-family:var(--display);color:var(--brand-d);font-size:.95rem;white-space:nowrap}
+.tk-intro{margin:6px 0 0;font-size:.9rem;color:var(--muted)}
+.tk-filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:20px 0 6px}
+.tk-filters button{font:inherit;font-size:.82rem;font-weight:700;padding:6px 12px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--line);background:var(--surface);color:var(--body)}
+.tk-filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tk-filters select,.tk-filters input{font:inherit;font-size:.85rem;padding:6px 10px;border-radius:8px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.tk-filters input{flex:1;min-width:160px}
+.tk-phase{margin-top:10px}
+.tk-phase>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px 16px;
+  flex-wrap:wrap;padding:12px 16px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px}
+.tk-phase[open]>summary{margin-bottom:10px;border-color:var(--brand)}
+.tk-ph-title{display:flex;align-items:baseline;gap:4px 12px;flex-wrap:wrap}
+.tk-ph-title::before{align-self:center}
+.tk-ph-title h2{font-size:1.1rem}.tk-ph-title p{margin:0;font-size:.82rem;color:var(--muted)}
+.tk-ph-prog{display:flex;align-items:center;gap:10px}.tk-ph-prog .bar{width:120px;height:8px}
+.tk-task{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.tk-task>summary{list-style:none;cursor:pointer;padding:12px 16px 12px 12px;display:grid;
+  grid-template-columns:auto 1fr auto;gap:4px 14px;align-items:center}
+.tk-score{grid-row:1/3;width:60px;padding:7px 4px;border-radius:10px;text-align:center;line-height:1}
+.tk-score b{display:block;font-family:var(--display);font-size:1.2rem;font-variant-numeric:tabular-nums}
+.tk-score span{display:block;margin-top:4px;font-size:.64rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.tk-task>summary h3{font-size:.96rem}.tk-task>summary h3 small{font-weight:600;color:var(--muted);font-size:.78rem;margin-right:8px}
+.tk-meta{grid-column:2/-1;display:flex;gap:12px;align-items:center;font-size:.8rem;color:var(--muted)}
+.tk-meta .bar{flex:1;max-width:240px}
+.tk-body{padding:0 16px 12px;border-top:1px solid var(--line-soft)}
+.tk-done{margin:12px 0 6px;font-size:.86rem}
+.tk-subs{list-style:none;margin:0;padding:0}
+.tk-subs li{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:9px 0;
+  border-top:1px solid var(--line-soft);font-size:.9rem;color:var(--ink)}
+.tk-subs li:first-child{border-top:0}
+.tk-subs li em{display:block;font-style:normal;font-size:.8rem;color:var(--muted)}
+.tk-empty{padding:24px;text-align:center;color:var(--muted)}
+/* ---------- Diagrams tab ---------- */
+.dg-nav{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.dg-nav a{color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 12px;
+  font-size:.82rem;font-weight:700;background:var(--surface)}
+.dg-ver{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px}
+.dg-ver.current{border-color:var(--brand)}
+.dg-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.9rem;color:var(--ink)}
+.dg-ver>summary{list-style:none;cursor:pointer}
+.dg-ver>summary::after{content:'Show';margin-left:auto;font-size:.75rem;font-weight:700;color:var(--muted)}
+.dg-ver[open]>summary::after{content:'Hide'}
+.dg-ver p{margin:6px 0;font-size:.88rem}.dg-ver p b{color:var(--muted)}
+.dg-changed{border-left:3px solid var(--amber);padding-left:10px}
+.dg-ver.superseded{opacity:.55}.dg-ver.superseded .dg-head{text-decoration:line-through}.dg-ver.superseded svg{filter:grayscale(1)}
+.dg-ver svg{width:100%;height:auto;display:block;margin:10px 0 0}
+.dg-ver .b{stroke-width:.9}.dg-ver .b.a{fill:var(--slate-l);stroke:var(--slate)}.dg-ver .b.c{fill:var(--brand-l);stroke:var(--brand)}
+.dg-ver .b.d{fill:var(--amber-l);stroke:var(--amber)}.dg-ver .b.n{fill:var(--surface);stroke:var(--muted)}
+.dg-ver .tt{fill:var(--ink);font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:central}
+.dg-ver .ts{fill:var(--muted);font-size:12px;text-anchor:middle;dominant-baseline:central}
+.dg-ver .tl{fill:var(--ink);font-size:14px;font-weight:700;dominant-baseline:central}
+.dg-ver .frame{fill:none;stroke:var(--muted);stroke-dasharray:5 4;stroke-width:.9}
+.dg-ver .ar{fill:none;stroke:var(--muted);stroke-width:1.3}.dg-ver .ar.dash{stroke-dasharray:5 4}
 @media(max-width:640px){
-  .summary{grid-template-columns:1fr 1fr}
+  .summary,.tk-summary{grid-template-columns:1fr 1fr}.tk-summary>div:last-child{grid-column:1/-1}
   .row{flex-direction:column}
   .pill{align-self:flex-start}
+  .wrap{padding:28px 16px 70px}
+  .tabs button{padding:10px 8px}
+  details.fold>summary{grid-template-columns:auto 1fr;padding:10px 14px}
+  details.fold>summary .fold-meta{grid-column:2}
+  .fold-bar{justify-content:flex-start}
+  .tk-task>summary{grid-template-columns:auto 1fr}.tk-task>summary .chip{grid-column:2;justify-self:start}
+  .tk-score{grid-row:1/4}.tk-meta{grid-column:2}.tk-ph-prog .bar{width:80px}
+  .tk-subs li{flex-direction:column;gap:4px}
 }
+@media print{details>.fold-body,details>.tk-body{display:block}}
 </style>
 </head>
 <body>
@@ -138,328 +230,1212 @@ footer code{background:var(--surface-2);padding:1px 6px;border-radius:4px;font-s
     </div>
   </div>
   <p class="updated" id="updatedLine"></p>
-
-  <div class="summary" id="summaryStrip"></div>
-  <div class="legend">
-    <span><i class="i-done"></i> Done — built, tested, real data</span>
-    <span><i class="i-draft"></i> Draft — written, not yet confirmed</span>
-    <span><i class="i-flag"></i> Needs a decision — see below</span>
-    <span><i class="i-gap"></i> Left for later, on purpose</span>
-  </div>
-
-  <section id="decisionsSection" style="display:none">
-    <div class="sec-head">
-      <h2>Needs your decision</h2>
-      <p>Nothing breaks if these wait — but don't ship to real users until they're settled.</p>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Status page views" hidden>
+    <button type="button" role="tab" id="tab-status" aria-controls="panel-status" aria-selected="true">Status</button>
+    <button type="button" role="tab" id="tab-tasks" aria-controls="panel-tasks" aria-selected="false" hidden>Tasks<span id="tab-tasks-count"></span></button>
+    <button type="button" role="tab" id="tab-diagrams" aria-controls="panel-diagrams" aria-selected="false" hidden>Diagrams<span id="tab-diagrams-count"></span></button>
+  </nav>
+  <div class="panel" id="panel-status" role="tabpanel" aria-labelledby="tab-status">
+    <div class="summary" id="summaryStrip"></div>
+    <div class="legend">
+      <span><i class="i-done"></i> Done — built, tested, real data</span>
+      <span><i class="i-draft"></i> Draft — written, not yet confirmed</span>
+      <span><i class="i-flag"></i> Needs a decision</span>
+      <span><i class="i-gap"></i> Left for later, on purpose</span>
     </div>
-    <div id="decisionsList"></div>
-  </section>
-
-  <div id="groupsHost"></div>
-
+    <div class="fold-bar"><button type="button" data-fold="open">Expand all</button><button type="button" data-fold="close">Collapse all</button></div>
+    <div id="decisionsHost"></div>
+    <div id="groupsHost"></div>
+  </div>
+  <div class="panel" id="panel-tasks" role="tabpanel" aria-labelledby="tab-tasks" hidden></div>
+  <div class="panel" id="panel-diagrams" role="tabpanel" aria-labelledby="tab-diagrams" hidden></div>
   <footer id="footerNote"></footer>
 </div>
-
 <script>
 /*
- * ALL content below is data. Fill in STATUS_DATA and this page renders
- * itself — including the summary strip counts, which are computed with
- * Array.filter().length, never typed by hand. This is deliberate: a
- * hand-typed summary count WILL eventually disagree with the actual row
- * list the moment either one changes and the other doesn't. Making the
- * count a derived value makes that entire bug class impossible.
+ * ALL content below is data. Fill in STATUS_DATA (by hand, or with scripts/build_status.py, which
+ * writes it between the STATUS_DATA markers) and this page renders itself — including every count,
+ * which is computed with Array.filter().length, never typed by hand. A hand-typed count WILL
+ * eventually disagree with the rows the moment either one changes and the other doesn't.
+ *
+ * Fold rule: every section, phase, task and diagram topic opens as ONE LINE showing its title and
+ * its counts (chips + a mini bar), so the whole page reads as an overview. The viewer opens only
+ * what they need; Expand all / Collapse all on every tab; a link to #id opens what it points at;
+ * filtering or searching tasks opens the matches.
  */
-const STATUS_DATA = {
-  meta: {
-    orgLabel: "VENUKA \u00b7 HAPPY LEARNING KIDS",
-    pageTitle: "Venuka's website — what's built",
-    markInitials: "V",
-    updatedLine: "Last updated 3 November 2026 \u2014 the site is live, and the way it is " +
-      "published is now decided: a private repository, hosted free on Cloudflare Pages, at " +
-      "artbyvenuka.nischayacreativesoft.com. " +
-      "A plain-language summary of what is finished, what still needs a decision, " +
-      "and what is deliberately left for later.",
-    footerNote: 'Exact files and line numbers are in <code>REGISTRY.md</code> in the ' +
-      'project folder. Step-by-step publishing instructions are in <code>DEPLOYMENT.md</code>. ' +
-      'This page is the plain-language summary and is a snapshot, not a live view.',
+const STATUS_DATA = /*STATUS_DATA:START*/{
+ "meta": {
+  "orgLabel": "VENUKA · HAPPY LEARNING KIDS",
+  "pageTitle": "Venuka's website — what's built",
+  "markInitials": "V",
+  "updatedLine": "Last updated 4 November 2026. The website is finished and live; what is left is where it lives. Everything below was re-checked against the code on the day, not carried over from the last version of this page. Open a section to see inside it — nothing is open to begin with, so the first view stays an overview.",
+  "footerNote": "Exact files and line numbers are in <code>REGISTRY.md<\/code>. Step-by-step publishing instructions are in <code>DEPLOYMENT.md<\/code>. This page is built from <code>status-data.json<\/code>, <code>TASKS.json<\/code> and <code>diagrams.py<\/code> — edit those and rebuild, never this file."
+ },
+ "groups": [
+  {
+   "title": "The moving scene behind every page",
+   "description": "A drawn meadow that runs quietly behind all eleven pages. It is not a video or a picture — it is drawn fresh as you watch, so it never repeats.",
+   "items": [
+    {
+     "name": "The meadow and the sky",
+     "status": "done",
+     "description": "Grass, a horizon and a sky that is painted afresh every frame. Every other piece of the scene sits on top of this."
+    },
+    {
+     "name": "Four seasons, changing on their own",
+     "status": "done",
+     "description": "Sunny, Cloudy, Rain and Snow follow one another and fade between each other, so the sky is never quite the same twice.",
+     "admin": true
+    },
+    {
+     "name": "Rain and snow falling",
+     "status": "done",
+     "description": "Drops and flakes fall at a speed and thickness that match whichever season is running."
+    },
+    {
+     "name": "Snow settling on the ground",
+     "status": "done",
+     "description": "During the snow season it gathers into a depth along the ground, and melts away as the season turns."
+    },
+    {
+     "name": "The sun crossing the sky",
+     "status": "done",
+     "description": "It moves, and its colour and height change with the season."
+    },
+    {
+     "name": "Clouds drifting across",
+     "status": "done",
+     "description": "Each one is a different shape, and how many there are depends on the season."
+    },
+    {
+     "name": "Flowers swaying in the wind",
+     "status": "done",
+     "description": "Drawn at different distances, so the near ones are bigger and move more than the far ones."
+    },
+    {
+     "name": "Butterflies that avoid the writing",
+     "status": "done",
+     "description": "They fly across the page but steer around the text panels, so they never sit on top of something you are reading."
+    },
+    {
+     "name": "Wind and gusts",
+     "status": "done",
+     "description": "A steady breeze with occasional stronger gusts; the flowers, clouds and butterflies all respond to it."
+    },
+    {
+     "name": "The weather badge in the corner",
+     "status": "done",
+     "description": "Shows the season with a small picture, and switching the scene off is remembered the next time you visit.",
+     "admin": true
+    },
+    {
+     "name": "Stillness for anyone who needs it",
+     "status": "done",
+     "description": "If the visitor's device asks for less movement, the scene holds still without being asked twice."
+    }
+   ]
   },
-
-  groups: [
+  {
+   "title": "On every page",
+   "description": "The furniture shared by all eleven pages. Built once, so a change to any of it changes everywhere.",
+   "items": [
     {
-      title: "Pages",
-      description: "The nine pages a visitor can reach.",
-      items: [
-        { name: "Home", status: "done", admin: false,
-          description: "Welcome, featured drawings, latest videos, activities and the YouTube invitation." },
-        { name: "About Venuka", status: "done", admin: true,
-          description: "Her creative journey in her own words, and what drawing gives a child." },
-        { name: "Drawings gallery", status: "done", admin: false,
-          description: "All the drawings, with category buttons, a search box and a full-size viewer." },
-        { name: "Arts &amp; Crafts", status: "done", admin: false,
-          description: "Page is built and waiting. It says honestly that no craft has been photographed yet." },
-        { name: "Drawing videos", status: "done", admin: false,
-          description: "All 14 videos, with filters and search. Nothing loads from YouTube until you press play." },
-        { name: "Learn &amp; Create", status: "done", admin: true,
-          description: "Drawing ideas, colouring tricks, the five steps, craft ideas and what to keep in the box." },
-        { name: "New Creations", status: "done", admin: false,
-          description: "Newest work first. Updates itself whenever anything is added." },
-        { name: "Contact", status: "draft", admin: false,
-          description: "Form and links are built and tested. It cannot send a message yet — see the decision below." },
-        { name: "Page-not-found screen", status: "done", admin: false,
-          description: "A friendly screen if someone follows a broken link, instead of a browser error." },
-      ],
+     "name": "The top menu",
+     "status": "done",
+     "description": "Links to all nine main pages, with the page you are on marked."
     },
     {
-      title: "Venuka's work",
-      description: "The drawings, videos and crafts themselves.",
-      items: [
-        { name: "9 photographed originals", status: "done", admin: true,
-          description: "Garden of Shapes, Cute Girl, Giraffe, Rainbow Unicorn, A Boat Ride, and four canvas paintings. Real photographs of her framed work, each with a written picture description and an easy/medium level." },
-        { name: "\u201CFrog and Duck\u201D photograph", status: "done", admin: true,
-          description: "A real photograph of the sketchbook page, dated 30 August 2023 in her own handwriting. Used as the front-page picture and the link preview." },
-        { name: "13 drawings shown as video stills", status: "draft", admin: true,
-          description: "Real frames from her own videos, each clearly labelled \u201CStill from video\u201D. They can be swapped for proper photographs whenever the originals are photographed." },
-        { name: "14 drawing videos", status: "done", admin: true,
-          description: "Every title, date and thumbnail checked against the Happy Learning Kids channel." },
-        { name: "Eight gallery categories", status: "done", admin: true,
-          description: "Animals, Birds, Nature, Cute Characters, Pencil, Colour, Easy, and Special Artwork." },
-        { name: "\u201CSpecial Artwork\u201D category", status: "done", admin: true,
-          description: "Now holds 7 pieces \u2014 the canvas paintings and the more elaborate coloured drawings." },
-        { name: "Craft projects", status: "gap", admin: true,
-          description: "Nothing added yet, because nothing has been photographed. The page is ready for the first one." },
-        { name: "Materials and difficulty notes", status: "draft", admin: true,
-          description: "Filled in for 5 of the 14 drawings. The rest honestly say \u201CNot recorded yet\u201D rather than guessing." },
-      ],
+     "name": "The menu button on a phone",
+     "status": "done",
+     "description": "On a narrow screen the menu folds into a button that opens and closes it."
     },
     {
-      title: "Finding things",
-      description: "How a visitor gets to what they want.",
-      items: [
-        { name: "Category buttons with live counts", status: "done", admin: false,
-          description: "Each button shows how many drawings it holds, and the count updates itself." },
-        { name: "Search", status: "done", admin: false,
-          description: "Searches titles, descriptions and the picture descriptions on both the gallery and the videos." },
-        { name: "Full-size artwork viewer", status: "done", admin: false,
-          description: "Opens any drawing large, with its details. Arrow keys move between pictures, Escape closes." },
-        { name: "Click-to-play video", status: "done", admin: false,
-          description: "Shows a local picture until you press play, so the page stays fast and YouTube is not contacted before then." },
-        { name: "Newest-first ordering", status: "done", admin: false,
-          description: "The home page and New Creations sort themselves by date. Nothing to maintain by hand." },
-      ],
+     "name": "Skip to the content",
+     "status": "done",
+     "description": "A link that appears when you press Tab, so someone using a keyboard can jump past the menu."
     },
     {
-      title: "The moving background",
-      description: "The meadow that runs behind every page.",
-      items: [
-        { name: "Seasons", status: "done", admin: false,
-          description: "Sunny, cloudy, rain and snow, thirty seconds each. Snow settles into drifts and melts when the sun returns." },
-        { name: "Butterflies", status: "done", admin: false,
-          description: "They fly, flap, wander, land on a flower, rest, and take off again. Measured: all wings flapping, gentle speeds, none stuck." },
-        { name: "Flowers that react", status: "done", admin: false,
-          description: "A flower dips under a landing butterfly and nods when one flies past. Measured: 8 of 13 flowers visibly moving." },
-        { name: "Pause button", status: "done", admin: false,
-          description: "The little weather badge in the corner names the season and pauses everything. The choice is remembered." },
-        { name: "Still picture for reduced motion", status: "done", admin: false,
-          description: "Anyone whose device asks for less motion gets a composed still scene, never a blank box." },
-        { name: "Carries between pages", status: "done", admin: false,
-          description: "The same flowers, butterflies and weather continue when you click to another page." },
-      ],
+     "name": "The footer",
+     "status": "done",
+     "description": "The site's pages again, the YouTube channel, the hashtag, and a short line about the site."
     },
     {
-      title: "Getting in touch",
-      items: [
-        { name: "Contact form and its checks", status: "done", admin: false,
-          description: "Name, email, subject and message, each checked properly with clear messages." },
-        { name: "YouTube channel link", status: "done", admin: true,
-          description: "The one verified way to reach Venuka. Appears on the contact page and in the footer." },
-        { name: "Email, Instagram, Facebook, WhatsApp", status: "gap", admin: true,
-          description: "Shown as clearly-labelled \u201Cnot published yet\u201D. Nothing was invented. Each becomes a real link the moment a genuine address is added." },
-      ],
+     "name": "The email pill in the footer",
+     "status": "done",
+     "description": "Shows an email address when one is added, and a tidy 'not added yet' message when there is none. Both states have been checked.",
+     "admin": true
     },
     {
-      title: "Learn &amp; Create content",
-      description: "Written for this website, as suggestions for children \u2014 not presented as Venuka's finished work.",
-      items: [
-        { name: "Six drawing ideas", status: "done", admin: true, description: "Start with a circle, sheep are just clouds, and so on." },
-        { name: "Five colouring tricks", status: "done", admin: true, description: "Practical tips a child can use straight away." },
-        { name: "The five drawing steps", status: "done", admin: true, description: "The same sequence you see in every one of her videos." },
-        { name: "Four craft ideas", status: "done", admin: true, description: "Paper shapes, handprints, blow painting, kitchen-roll animals." },
-        { name: "Recommended materials", status: "done", admin: true, description: "Six things worth keeping in the box, and why." },
-        { name: "Printable activities", status: "gap", admin: true, description: "Announced as coming. Nothing pretends to be downloadable yet." },
-      ],
+     "name": "The year, kept current",
+     "status": "done",
+     "description": "The footer year updates itself; nobody has to remember it in January."
     },
     {
-      title: "Publishing safely",
-      description: "What stops a small mistake from taking the live site down.",
-      items: [
-        { name: "Automatic checks", status: "done", admin: false,
-          description: "53 checks run in about a second: typos, missing photos, unknown categories, duplicates, broken links, missing picture descriptions and colour contrast. Tested by breaking each thing on purpose." },
-        { name: "Publish only if the checks pass", status: "draft", admin: false,
-          description: "Written and valid, but it cannot be proven until the first real push. If the checks fail, the site is simply not republished." },
-        { name: "One-command web address setter", status: "done", admin: false,
-          description: "Fills the full address into all nine pages, the sitemap and the search-engine file. Tested." },
-        { name: "Publishing instructions", status: "done", admin: false,
-          description: "Step-by-step notes covering the public-or-private choice, a parent checklist, custom domains and how to undo a bad change." },
-        { name: "Guide for adding new work", status: "done", admin: false,
-          description: "How to add a drawing, a craft or a video, with the exact shape of each entry." },
-        { name: "The repository itself", status: "done", admin: false,
-          description: "Created. This folder is now its own git repository on the main branch, with the first commit made. It is kept out of the parent project's repository, so nothing here can be swept into your personal one." },
-        { name: "What goes online, and what does not", status: "done", admin: false,
-          description: "51 files are published \u2014 the pages, styles, scripts, images, checks and notes. Everything else stays on your computer: Finder junk, editor settings, drafts named with a leading underscore, and anything holding a password. Run git ls-files to see the exact list." },
-        { name: "Contact form into a private Google Sheet", status: "draft", admin: true,
-          description: "The website side is finished and tested. It waits on you creating the Sheet and pasting one address into the content file \u2014 the steps are in tools/google-sheet-form.gs. Messages will land only in your Sheet; nobody visiting the site can read them." },
-        { name: "Spam protection on the form", status: "done", admin: false,
-          description: "A hidden box no person can see or reach. Anything that fills it in is thrown away without ever being sent, and without being told why. The script also refuses more than 20 messages an hour." },
-        { name: "Counting visitors", status: "draft", admin: true,
-          description: "Cloudflare Web Analytics is wired in and waits on one token from you. It uses no cookies, so nothing pops up at visitors and no consent banner is needed. You will see page views, popular pages, where people came from and roughly which country \u2014 never who they are." },
-        { name: "Your personal address kept separate", status: "done", admin: false,
-          description: "The publishing notes named your personal GitHub site in five places. Replaced with a placeholder, so Venuka's public files do not point back at your own site." },
-      ],
+     "name": "The full-size picture viewer",
+     "status": "done",
+     "description": "Clicking any drawing opens it large, with its title and notes beside it, and closes on Escape."
     },
     {
-      title: "Quality",
-      items: [
-        { name: "Phone, tablet and desktop", status: "done", admin: false,
-          description: "Checked from 320 pixels wide up to 1500. Nothing overflows sideways at any size." },
-        { name: "Keyboard and screen readers", status: "done", admin: false,
-          description: "Menu, filters, search and the picture viewer all work without a mouse. Every image has a written description." },
-        { name: "Colour contrast", status: "done", admin: false,
-          description: "Every text colour measured against all four skies, plus grass, snow and the brightest flowers. The tightest passes with room to spare." },
-        { name: "Speed", status: "done", admin: false,
-          description: "1.5 MB in total. Pictures load only as you reach them, and the background pauses when the tab is hidden." },
-        { name: "Link previews and search listing", status: "gap", admin: false,
-          description: "Waiting on the final web address. One command fills them in once it is known." },
-      ],
+     "name": "The honest placeholder",
+     "status": "done",
+     "description": "When a photograph has not been taken yet, or fails to load, the page says so plainly instead of showing a blank box. No stock picture is ever put in its place."
     },
-  ],
-
-  decisions: [
-    { tag: "Photo of Venuka",
-      title: "A photograph of her exists but has not been published",
-      body: "There is a photo on your machine. It was deliberately left out \u2014 publishing a " +
-        "photograph of a child is a family decision, not a build decision, and once the site is " +
-        "public it is public permanently. The About page holds a space for it. <b>Decide before " +
-        "the 31st</b>, because adding it later is easy but removing it later is not." },
-    { tag: "School year",
-      title: "Her school year and board were left off on purpose",
-      body: "The old Google Site listed her school year and board under Education. That was " +
-        "omitted here because it is an identifying detail about a child, combined with her first " +
-        "name and her drawings. Say the word and it goes back in \u2014 but it should be a choice." },
-    { tag: "Missing videos",
-      title: "Seven videos are on YouTube but not on the website",
-      body: "Checked against the live channel feed. Missing: a Jungle giraffe-and-cat pair, a duck " +
-        "drawing, a mermaid-and-fish colouring, a sheep/girl/ducks scene and others. The site does " +
-        "not watch YouTube \u2014 each video is added by hand. Decide whether to add these before going " +
-        "live, and whether you want the daily automatic sync." },
-    { tag: "Public or private",
-      title: "Settled \u2014 the repository goes private, which is why the host changes",
-      body: "Not because anything in it is dangerous. There are no passwords or keys, and every " +
-        "contact field is deliberately empty. It is because the working notes in the repository " +
-        "discuss a child \u2014 whether to publish her photograph, whether to name her school year \u2014 " +
-        "and those are family conversations, not something strangers should be able to read. " +
-        "<b>The website itself is public either way; only the notes and the code are hidden.</b> " +
-        "GitHub publishes a free site only from a <i>public</i> repository, so this choice rules " +
-        "out GitHub Pages unless you pay about $4 a month. That is the whole reason for moving to " +
-        "Cloudflare Pages, which is free and has no such condition." },
-    { tag: "Contact form",
-      title: "The form cannot deliver a message yet",
-      body: "No delivery service is connected, and the form says so honestly rather than pretending. " +
-        "Connecting one (Formspree, Basin, Netlify Forms) is a single line in the content file. " +
-        "Until then the YouTube channel is the only way to reach her \u2014 which may be exactly what " +
-        "you want for a child's website." },
-    { tag: "Web address",
-      title: "Decided \u2014 artbyvenuka.nischayacreativesoft.com on Cloudflare Pages, free",
-      body: "The site is live now on its free GitHub address, and that address will stop working " +
-        "when the repository goes private. The permanent home is " +
-        "<b>artbyvenuka.nischayacreativesoft.com</b>, a subdomain of the company domain, served by " +
-        "<b>Cloudflare Pages</b>. Everything about it is free: Cloudflare Pages hosting, the HTTPS " +
-        "certificate, and the DNS record at GoDaddy. <b>The company site is not touched</b> \u2014 " +
-        "nischayacreativesoft.com stays exactly where it is, the nameservers stay at GoDaddy, and " +
-        "the new subdomain is one extra record beside it. The two are independent and can sit on " +
-        "different hosts. Five things are pending: make the repository private, switch GitHub Pages " +
-        "off, delete the old workflow, connect Cloudflare Pages, and add the one CNAME record. The " +
-        "steps are in <code>DEPLOYMENT.md</code>, in order, and the order matters \u2014 the DNS " +
-        "record goes in <i>after</i> Cloudflare knows about the domain, or visitors see an error " +
-        "until it settles. The trade-off to accept: 37 characters is long to read out, and the " +
-        "address belongs to the company, so it cannot follow Venuka to her own account later. A " +
-        "short domain such as venuka.art stays an option \u2014 though an address like that must sit " +
-        "on Cloudflare's own nameservers, which a subdomain never needs." },
-    { tag: "Working notes",
-      title: "The project documents are kept off the website on purpose",
-      body: "This page, the registry, the publishing guide and the private notes live in the " +
-        "repository but are never served to visitors. <code>tools/build.js</code> copies only the " +
-        "website \u2014 the eleven pages, the pictures, the styles \u2014 into a clean folder, and that " +
-        "folder is what gets published. It works by allowing a short list rather than by excluding " +
-        "one, so a private note added next month is left out automatically instead of having to be " +
-        "remembered. Checked on the running site: every document returns a 404." },
-  ],
-};
-
-(function render(){
-  const d = STATUS_DATA;
-  document.title = d.meta.pageTitle;
-  document.getElementById('orgLabel').textContent = d.meta.orgLabel;
-  document.getElementById('pageTitle').textContent = d.meta.pageTitle;
-  document.getElementById('markInitials').textContent = d.meta.markInitials;
-  document.getElementById('updatedLine').innerHTML = d.meta.updatedLine;
-  document.getElementById('footerNote').innerHTML = d.meta.footerNote;
-
-  const allItems = d.groups.flatMap(g => g.items);
-  const counts = {
-    done: allItems.filter(i => i.status === 'done').length,
-    draft: allItems.filter(i => i.status === 'draft').length,
-    gap: allItems.filter(i => i.status === 'gap').length,
-    flag: d.decisions.length,
-  };
-
-  document.getElementById('summaryStrip').innerHTML = `
-    <div class="n-done"><b>${counts.done}</b><span>Done</span></div>
-    <div class="n-draft"><b>${counts.draft}</b><span>Draft — needs review</span></div>
-    <div class="n-flag"><b>${counts.flag}</b><span>Needs your decision</span></div>
-    <div class="n-gap"><b>${counts.gap}</b><span>Left for later</span></div>
-  `;
-
-  if (d.decisions.length) {
-    document.getElementById('decisionsSection').style.display = '';
-    document.getElementById('decisionsList').innerHTML = d.decisions.map(x => `
-      <div class="decision">
-        <span class="tag">${esc(x.tag)}</span>
-        <h3>${esc(x.title)}</h3>
-        <p>${x.body}</p>
-      </div>
-    `).join('');
+    {
+     "name": "The 'could not be loaded' message",
+     "status": "done",
+     "description": "If the file holding all the content ever breaks, each gallery says so in plain words rather than showing an empty page."
+    },
+    {
+     "name": "Grey loading blocks",
+     "status": "done",
+     "description": "While a gallery is being filled in, grey shapes hold the space so the page does not jump about."
+    }
+   ]
+  },
+  {
+   "title": "Home page",
+   "items": [
+    {
+     "name": "The headline",
+     "status": "done",
+     "description": "'Unleashing Creativity, One Stroke at a Time', with a supporting line beneath it.",
+     "admin": true
+    },
+    {
+     "name": "Three buttons",
+     "status": "done",
+     "description": "Explore Drawings, Watch Videos, About Venuka."
+    },
+    {
+     "name": "The framed drawing",
+     "status": "done",
+     "description": "The frog-and-duck photograph in a frame, captioned with where it came from and when.",
+     "admin": true
+    },
+    {
+     "name": "The welcome ribbon",
+     "status": "done",
+     "description": "'Happy Learning to all Children and all Visitors!' across the foot of the opening screen.",
+     "admin": true
+    },
+    {
+     "name": "A little about Venuka",
+     "status": "done",
+     "description": "A short paragraph, with a link on to the About page.",
+     "admin": true
+    },
+    {
+     "name": "Fresh from the sketchbook",
+     "status": "done",
+     "description": "The four newest drawings, picked automatically by date — nothing to update by hand."
+    },
+    {
+     "name": "Draw along with Venuka",
+     "status": "done",
+     "description": "The most recent videos from the channel, shown as cards that play where they are."
+    }
+   ]
+  },
+  {
+   "title": "Drawings gallery",
+   "items": [
+    {
+     "name": "All 23 drawings",
+     "status": "done",
+     "description": "Every drawing in the collection, newest first."
+    },
+    {
+     "name": "The search box",
+     "status": "done",
+     "description": "Types as you go and narrows the drawings immediately, with a button to clear it."
+    },
+    {
+     "name": "Category buttons with counts",
+     "status": "done",
+     "description": "Eight categories, each showing how many drawings it holds, so an empty one is obvious before you press it."
+    },
+    {
+     "name": "The 'showing X of Y' line",
+     "status": "done",
+     "description": "Says how many drawings are on screen out of the whole collection."
+    },
+    {
+     "name": "Opening a drawing full size",
+     "status": "done",
+     "description": "Click any drawing for the large version, its title, its notes, and a link to the video where there is one."
+    },
+    {
+     "name": "When nothing matches",
+     "status": "done",
+     "description": "A friendly message suggesting a different search rather than an empty screen."
+    }
+   ]
+  },
+  {
+   "title": "The sketchbook",
+   "description": "The pretty way through the same drawings. The gallery remains the real, searchable listing, so nothing is only reachable here.",
+   "items": [
+    {
+     "name": "A sketchbook that turns its pages",
+     "status": "done",
+     "description": "A sheet lifts from one side and lays itself down on the other, the way a real sketchbook does."
+    },
+    {
+     "name": "Drawing on the left, notes on the right",
+     "status": "done",
+     "description": "Each opening shows one drawing and what is known about it."
+    },
+    {
+     "name": "Page numbers",
+     "status": "done",
+     "description": "So it reads as a book rather than a list."
+    },
+    {
+     "name": "Opens full size on a click",
+     "status": "done",
+     "description": "Uses the same large viewer as the rest of the site."
+    },
+    {
+     "name": "A still version",
+     "status": "done",
+     "description": "For anyone whose device asks for less movement, the pages change without the turning animation."
+    }
+   ]
+  },
+  {
+   "title": "Videos",
+   "items": [
+    {
+     "name": "All 14 videos",
+     "status": "done",
+     "description": "Each with its own thumbnail picture, title and description."
+    },
+    {
+     "name": "Playing without leaving the page",
+     "status": "done",
+     "description": "Press play and the video runs in place, through YouTube's privacy-friendly player, which does not set tracking cookies until you press play."
+    },
+    {
+     "name": "Tag buttons",
+     "status": "done",
+     "description": "Colouring, Animals, Birds, Nature, Cute Characters, Step by step, Easy — each with a live count."
+    },
+    {
+     "name": "The search box",
+     "status": "done",
+     "description": "Same behaviour as the drawings gallery."
+    }
+   ]
+  },
+  {
+   "title": "Arts & crafts",
+   "items": [
+    {
+     "name": "The crafts gallery",
+     "status": "gap",
+     "description": "Built and working, but there is not one craft photograph yet, so it shows its empty state. The moment a photograph is added it appears here."
+    },
+    {
+     "name": "Four craft ideas to try at home",
+     "status": "done",
+     "description": "Written out, each with what it needs and what to do.",
+     "admin": true
+    },
+    {
+     "name": "The empty state",
+     "status": "done",
+     "description": "Says plainly that the crafts are still to be photographed, rather than pretending the page is finished."
+    }
+   ]
+  },
+  {
+   "title": "New creations",
+   "items": [
+    {
+     "name": "Most recent drawings",
+     "status": "done",
+     "description": "Fills itself from the dates on the drawings."
+    },
+    {
+     "name": "Most recent from the channel",
+     "status": "done",
+     "description": "The newest videos, in the order they were published."
+    },
+    {
+     "name": "'What this page is waiting for'",
+     "status": "done",
+     "description": "A short, honest note saying these sections are built and empty, and will fill as new work is added.",
+     "admin": true
+    }
+   ]
+  },
+  {
+   "title": "Learn & Create",
+   "items": [
+    {
+     "name": "Six ideas to get you going",
+     "status": "done",
+     "description": "Starting points for a child with a blank page.",
+     "admin": true
+    },
+    {
+     "name": "How almost every drawing here was made",
+     "status": "done",
+     "description": "The method Venuka uses, written as steps.",
+     "admin": true
+    },
+    {
+     "name": "Five colouring tricks",
+     "status": "done",
+     "description": "Short, practical tips.",
+     "admin": true
+    },
+    {
+     "name": "What to keep in the box",
+     "status": "done",
+     "description": "Six materials worth having to hand.",
+     "admin": true
+    },
+    {
+     "name": "Four encouragements",
+     "status": "done",
+     "description": "Short lines of the 'keep going' kind, shown around the learning pages.",
+     "admin": true
+    }
+   ]
+  },
+  {
+   "title": "About Venuka",
+   "items": [
+    {
+     "name": "A creative journey",
+     "status": "done",
+     "description": "How the drawing started and where it has gone.",
+     "admin": true
+    },
+    {
+     "name": "Loving drawing and colouring",
+     "status": "done",
+     "description": "What she enjoys most.",
+     "admin": true
+    },
+    {
+     "name": "Animals, nature and characters",
+     "status": "done",
+     "description": "What she draws most often.",
+     "admin": true
+    },
+    {
+     "name": "A message from the family",
+     "status": "done",
+     "description": "A quote, signed '~ By My Dad'.",
+     "admin": true
+    },
+    {
+     "name": "What drawing gives a child",
+     "status": "done",
+     "description": "A short piece for visiting parents.",
+     "admin": true
+    },
+    {
+     "name": "The space for her photograph",
+     "status": "gap",
+     "description": "The page holds a place for it. Deliberately empty — see the decision below."
+    },
+    {
+     "name": "A link to the old Google Site",
+     "status": "done",
+     "description": "So the earlier site is not simply lost.",
+     "admin": true
+    }
+   ]
+  },
+  {
+   "title": "Say hello — the contact page",
+   "items": [
+    {
+     "name": "Name, email, subject and message",
+     "status": "done",
+     "description": "Four boxes, each explaining what is wanted and each checked before anything is sent."
+    },
+    {
+     "name": "The consent tickbox",
+     "status": "done",
+     "description": "Must be ticked; the message cannot be sent without it."
+    },
+    {
+     "name": "The hidden spam trap",
+     "status": "done",
+     "description": "An extra box no person can see. A machine filling it in is quietly ignored, and is never told which boxes it got wrong."
+    },
+    {
+     "name": "Error messages, box by box",
+     "status": "done",
+     "description": "Each problem is shown beside the box that caused it, in words rather than in red alone."
+    },
+    {
+     "name": "Where a message goes",
+     "status": "done",
+     "description": "Into a private Google Sheet only the family can open. Confirmed working."
+    },
+    {
+     "name": "What it says afterwards",
+     "status": "done",
+     "description": "It reports a real success or a real failure. It never claims a message was sent when it was not."
+    },
+    {
+     "name": "The YouTube channel link",
+     "status": "done",
+     "description": "The other way to reach her, published on the page.",
+     "admin": true
+    },
+    {
+     "name": "Instagram, Facebook and WhatsApp",
+     "status": "gap",
+     "description": "Slots exist and are empty. Each says plainly that it is not published yet rather than showing a dead link.",
+     "admin": true
+    }
+   ]
+  },
+  {
+   "title": "Privacy notice and the wrong-address page",
+   "items": [
+    {
+     "name": "The privacy notice",
+     "status": "done",
+     "description": "Who should use the form, what is collected, why, where it is kept, for how long, cookies and video embeds, and what choices a visitor has.",
+     "admin": true
+    },
+    {
+     "name": "The wrong-address page",
+     "status": "done",
+     "description": "'This page went off the page' — a friendly screen with the way back, shown for any address that does not exist."
+    }
+   ]
+  },
+  {
+   "title": "The collection itself",
+   "description": "What is actually in the website today, counted from the content file rather than remembered.",
+   "items": [
+    {
+     "name": "23 drawings",
+     "status": "done",
+     "description": "Up from 14 at the end of August."
+    },
+    {
+     "name": "10 photographed originals",
+     "status": "done",
+     "description": "Drawings photographed from the paper, shown as the real thing."
+    },
+    {
+     "name": "13 drawings shown with their video still",
+     "status": "done",
+     "description": "Not yet photographed, so the gallery uses the picture from the video. Honest, but a photograph would be better."
+    },
+    {
+     "name": "14 videos",
+     "status": "done",
+     "description": "Each matched to a thumbnail picture held on the site."
+    },
+    {
+     "name": "Eight categories",
+     "status": "done",
+     "description": "Animal Drawings, Birds, Nature, Cartoon and Cute Characters, Pencil Drawings, Colour Drawings, Easy Drawings for Kids, Special Artwork. All eight now have drawings in them.",
+     "admin": true
+    },
+    {
+     "name": "No crafts yet",
+     "status": "gap",
+     "description": "Nothing has been photographed. The page handles it gracefully."
+    },
+    {
+     "name": "Four drawings without a date",
+     "status": "draft",
+     "description": "Starry Night with Moon, Rainbow by the Lake, Pink Flowers on Blue, and Colourful Landscape Layers. They sort to the end of 'newest first' until a date is added.",
+     "admin": true
+    },
+    {
+     "name": "Nine drawings without materials listed",
+     "status": "draft",
+     "description": "Those entries show 'Not recorded yet' rather than a guess at what was used.",
+     "admin": true
+    }
+   ]
+  },
+  {
+   "title": "Pictures and files",
+   "items": [
+    {
+     "name": "The frog-and-duck photograph",
+     "status": "done",
+     "description": "In three sizes, so a phone downloads a small one and a laptop a large one. Dated in her own handwriting, August 2023."
+    },
+    {
+     "name": "Nine more photographed originals",
+     "status": "done",
+     "description": "Saved in a modern format that keeps the quality at a fraction of the size."
+    },
+    {
+     "name": "14 video thumbnails",
+     "status": "done",
+     "description": "About 62 KB each."
+    },
+    {
+     "name": "The sharing picture",
+     "status": "done",
+     "description": "What appears when the link is pasted into WhatsApp or Facebook — a crop of the frog-and-duck drawing."
+    },
+    {
+     "name": "Logo and tab icon",
+     "status": "done",
+     "description": "Both drawn as shapes rather than photographs, so they stay sharp at any size and weigh almost nothing."
+    },
+    {
+     "name": "The crafts picture folder",
+     "status": "gap",
+     "description": "Empty, waiting for the first craft photograph."
+    }
+   ]
+  },
+  {
+   "title": "Publishing and safety",
+   "description": "How a change gets from the family's computer to the web, and what stops a mistake getting there.",
+   "items": [
+    {
+     "name": "66 automatic checks",
+     "status": "done",
+     "description": "Run before anything is published. They catch a missing comma, a drawing with no title, a picture that is not there, a broken link, an image with no description for screen readers, and text too faint to read. If one fails, nothing is published and the live site is untouched."
+    },
+    {
+     "name": "The site assembler",
+     "status": "done",
+     "description": "Copies the website, and only the website, into a clean folder for publishing. It works from a short list of what belongs, so a private note added later is left out without anyone having to remember. Checked by serving the result: every working document returns 'not found'."
+    },
+    {
+     "name": "The web-address setter",
+     "status": "done",
+     "description": "One command updates the address inside all nine pages plus the sitemap, so WhatsApp previews and search engines point at the right place."
+    },
+    {
+     "name": "The old GitHub publishing step",
+     "status": "gap",
+     "description": "Served the site until now. It needs GitHub Pages, which a private repository cannot use without paying, so it is being removed."
+    },
+    {
+     "name": "Cloudflare Pages",
+     "status": "gap",
+     "description": "The new home. Free, works with a private repository, and runs the same checks before publishing. Not connected yet."
+    },
+    {
+     "name": "A private repository",
+     "status": "gap",
+     "description": "So the working notes about Venuka are not readable by strangers. The website itself stays public either way. Not done yet."
+    },
+    {
+     "name": "Visitor counting",
+     "status": "gap",
+     "description": "A line is ready for it. Cookieless, so it needs no consent banner, and nothing at all is requested while it is switched off."
+    }
+   ]
   }
+ ],
+ "decisions": [
+  {
+   "tag": "Photo of Venuka",
+   "title": "A photograph of her exists but has not been published",
+   "body": "There is a photo on your machine. It was deliberately left out — publishing a photograph of a child is a family decision, not a build decision. Making the repository private does <b>not<\/b> change this: the website is public either way, so the moment the photograph goes on the About page it is public permanently. The page holds a space for it. Adding it later is easy; removing it later is not."
+  },
+  {
+   "tag": "School year",
+   "title": "Her school year and board were left off on purpose",
+   "body": "The old Google Site listed both under Education. They were omitted here because it is an identifying detail about a child, sitting next to her first name and her drawings. Say the word and they go back in — but it should be a choice, not an oversight."
+  },
+  {
+   "tag": "Missing videos",
+   "title": "Seven videos were on the channel but not on the website",
+   "body": "Counted against the live channel feed on 30 August: a Jungle giraffe-and-cat pair, a duck drawing, a mermaid-and-fish colouring, a sheep/girl/ducks scene and others. <b>This has not been re-counted since<\/b>, and the collection has grown from 14 drawings to 23 in the meantime, so the real number today may be different. The site does not watch YouTube — each video is added by hand. Two things to settle: whether to add the missing ones, and whether you want a daily automatic check."
+  },
+  {
+   "tag": "Form address",
+   "title": "The form's delivery address is readable in the page source",
+   "body": "The contact form posts to a Google Apps Script address, and anyone who views the page source can see it. That is normal and unavoidable for a form on a static site, and the sheet behind it stays private — but it means a determined person could send messages straight to the script, bypassing the page. The script already defends itself: it rejects anything missing required fields, trims very long messages, allows twenty per hour, and ignores anything that trips the spam trap. Worth knowing it is there, and worth replacing the address if the sheet ever starts filling with rubbish."
+  },
+  {
+   "tag": "Email address",
+   "title": "No email address is published anywhere on the site",
+   "body": "Every contact field is deliberately empty, and the footer and contact page both show an honest 'not added yet' rather than a dead link. The form plus the YouTube channel are the only ways to reach her — which may be exactly right for a child's website. If you do add one, it becomes public and scrapeable, so a separate address kept for this is wiser than a personal one."
+  }
+ ],
+ "tasks": {
+  "updated": "4 November 2026, 11:00 IST",
+  "note": "The website itself is finished. Everything left is either moving it to its permanent home, or filling in work that only the family can supply — photographs, and two decisions about what to say about Venuka. Items marked 'on hold' are not counted in the progress figure; they are things worth doing one day, not things holding anything up.",
+  "phases": [
+   {
+    "id": "P1",
+    "title": "Move to its permanent home",
+    "dates": "decided 3–4 Nov 2026 · not yet carried out"
+   },
+   {
+    "id": "P2",
+    "title": "Fill in the collection",
+    "dates": "ongoing, as new work is made"
+   },
+   {
+    "id": "P3",
+    "title": "The family decisions",
+    "dates": "open since 30 Aug 2026"
+   },
+   {
+    "id": "P4",
+    "title": "Worth doing one day",
+    "dates": "no date"
+   }
+  ],
+  "tasks": [
+   {
+    "id": "T1",
+    "phase": "P1",
+    "title": "Decide where the site should live",
+    "area": "Hosting",
+    "who": "Hara",
+    "doneWhen": "The address and the host are settled, and the reasoning is written down where it can be checked later.",
+    "subs": [
+     {
+      "t": "Weigh a subdomain against buying a domain",
+      "s": "c",
+      "n": "Hara asked, 3 Nov 2026. Settled on artbyvenuka.nischayacreativesoft.com — free, and the company domain was already in hand."
+     },
+     {
+      "t": "Check what the company domain is actually doing today",
+      "s": "c",
+      "n": "Read live on 3 Nov: GitHub's four addresses on the bare domain, www pointing at the same account, one Google verification line, no email records, no other subdomains. The new subdomain sits beside all of it and disturbs none of it."
+     },
+     {
+      "t": "Settle whether the repository should be private",
+      "s": "c",
+      "n": "Hara decided private, 4 Nov 2026, so the working notes about Venuka are not readable by strangers."
+     },
+     {
+      "t": "Confirm what a private repository costs on GitHub",
+      "s": "c",
+      "n": "Checked against GitHub's own documentation, 4 Nov: free accounts can publish a website only from a public repository. Hence the move to Cloudflare."
+     },
+     {
+      "t": "Confirm Cloudflare can serve a subdomain without moving the domain",
+      "s": "c",
+      "n": "Checked against Cloudflare's own documentation, 4 Nov: a subdomain needs only one record at GoDaddy. The nameservers stay where they are."
+     },
+     {
+      "t": "Write the decision and the steps down",
+      "s": "c",
+      "n": "DEPLOYMENT.md rewritten end to end, 4 Nov, and committed."
+     }
+    ]
+   },
+   {
+    "id": "T2",
+    "phase": "P1",
+    "title": "Keep the working notes off the website",
+    "area": "Safety",
+    "who": "Hara",
+    "doneWhen": "The published site contains the eleven pages and nothing else, and that is true automatically rather than by anyone remembering.",
+    "subs": [
+     {
+      "t": "Write something that copies only the website",
+      "s": "c",
+      "n": "Done 4 Nov. It works from a list of what belongs, so anything new is left out by default rather than needing to be noticed."
+     },
+     {
+      "t": "Prove it by actually serving the result",
+      "s": "c",
+      "n": "Served it and asked for each document by name: all of them returned 'not found'. The site itself rendered correctly with no errors."
+     },
+     {
+      "t": "Make it part of the real publishing step",
+      "s": "n",
+      "n": "Waits on Cloudflare being connected — it goes in as the build command there."
+     }
+    ]
+   },
+   {
+    "id": "T3",
+    "phase": "P1",
+    "title": "Make the repository private",
+    "area": "Hosting",
+    "who": "Hara",
+    "doneWhen": "The code and notes are private, and no half-switched-off publishing is left behind.",
+    "subs": [
+     {
+      "t": "Switch the repository to private",
+      "s": "n"
+     },
+     {
+      "t": "Switch GitHub Pages off",
+      "s": "n",
+      "n": "Otherwise a stale public copy is left sitting there."
+     },
+     {
+      "t": "Remove the old publishing step",
+      "s": "n",
+      "n": "It needs GitHub Pages and would now fail on every single change, sending a failure email each time."
+     },
+     {
+      "t": "Tell anyone who has the old link",
+      "s": "n",
+      "n": "The current github.io address stops working the moment the repository goes private."
+     }
+    ]
+   },
+   {
+    "id": "T4",
+    "phase": "P1",
+    "title": "Connect Cloudflare Pages",
+    "area": "Hosting",
+    "who": "Hara",
+    "doneWhen": "A change pushed from the computer appears on Cloudflare's own free address a minute later, with the checks having run first.",
+    "subs": [
+     {
+      "t": "Make a Cloudflare account",
+      "s": "n"
+     },
+     {
+      "t": "Connect it to the repository, that one only",
+      "s": "n",
+      "n": "Choose 'only select repositories' rather than all of them, so Cloudflare can read this project and nothing else."
+     },
+     {
+      "t": "Set the build command and the output folder",
+      "s": "n",
+      "n": "The checks and the assembler as the command; the assembled folder as the output."
+     },
+     {
+      "t": "Deploy once and open the free address",
+      "s": "n"
+     }
+    ]
+   },
+   {
+    "id": "T5",
+    "phase": "P1",
+    "title": "Point the subdomain at it",
+    "area": "Hosting",
+    "who": "Hara",
+    "doneWhen": "artbyvenuka.nischayacreativesoft.com loads the site over a secure connection, and the company site is unchanged.",
+    "subs": [
+     {
+      "t": "Add the domain in Cloudflare first",
+      "s": "n",
+      "n": "Order matters. Creating the record at GoDaddy before Cloudflare knows about the domain gives visitors an error until it settles."
+     },
+     {
+      "t": "Add the one record at GoDaddy",
+      "s": "n",
+      "n": "A CNAME on 'artbyvenuka'. The bare domain and www records are the company site and must not be touched."
+     },
+     {
+      "t": "Wait for the secure certificate",
+      "s": "n",
+      "n": "Usually minutes. Cloudflare shows 'Active' when it is ready."
+     },
+     {
+      "t": "Check the company site still loads",
+      "s": "n"
+     }
+    ]
+   },
+   {
+    "id": "T6",
+    "phase": "P1",
+    "title": "Tell the site its new address",
+    "area": "Hosting",
+    "who": "Hara",
+    "doneWhen": "Pasting the link into WhatsApp shows Venuka's frog-and-duck drawing.",
+    "subs": [
+     {
+      "t": "Run the address setter",
+      "s": "n",
+      "n": "Best left until the subdomain actually answers, so the site does not spend days pointing at an address that is not there yet."
+     },
+     {
+      "t": "Run the checks and publish",
+      "s": "n"
+     },
+     {
+      "t": "Paste the link into WhatsApp and look",
+      "s": "n"
+     }
+    ]
+   },
+   {
+    "id": "T7",
+    "phase": "P1",
+    "title": "Check it over after the move",
+    "area": "Hosting",
+    "who": "Hara",
+    "doneWhen": "Every item on the list in the publishing guide passes on the real address.",
+    "subs": [
+     {
+      "t": "The scene moves and the butterflies fly",
+      "s": "n"
+     },
+     {
+      "t": "Search, filters and full-size view all work",
+      "s": "n"
+     },
+     {
+      "t": "A video plays",
+      "s": "n"
+     },
+     {
+      "t": "Open it on a phone",
+      "s": "n"
+     },
+     {
+      "t": "A wrong address shows the friendly page",
+      "s": "n"
+     },
+     {
+      "t": "Asking for a working document returns 'not found'",
+      "s": "n",
+      "n": "The one that matters most. If this fails, the notes are on the web."
+     }
+    ]
+   },
+   {
+    "id": "T8",
+    "phase": "P2",
+    "title": "Photograph the crafts",
+    "area": "Content",
+    "who": "Family",
+    "doneWhen": "At least one craft photograph is on the site and the empty state is gone.",
+    "subs": [
+     {
+      "t": "Photograph a finished craft",
+      "s": "b",
+      "n": "Waiting on the family. The page, the card and the folder are all ready and have been since 30 August."
+     },
+     {
+      "t": "Add it to the content file",
+      "s": "b",
+      "n": "One short entry; the guide explains each field."
+     }
+    ]
+   },
+   {
+    "id": "T9",
+    "phase": "P2",
+    "title": "Re-count the videos on the channel",
+    "area": "Content",
+    "who": "Hara",
+    "doneWhen": "The number of videos on the channel but not on the site is known again, and each one is either added or deliberately left out.",
+    "subs": [
+     {
+      "t": "Compare the channel against the site",
+      "s": "n",
+      "n": "Last counted 30 August: seven missing. The collection has grown from 14 drawings to 23 since, so that number is stale."
+     },
+     {
+      "t": "Add the ones worth adding",
+      "s": "n"
+     },
+     {
+      "t": "Decide about a daily automatic check",
+      "s": "n",
+      "n": "Would remove the counting by hand, but it is machinery to maintain for a site that gains a video every few weeks."
+     }
+    ]
+   },
+   {
+    "id": "T10",
+    "phase": "P2",
+    "title": "Fill the gaps in the drawing entries",
+    "area": "Content",
+    "who": "Family",
+    "doneWhen": "Every drawing has a date, and materials where they are known.",
+    "subs": [
+     {
+      "t": "Four drawings have no date",
+      "s": "n",
+      "n": "Starry Night with Moon, Rainbow by the Lake, Pink Flowers on Blue, Colourful Landscape Layers. They sort to the end of 'newest first' until dated."
+     },
+     {
+      "t": "Nine drawings have no materials listed",
+      "s": "n",
+      "n": "They show 'Not recorded yet' rather than a guess — honest, but a real answer is better."
+     },
+     {
+      "t": "Photograph the 13 drawings that only have a video still",
+      "s": "h",
+      "n": "They look fine as they are. Worth doing slowly, a few at a time, not as a job."
+     }
+    ]
+   },
+   {
+    "id": "T11",
+    "phase": "P3",
+    "title": "The photograph of Venuka",
+    "area": "Decision",
+    "who": "Family",
+    "doneWhen": "The family has decided either way, and the About page reflects it.",
+    "subs": [
+     {
+      "t": "Decide whether to publish it",
+      "s": "b",
+      "n": "Open since 30 August. A private repository does not change this — the website is public either way."
+     },
+     {
+      "t": "Add it, if the answer is yes",
+      "s": "b",
+      "n": "The space is already on the page."
+     }
+    ]
+   },
+   {
+    "id": "T12",
+    "phase": "P3",
+    "title": "Her school year and board",
+    "area": "Decision",
+    "who": "Family",
+    "doneWhen": "A decision is made, rather than it staying off the page by default.",
+    "subs": [
+     {
+      "t": "Decide whether they go back on the About page",
+      "s": "b",
+      "n": "On the old Google Site; left out here because it identifies a child alongside her first name and her drawings."
+     }
+    ]
+   },
+   {
+    "id": "T13",
+    "phase": "P4",
+    "title": "Count the visitors",
+    "area": "Nice to have",
+    "who": "Hara",
+    "doneWhen": "The page shows how many people visit, without cookies and without a consent banner.",
+    "subs": [
+     {
+      "t": "Add the Cloudflare analytics key",
+      "s": "h",
+      "n": "One line in the content file. You will be in the Cloudflare dashboard anyway for the hosting move, so it costs about a minute then."
+     }
+    ]
+   },
+   {
+    "id": "T14",
+    "phase": "P4",
+    "title": "Instagram, Facebook, WhatsApp",
+    "area": "Nice to have",
+    "who": "Family",
+    "doneWhen": "Either the links are published, or the slots are removed for good.",
+    "subs": [
+     {
+      "t": "Decide whether the site should have them at all",
+      "s": "h",
+      "n": "The slots exist and say plainly that nothing is published yet. For a child's site, the YouTube channel and the form may be enough."
+     }
+    ]
+   }
+  ]
+ },
+ "diagrams": [
+  {
+   "id": "publishing",
+   "title": "How a change reaches the web",
+   "versions": [
+    {
+     "v": "v1",
+     "date": "30 Aug 2026",
+     "time": "18:10 IST",
+     "status": "superseded",
+     "why": "Written when the site first went live, to show the family that a mistake cannot reach the web: the checks sit between the computer and the website, and a failure simply means nothing is published.",
+     "context": "The repository was public, which is the only way GitHub publishes a site for free. The whole folder was published, with the working documents deleted in the last seconds before it went out.",
+     "changed": "Replaced on 4 Nov 2026 when the repository was made private.",
+     "built": "Yes — this is how the site was published from 30 Aug until now.",
+     "svg": "<svg viewBox=\"0 0 680 282\" role=\"img\" aria-label=\"A push goes to a public GitHub repository, the checks run, GitHub Pages publishes the whole folder to a github.io address.\"><defs><marker id=\"ah\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M2 1L8 5L2 9\" fill=\"none\" stroke=\"context-stroke\" stroke-width=\"1.5\"/><\/marker><\/defs><rect class=\"b n\" x=\"20\" y=\"30\" width=\"190\" height=\"56\" rx=\"8\"/><text class=\"tt\" x=\"115.0\" y=\"49.0\">Your computer<\/text><text class=\"ts\" x=\"115.0\" y=\"69.0\">git push<\/text><path class=\"ar\" d=\"M210 58 L250 58\" marker-end=\"url(#ah)\"/><rect class=\"b a\" x=\"250\" y=\"30\" width=\"190\" height=\"56\" rx=\"8\"/><text class=\"tt\" x=\"345.0\" y=\"49.0\">GitHub<\/text><text class=\"ts\" x=\"345.0\" y=\"69.0\">Public repository<\/text><path class=\"ar\" d=\"M440 58 L480 58\" marker-end=\"url(#ah)\"/><rect class=\"b c\" x=\"480\" y=\"30\" width=\"180\" height=\"56\" rx=\"8\"/><text class=\"tt\" x=\"570.0\" y=\"49.0\">Checks<\/text><text class=\"ts\" x=\"570.0\" y=\"69.0\">66 must pass<\/text><path class=\"ar\" d=\"M570 86 L570 120\" marker-end=\"url(#ah)\"/><rect class=\"b c\" x=\"400\" y=\"120\" width=\"260\" height=\"56\" rx=\"8\"/><text class=\"tt\" x=\"530.0\" y=\"139.0\">GitHub Pages<\/text><text class=\"ts\" x=\"530.0\" y=\"159.0\">publishes the whole folder<\/text><path class=\"ar\" d=\"M530 176 L530 210\" marker-end=\"url(#ah)\"/><rect class=\"b c\" x=\"200\" y=\"210\" width=\"460\" height=\"52\" rx=\"8\"/><text class=\"tt\" x=\"430.0\" y=\"227.0\">itsmehara.github.io/venuka-art<\/text><text class=\"ts\" x=\"430.0\" y=\"247.0\">the address people visited<\/text><\/svg>"
+    },
+    {
+     "v": "v2",
+     "date": "4 Nov 2026",
+     "time": "11:00 IST",
+     "status": "current",
+     "why": "The repository is going private so the working notes about Venuka are not readable by strangers. GitHub publishes a free site only from a public repository, so the host has to change.",
+     "context": "Cloudflare Pages is free, has no public-repository condition, and runs the same checks as the build command. The company domain is untouched: its nameservers stay at GoDaddy and it keeps pointing at GitHub Pages. Only one new record is added beside it.",
+     "changed": "GitHub Pages gives way to Cloudflare Pages, and the address moves from a github.io path to a subdomain of the company domain. The deleting of working documents moves out of the publishing step and into the assembler, which is the second topic below.",
+     "svg": "<svg viewBox=\"0 0 680 355\" role=\"img\" aria-label=\"A push goes to a private GitHub repository, Cloudflare Pages runs the checks and the assembler, and serves the result at a subdomain. The company domain stays at GoDaddy and keeps pointing at GitHub Pages.\"><defs><marker id=\"ah\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M2 1L8 5L2 9\" fill=\"none\" stroke=\"context-stroke\" stroke-width=\"1.5\"/><\/marker><\/defs><rect class=\"b n\" x=\"20\" y=\"30\" width=\"180\" height=\"56\" rx=\"8\"/><text class=\"tt\" x=\"110.0\" y=\"49.0\">Your computer<\/text><text class=\"ts\" x=\"110.0\" y=\"69.0\">git push<\/text><path class=\"ar\" d=\"M200 58 L240 58\" marker-end=\"url(#ah)\"/><rect class=\"b a\" x=\"240\" y=\"30\" width=\"190\" height=\"56\" rx=\"8\"/><text class=\"tt\" x=\"335.0\" y=\"49.0\">GitHub<\/text><text class=\"ts\" x=\"335.0\" y=\"69.0\">Private repository<\/text><path class=\"ar\" d=\"M430 58 L470 58\" marker-end=\"url(#ah)\"/><rect class=\"b c\" x=\"470\" y=\"30\" width=\"190\" height=\"56\" rx=\"8\"/><text class=\"tt\" x=\"565.0\" y=\"49.0\">Cloudflare Pages<\/text><text class=\"ts\" x=\"565.0\" y=\"69.0\">runs the checks<\/text><path class=\"ar\" d=\"M565 86 L565 118\" marker-end=\"url(#ah)\"/><rect class=\"b c\" x=\"430\" y=\"118\" width=\"230\" height=\"56\" rx=\"8\"/><text class=\"tt\" x=\"545.0\" y=\"137.0\">Then the assembler<\/text><text class=\"ts\" x=\"545.0\" y=\"157.0\">only the website<\/text><path class=\"ar\" d=\"M545 174 L545 255\" marker-end=\"url(#ah)\"/><rect class=\"frame\" x=\"20\" y=\"215\" width=\"640\" height=\"120\" rx=\"14\"/><text class=\"tl\" x=\"38\" y=\"237\">GoDaddy — the nameservers stay here<\/text><rect class=\"b a\" x=\"45\" y=\"255\" width=\"270\" height=\"60\" rx=\"8\"/><text class=\"tt\" x=\"180.0\" y=\"276.0\">nischayacreativesoft.com<\/text><text class=\"ts\" x=\"180.0\" y=\"296.0\">still on GitHub Pages<\/text><rect class=\"b c\" x=\"355\" y=\"255\" width=\"280\" height=\"60\" rx=\"8\"/><text class=\"tt\" x=\"495.0\" y=\"276.0\">artbyvenuka<\/text><text class=\"ts\" x=\"495.0\" y=\"296.0\">...nischayacreativesoft.com<\/text><\/svg>"
+    }
+   ]
+  },
+  {
+   "id": "whatships",
+   "title": "What reaches the web, and what does not",
+   "versions": [
+    {
+     "v": "v1",
+     "date": "4 Nov 2026",
+     "time": "10:30 IST",
+     "status": "current",
+     "why": "Moving host put the family notes at risk. The old publishing step deleted them in the seconds before going live; Cloudflare has no such step, and if it were forgotten the notes about Venuka's photograph would go public.",
+     "context": "The assembler works from a list of what belongs on the website rather than a list of what to exclude. A private note added next month is therefore left out by default, instead of needing someone to remember it. It refuses to finish if a working document slips through.",
+     "built": "Yes — 4 Nov 2026. Checked by serving the assembled folder and asking for each document by name: all returned not-found, and the site itself rendered correctly with no errors.",
+     "svg": "<svg viewBox=\"0 0 680 312\" role=\"img\" aria-label=\"The repository holds the website and the working notes. The assembler copies only the website, which goes on the web; the notes are left behind and return not-found if anyone asks for them.\"><defs><marker id=\"ah\" viewBox=\"0 0 10 10\" refX=\"8\" refY=\"5\" markerWidth=\"6\" markerHeight=\"6\" orient=\"auto-start-reverse\"><path d=\"M2 1L8 5L2 9\" fill=\"none\" stroke=\"context-stroke\" stroke-width=\"1.5\"/><\/marker><\/defs><rect class=\"frame\" x=\"20\" y=\"20\" width=\"640\" height=\"100\" rx=\"14\"/><text class=\"tl\" x=\"38\" y=\"42\">Everything in the repository<\/text><rect class=\"b c\" x=\"45\" y=\"52\" width=\"275\" height=\"50\" rx=\"8\"/><text class=\"tt\" x=\"182.5\" y=\"68.0\">The website<\/text><text class=\"ts\" x=\"182.5\" y=\"88.0\">11 pages, pictures, styles<\/text><rect class=\"b d\" x=\"360\" y=\"52\" width=\"275\" height=\"50\" rx=\"8\"/><text class=\"tt\" x=\"497.5\" y=\"68.0\">The working notes<\/text><text class=\"ts\" x=\"497.5\" y=\"88.0\">status, registry, guides<\/text><path class=\"ar\" d=\"M182 102 L182 145\" marker-end=\"url(#ah)\"/><path class=\"ar dash\" d=\"M497 102 L497 145\" marker-end=\"url(#ah)\"/><rect class=\"b a\" x=\"60\" y=\"145\" width=\"245\" height=\"52\" rx=\"8\"/><text class=\"tt\" x=\"182.5\" y=\"162.0\">The assembler<\/text><text class=\"ts\" x=\"182.5\" y=\"182.0\">copies only the website<\/text><rect class=\"b d\" x=\"395\" y=\"145\" width=\"245\" height=\"52\" rx=\"8\"/><text class=\"tt\" x=\"517.5\" y=\"162.0\">Left behind<\/text><text class=\"ts\" x=\"517.5\" y=\"182.0\">never copied anywhere<\/text><path class=\"ar\" d=\"M182 197 L182 240\" marker-end=\"url(#ah)\"/><rect class=\"b c\" x=\"60\" y=\"240\" width=\"245\" height=\"52\" rx=\"8\"/><text class=\"tt\" x=\"182.5\" y=\"257.0\">On the web<\/text><text class=\"ts\" x=\"182.5\" y=\"277.0\">what visitors see<\/text><text class=\"ts\" x=\"517\" y=\"237\" style=\"text-anchor:middle\">Asking for one by name<\/text><text class=\"ts\" x=\"517\" y=\"255\" style=\"text-anchor:middle\">returns &#x27;not found&#x27;<\/text><\/svg>"
+    }
+   ]
+  }
+ ]
+}/*STATUS_DATA:END*/;
 
-  document.getElementById('groupsHost').innerHTML = d.groups.map(g => `
-    <section>
-      <div class="sec-head">
-        <h2>${esc(g.title)}</h2>
-        ${g.description ? `<p>${esc(g.description)}</p>` : ''}
-      </div>
-      <div class="list">
-        ${g.items.map(item => `
-          <div class="row">
-            <div class="row-text">
-              <h4>${esc(item.name)}</h4>
-              <p>${item.description}</p>
-              ${item.admin ? '<div class="row-badges"><span class="admin-badge">Good admin-panel candidate</span></div>' : ''}
-            </div>
-            <span class="pill pill-${item.status}">${statusLabel(item.status)}</span>
-          </div>
-        `).join('')}
-      </div>
-    </section>
-  `).join('');
+(function(){
+const d = STATUS_DATA;
+const $ = id => document.getElementById(id);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+const bar = parts => { const total = parts.reduce((a, [, n]) => a + n, 0);
+  return `<span class="bar" aria-hidden="true">${parts.map(([k, n]) => `<i class="${k}" style="width:${total ? n / total * 100 : 0}%"></i>`).join('')}</span>`; };
+const fold = (id, title, meta, body) =>
+  `<details class="fold" id="${esc(id)}"><summary><h2>${esc(title)}</h2><span class="fold-meta">${meta}</span></summary><div class="fold-body">${body}</div></details>`;
+
+// ---------- Status tab ----------
+document.title = d.meta.pageTitle;
+$('orgLabel').textContent = d.meta.orgLabel;
+$('pageTitle').textContent = d.meta.pageTitle;
+$('markInitials').textContent = d.meta.markInitials;
+$('updatedLine').innerHTML = d.meta.updatedLine;
+$('footerNote').innerHTML = d.meta.footerNote;
+const LABEL = {done: 'Done', draft: 'Draft', gap: 'Left for later'};
+const tally = items => ['done', 'draft', 'gap'].map(k => [k, items.filter(i => i.status === k).length]);
+const all = d.groups.flatMap(g => g.items);
+const [[, nDone], [, nDraft], [, nGap]] = tally(all);
+$('summaryStrip').innerHTML = `
+  <div class="n-done"><b>${nDone}</b><span>Done</span></div>
+  <div class="n-draft"><b>${nDraft}</b><span>Draft — needs review</span></div>
+  <div class="n-flag"><b>${d.decisions.length}</b><span>Needs your decision</span></div>
+  <div class="n-gap"><b>${nGap}</b><span>Left for later</span></div>`;
+if (d.decisions.length) $('decisionsHost').innerHTML = fold('decisions', 'Needs your decision',
+  `<span class="chip flag">${d.decisions.length} to decide</span>`,
+  `<p class="desc">Nothing breaks if these wait — but don't ship to real users until they're settled.</p>` +
+  d.decisions.map(x => `<div class="decision"><span class="tag">${esc(x.tag)}</span><h3>${esc(x.title)}</h3><p>${x.body}</p></div>`).join(''));
+$('groupsHost').innerHTML = d.groups.map(g => {
+  const t = tally(g.items).filter(([, n]) => n);
+  return fold('g-' + slug(g.title), g.title, t.map(([k, n]) => `<span class="chip ${k}">${n} ${LABEL[k].toLowerCase()}</span>`).join('') + bar(t),
+    (g.description ? `<p class="desc">${esc(g.description)}</p>` : '') + `<div class="list">${g.items.map(item => `
+      <div class="row"><div class="row-text"><h4>${esc(item.name)}</h4><p>${item.description}</p>
+        ${item.admin ? '<div class="row-badges"><span class="admin-badge">Good admin-panel candidate</span></div>' : ''}</div>
+        <span class="pill pill-${item.status}">${LABEL[item.status] || esc(item.status)}</span></div>`).join('')}</div>`);
+}).join('');
+
+// ---------- Tasks tab ----------
+const T = d.tasks;
+if (T) {
+  const TL = {c: 'Completed', p: 'In progress', n: 'Not started', b: 'Blocked', h: 'On hold'};
+  const count = subs => subs.reduce((a, s) => (a[s.s]++, a), {c: 0, p: 0, n: 0, b: 0, h: 0});
+  const statusOf = subs => subs.every(s => s.s === 'c') ? 'c' : subs.some(s => s.s === 'p' || s.s === 'c') ? 'p'
+    : subs.some(s => s.s === 'b') ? 'b' : subs.every(s => s.s === 'h') ? 'h' : 'n';
+  const subs = T.tasks.flatMap(t => t.subs), tot = count(subs), active = subs.length - tot.h;
+  $('tab-tasks').hidden = false; $('tab-tasks-count').textContent = `${tot.c}/${active} done`;
+  const state = {st: 'all', phase: 'all', q: ''}, opened = new Set();
+  const host = $('panel-tasks');
+  host.innerHTML = `${T.note ? `<p class="tk-intro">${esc(T.note)}</p>` : ''}
+    <p class="tk-intro">Updated ${esc(T.updated || '')}${T.deadline ? ' · deadline ' + esc(T.deadline) : ''}. On-hold items are not counted in the progress total.</p>
+    <div class="tk-summary">${['c', 'p', 'n', 'b', 'h'].map(k => `<div><b>${tot[k]}</b><span>${TL[k]}</span></div>`).join('')}</div>
+    <div class="tk-overall">${bar([['c', tot.c], ['p', tot.p], ['b', tot.b], ['n', tot.n]])}<b>${tot.c} of ${active} done · ${pct(tot.c, active)}%</b></div>
+    <div class="tk-filters" role="group" aria-label="Filter tasks">
+      ${['all', 'p', 'b', 'n', 'c', 'h'].map(k => `<button type="button" data-st="${k}" aria-pressed="${k === 'all'}">${k === 'all' ? 'All' : TL[k]}</button>`).join('')}
+      <select aria-label="Phase"><option value="all">All phases</option>${T.phases.map(p => `<option value="${esc(p.id)}">${esc(p.id)} ${esc(p.title)}</option>`).join('')}</select>
+      <input type="search" placeholder="Search tasks" aria-label="Search tasks">
+    </div>
+    <div class="fold-bar"><button type="button" data-fold="open">Expand all</button><button type="button" data-fold="close">Collapse all</button></div>
+    <div id="tk-list"></div>`;
+  const render = () => {
+    const q = state.q.toLowerCase(), filtering = state.st !== 'all' || !!q;
+    let out = '';
+    for (const ph of T.phases) {
+      if (state.phase !== 'all' && state.phase !== ph.id) continue;
+      const tasks = T.tasks.filter(t => t.phase === ph.id);
+      let block = '';
+      for (const t of tasks) {
+        const hit = !q || [t.title, t.id, t.area, t.who].join(' ').toLowerCase().includes(q);
+        const shown = t.subs.filter(s => (state.st === 'all' || s.s === state.st) && (hit || (s.t + ' ' + (s.n || '')).toLowerCase().includes(q)));
+        if (!shown.length) continue;
+        const st = statusOf(t.subs), k = count(t.subs);
+        block += `<details class="tk-task" data-key="${esc(t.id)}" ${filtering || opened.has(t.id) ? 'open' : ''}><summary>
+          <div class="tk-score chip ${st}" aria-label="${k.c} of ${t.subs.length} sub-tasks done"><b>${k.c}/${t.subs.length}</b><span>done</span></div>
+          <h3><small>${esc(t.id)}</small>${esc(t.title)}</h3><span class="chip ${st}">${TL[st]}</span>
+          <div class="tk-meta">${bar([['c', k.c], ['p', k.p], ['b', k.b], ['n', k.n]])}<span>${esc([t.area, t.who].filter(Boolean).join(' · '))}</span></div>
+          </summary><div class="tk-body">${t.doneWhen ? `<p class="tk-done"><b>Done when:</b> ${esc(t.doneWhen)}</p>` : ''}<ul class="tk-subs">
+          ${shown.map(s => `<li><span>${esc(s.t)}${s.n ? `<em>${esc(s.n)}</em>` : ''}</span><span class="chip ${s.s}">${TL[s.s]}</span></li>`).join('')}</ul></div></details>`;
+      }
+      if (!block) continue;
+      const ps = tasks.flatMap(t => t.subs), pk = count(ps), pst = statusOf(ps);
+      out += `<details class="tk-phase" data-key="${esc(ph.id)}" ${filtering || state.phase !== 'all' || opened.has(ph.id) ? 'open' : ''}><summary>
+        <span class="tk-ph-title"><h2>${esc(ph.id)} · ${esc(ph.title)}</h2><p>${esc(ph.dates || '')}</p></span>
+        <span class="tk-ph-prog">${bar([['c', pk.c], ['p', pk.p], ['b', pk.b], ['n', pk.n]])}<span class="chip ${pst}">${pk.c}/${ps.length} done · ${pct(pk.c, ps.length)}%</span></span>
+        </summary>${block}</details>`;
+    }
+    $('tk-list').innerHTML = out || '<p class="tk-empty">No tasks match.</p>';
+  };
+  host.addEventListener('toggle', e => {  // remember what the viewer opened, across re-renders
+    const key = e.target.dataset && e.target.dataset.key;
+    if (key && state.st === 'all' && !state.q) e.target.open ? opened.add(key) : opened.delete(key);
+  }, true);
+  host.querySelectorAll('[data-st]').forEach(b => b.addEventListener('click', () => {
+    state.st = b.dataset.st; host.querySelectorAll('[data-st]').forEach(x => x.setAttribute('aria-pressed', x === b)); render();
+  }));
+  host.querySelector('select').addEventListener('change', e => { state.phase = e.target.value; render(); });
+  host.querySelector('input').addEventListener('input', e => { state.q = e.target.value.trim(); render(); });
+  render();
+}
+
+// ---------- Diagrams tab ----------
+const G = d.diagrams;
+if (G && G.length) {
+  $('tab-diagrams').hidden = false;
+  $('tab-diagrams-count').textContent = G.reduce((a, t) => a + t.versions.length, 0);
+  $('panel-diagrams').innerHTML = `<p class="tk-intro">Every design diagram, dated, with why it was added. When a decision changes, the new version goes below the old one; old versions stay, greyed out and struck through.</p>
+    <nav class="dg-nav" aria-label="Diagram topics">${G.map(t => `<a href="#dg-${esc(t.id)}">${esc(t.title)}</a>`).join('')}</nav>
+    <div class="fold-bar"><button type="button" data-fold="open">Expand all</button><button type="button" data-fold="close">Collapse all</button></div>` +
+    G.map(t => {
+      const cur = [...t.versions].reverse().find(v => v.status === 'current') || t.versions[t.versions.length - 1];
+      const when = v => esc(v.date) + (v.time ? ', ' + esc(v.time) : '');
+      return fold('dg-' + t.id, t.title, `<span class="chip c">${esc(cur.v)}</span>${when(cur)} · ${t.versions.length} version${t.versions.length > 1 ? 's' : ''}`,
+        t.versions.map(v => {
+          const isCur = v.status === 'current';
+          const head = `<strong class="dg-head">${esc(v.v)} · ${when(v)}</strong><span class="chip ${isCur ? 'c' : 'h'}">${isCur ? 'CURRENT' : 'SUPERSEDED'}</span>`;
+          const body = `<p><b>Why added:</b> ${esc(v.why)}</p>${v.context ? `<p><b>Context:</b> ${esc(v.context)}</p>` : ''}` +
+            (v.changed ? `<p class="dg-changed"><b>${isCur ? 'Why this version' : 'What changed'}:</b> ${esc(v.changed)}</p>` : '') +
+            (v.built ? `<p><b>Built:</b> ${esc(v.built)}</p>` : '') + (v.svg || '');
+          return isCur ? `<article class="dg-ver current"><div class="dg-meta">${head}</div>${body}</article>`
+            : `<details class="dg-ver superseded"><summary class="dg-meta">${head}</summary>${body}</details>`;
+        }).join(''));
+    }).join('');
+}
+
+// ---------- Tabs, fold bars, links ----------
+const TABS = ['status', 'tasks', 'diagrams'].filter(n => !$('tab-' + n).hidden);
+if (TABS.length > 1) $('tabs').hidden = false;
+const show = name => TABS.forEach(n => { $('tab-' + n).setAttribute('aria-selected', n === name); $('panel-' + n).hidden = n !== name; });
+TABS.forEach(n => $('tab-' + n).addEventListener('click', () => { show(n); history.replaceState(null, '', n === 'status' ? location.pathname : '#' + n); }));
+$('tabs').addEventListener('keydown', e => {
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  const i = Math.max(TABS.indexOf(document.activeElement.id.slice(4)), 0);
+  const next = $('tab-' + TABS[(i + (e.key === 'ArrowRight' ? 1 : TABS.length - 1)) % TABS.length]); next.focus(); next.click();
+});
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-fold]');
+  if (b) { b.closest('.panel').querySelectorAll('details').forEach(x => { x.open = b.dataset.fold === 'open'; }); return; }
+  const a = e.target.closest('a[href^="#"]'), id = a && a.getAttribute('href').slice(1);
+  if (id && $(id) && !TABS.includes(id)) { e.preventDefault(); reveal(id); history.replaceState(null, '', '#' + id); }
+});
+function reveal(id) {
+  const el = $(id); if (!el) return;
+  const panel = el.closest('.panel'); if (panel) show(panel.id.slice(6));
+  for (let p = el; p; p = p.parentElement) if (p.tagName === 'DETAILS') p.open = true;
+  el.scrollIntoView({block: 'start'});
+}
+const openHash = () => { const h = location.hash.slice(1); if (TABS.includes(h)) show(h); else if (h) reveal(h); };
+window.addEventListener('hashchange', openHash);
+openHash();
 })();
-
-function statusLabel(s){
-  return { done: 'Done', draft: 'Draft', gap: 'Left for later' }[s] || s;
-}
-function esc(v){
-  return String(v ?? '').replace(/[&<>"']/g, c => (
-    { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]
-  ));
-}
 </script>
 </body>
 </html>
