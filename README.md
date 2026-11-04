@@ -23,8 +23,8 @@ link to the **Happy Learning Kids** YouTube channel:
 | Content | One data file | `assets/js/data.js`. Add a drawing here and every page updates itself. |
 | Background scene | HTML canvas | The seasonal meadow, ~1,250 lines, written from scratch. |
 | Checks | Node | `tools/check.js`. Uses only what Node ships with. |
-| Hosting | GitHub Pages | Free, HTTPS included, publishes automatically when you push. |
-| Automation | GitHub Actions | Runs the checks, and only publishes if they pass. |
+| Hosting | Cloudflare Pages | Free, HTTPS included, publishes automatically when you push, and works with a private repository. |
+| Automation | The Cloudflare build command | `node tools/check.js && node tools/build.js` — runs the checks, then assembles the publishable folder. Nothing is published if the checks fail. |
 
 **Zero dependencies.** There is no `package.json`, no `node_modules`, nothing to
 `npm install`. That is deliberate: a website that a family keeps for years
@@ -55,11 +55,11 @@ assets/img/video/            Video thumbnails, named after the YouTube video id
 assets/img/crafts/           Craft photographs (empty until the crafts are shot)
 
 tools/check.js               The pre-publish checks — run this before pushing
+tools/build.js               Copies the website, and only the website, into dist/
 tools/set-domain.js          Fills in the real web address once you have one
-.github/workflows/deploy.yml Runs the checks, publishes only if they pass
 
 robots.txt, sitemap.xml      For search engines
-.nojekyll                    Tells GitHub Pages to serve the files untouched
+.nojekyll                    A leftover from GitHub Pages; harmless on Cloudflare
 .gitignore                   What stays on your computer and never goes online
 
 README.md                    This file

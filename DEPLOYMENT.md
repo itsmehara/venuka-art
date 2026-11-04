@@ -76,7 +76,15 @@ site, and there is no reason to.
 ## 3. Making the repository private
 
 The site is currently public at `https://itsmehara.github.io/venuka-art/`.
-Three things to do, in this order.
+
+**Already done — the publishing workflow is deleted.** `.github/` is gone from
+the repository, so no push can put anything on the web any more. The live site
+is frozen on its last deploy: it keeps serving the eleven pages exactly as they
+are, and will go on doing so until GitHub Pages is switched off below. Nothing
+you commit between now and Cloudflare will change it, which is the point — the
+only thing that publishes from here on is Cloudflare, once you connect it.
+
+Two things left, and they are yours to click.
 
 **1. Flip the repository to private.**
 `venuka-art` → Settings → General → scroll to **Danger Zone** → *Change
@@ -87,13 +95,9 @@ Settings → Pages → **Source: None**. On a free account the publish would sto
 working anyway once the repo is private, but leaving it half-on is untidy and
 confusing later.
 
-**3. Delete the old workflow.** Its deploy step needs GitHub Pages and will now
-fail on every push, emailing you a red X each time:
-
-```bash
-git rm .github/workflows/deploy.yml
-git commit -m "Move publishing to Cloudflare Pages"
-```
+You can do these now or at the moment Cloudflare goes live. Doing them now
+takes the old address down a little early; doing them after means the two
+addresses overlap for a while, both serving the same site. Neither is wrong.
 
 > **One thing to know.** The old `itsmehara.github.io/venuka-art/` address will
 > stop working. If you have already shared that link with anyone, send them the
@@ -129,7 +133,9 @@ working forever alongside the custom domain. Open it and check the site loads.
 
 `tools/check.js` runs the 66 content checks. If a comma is missing in
 `data.js`, the command fails, the deploy never happens, and the live site stays
-exactly as it was — the same safety the GitHub workflow gave you.
+exactly as it was — the same safety the GitHub workflow gave you. That workflow
+is deleted now, so this build command is the only place the checks still run.
+If you ever change it, keep `node tools/check.js &&` on the front.
 
 `tools/build.js` then copies **only the website** into `dist/`: the eleven
 pages, `assets/`, `robots.txt`, `sitemap.xml`. Everything else — this file,

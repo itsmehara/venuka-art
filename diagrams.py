@@ -84,7 +84,7 @@ TOPICS = [
                 "context": "The repository was public, which is the only way GitHub publishes a "
                            "site for free. The whole folder was published, with the working "
                            "documents deleted in the last seconds before it went out.",
-                "changed": "Replaced on 4 Nov 2026 when the repository was made private.",
+                "changed": "Removed on 4 Nov 2026, ahead of the repository being made private. It had just published three of the status page's own source files to the public web, because it worked by deleting a named list of working documents and that list had fallen behind the repository. Deleting it means nothing publishes from GitHub at all until Cloudflare is connected; the live site stays frozen on its last deploy.",
                 "built": "Yes — this is how the site was published from 30 Aug until now.",
                 "svg": PUBLISH_V1,
             },
@@ -104,6 +104,10 @@ TOPICS = [
                            "a github.io path to a subdomain of the company domain. The deleting of "
                            "working documents moves out of the publishing step and into the "
                            "assembler, which is the second topic below.",
+                "built": "Not yet — this is the plan, not the present. As of 4 Nov 11:45 IST "
+                         "nothing publishes at all: the GitHub workflow is deleted and Cloudflare "
+                         "is not connected, so the live github.io site is frozen on its last deploy. "
+                         "The parts that exist and are proven are the checks and the assembler.",
                 "svg": PUBLISH_V2,
             },
         ],
@@ -124,9 +128,12 @@ TOPICS = [
                            "than a list of what to exclude. A private note added next month is "
                            "therefore left out by default, instead of needing someone to remember "
                            "it. It refuses to finish if a working document slips through.",
-                "built": "Yes — 4 Nov 2026. Checked by serving the assembled folder and asking for "
-                         "each document by name: all returned not-found, and the site itself "
-                         "rendered correctly with no errors.",
+                "built": "Yes — 4 Nov 2026. Checked twice. First by serving the assembled folder "
+                         "and asking for each document by name: all returned not-found, and the "
+                         "site itself rendered correctly with no errors. Then on the live site "
+                         "itself, after the old publishing step had put three working files on "
+                         "the public web: once the assembler was doing the publishing, all nine "
+                         "documents returned not-found and only the website remained.",
                 "svg": SPLIT_V1,
             },
         ],

@@ -1,5 +1,5 @@
 {
-  "updated": "4 November 2026, 11:00 IST",
+  "updated": "4 November 2026, 11:45 IST",
   "note": "The website itself is finished. Everything left is either moving it to its permanent home, or filling in work that only the family can supply — photographs, and two decisions about what to say about Venuka. Items marked 'on hold' are not counted in the progress figure; they are things worth doing one day, not things holding anything up.",
 
   "phases": [
@@ -28,7 +28,7 @@
       "subs": [
         { "t": "Write something that copies only the website", "s": "c", "n": "Done 4 Nov. It works from a list of what belongs, so anything new is left out by default rather than needing to be noticed." },
         { "t": "Prove it by actually serving the result", "s": "c", "n": "Served it and asked for each document by name: all of them returned 'not found'. The site itself rendered correctly with no errors." },
-        { "t": "Make it part of the real publishing step", "s": "n", "n": "Waits on Cloudflare being connected — it goes in as the build command there." }
+        { "t": "Make it part of the real publishing step", "s": "c", "n": "Put into the GitHub workflow on 4 Nov and verified on the live site: every working document returns not-found. It goes in again as the Cloudflare build command when that is connected." }
       ]
     },
     {
@@ -37,7 +37,7 @@
       "subs": [
         { "t": "Switch the repository to private", "s": "n" },
         { "t": "Switch GitHub Pages off", "s": "n", "n": "Otherwise a stale public copy is left sitting there." },
-        { "t": "Remove the old publishing step", "s": "n", "n": "It needs GitHub Pages and would now fail on every single change, sending a failure email each time." },
+        { "t": "Remove the old publishing step", "s": "c", "n": "Deleted 4 Nov. It had just published three working files to the public web because its list of what to leave out was out of date. Fixed to use the assembler, checked that every document returned not-found, then removed so nothing can publish until Cloudflare is connected. The live site is frozen where it is." },
         { "t": "Tell anyone who has the old link", "s": "n", "n": "The current github.io address stops working the moment the repository goes private." }
       ]
     },

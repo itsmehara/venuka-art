@@ -5,8 +5,9 @@
    Run this before pushing:   node tools/check.js
 
    It is deliberately dependency-free, so it works on a fresh machine with
-   nothing installed but Node. GitHub Actions runs the same file, and refuses
-   to publish the site if anything here fails.
+   nothing installed but Node. Cloudflare Pages runs this same file as the
+   first half of its build command, and refuses to publish the site if
+   anything here fails.
 
    What it catches:
      1. A syntax error anywhere in the JavaScript  (the missing-comma problem)
