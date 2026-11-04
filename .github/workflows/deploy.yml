@@ -51,16 +51,17 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
-      # These are working documents for you, not pages of the website. They are
-      # kept in the repository but not published, so nobody can read the project
-      # notes by guessing a URL.
-      - name: Keep internal notes out of the published site
-        run: rm -rf STATUS.html REGISTRY.md DEPLOYMENT.md CONTENT-GUIDE.md README.md notes
+      # Build the publishable folder. tools/build.js copies the website and ONLY
+      # the website into dist/ — it works from a list of what belongs, so a new
+      # working file is left out by default. This replaced a hand-written list of
+      # files to delete, which had already fallen behind the repository once.
+      - name: Assemble the site
+        run: node tools/build.js
 
       - name: Package the site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'                                # everything that is left is the site
+          path: 'dist'                             # only what the assembler copied
 
       - name: Publish
         id: deployment
