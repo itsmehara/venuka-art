@@ -3,7 +3,7 @@
     "orgLabel": "VENUKA · HAPPY LEARNING KIDS",
     "pageTitle": "Venuka's website — what's built",
     "markInitials": "V",
-    "updatedLine": "Last updated 4 November 2026, 11:45 IST. The website is finished and live; what is left is where it lives. Everything below was re-checked against the code on the day, not carried over from the last version of this page. Open a section to see inside it — nothing is open to begin with, so the first view stays an overview.",
+    "updatedLine": "Last updated 6 November 2026, 10:00 IST. The website is finished and live; what is left is where it lives. Everything below was re-checked against the code on the day, not carried over from the last version of this page. Open a section to see inside it — nothing is open to begin with, so the first view stays an overview.",
     "footerNote": "Exact files and line numbers are in <code>REGISTRY.md</code>. Step-by-step publishing instructions are in <code>DEPLOYMENT.md</code>. This page is built from <code>status-data.json</code>, <code>TASKS.json</code> and <code>diagrams.py</code> — edit those and rebuild, never this file."
   },
 
@@ -189,8 +189,9 @@
         { "name": "The site assembler", "status": "done", "description": "Copies the website, and only the website, into a clean folder for publishing. It works from a short list of what belongs, so a private note added later is left out without anyone having to remember. Checked by serving the result: every working document returns 'not found'." },
         { "name": "The web-address setter", "status": "done", "description": "One command updates the address inside all nine pages plus the sitemap, so WhatsApp previews and search engines point at the right place." },
         { "name": "The old GitHub publishing step", "status": "done", "description": "Served the site from August until 4 November, then removed. It published everything in the folder apart from a named list of working documents — and that list had fallen behind, so three new files briefly reached the public web before being taken down. The assembler replaced it, because a list of what belongs cannot fall behind in the same way. Nothing publishes from GitHub any more." },
-        { "name": "Cloudflare Pages", "status": "gap", "description": "The new home. Free, works with a private repository, and runs the same checks before publishing. Not connected yet." },
-        { "name": "A private repository", "status": "gap", "description": "So the working notes about Venuka are not readable by strangers. The website itself stays public either way. Not done yet." },
+        { "name": "Publishing, right now", "status": "gap", "description": "Nothing publishes. The old step was deleted on 4 November after it put three working files on the public web, and no new host has been chosen yet, so a push reaches GitHub and stops there. The site is still up, frozen on its last deploy. This is deliberate and temporary — it is safer than a publishing step nobody is watching." },
+        { "name": "Where it will live", "status": "draft", "description": "Three ways, all of which give the same new address. Stay on GitHub Pages with a public repository, free, nothing new to learn. Move to Cloudflare Pages with a private repository, also free, but a new account to run. Or pay GitHub a few dollars a month and change nothing else. Open as of 6 November; the Diagrams tab lays the three side by side." },
+        { "name": "A private repository", "status": "gap", "description": "Would stop strangers reading the working notes. The website itself stays public either way — this hides the notes, nothing else. Worth knowing how narrow that is: the notes reveal that a photograph of Venuka exists and was held back, and that her school year was left off on purpose. Not the photograph, and not the school year. notes/ and originals/ have never been in the repository." },
         { "name": "Visitor counting", "status": "gap", "description": "A line is ready for it. Cookieless, so it needs no consent banner, and nothing at all is requested while it is switched off." }
       ]
     }

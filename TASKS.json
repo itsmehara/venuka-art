@@ -1,5 +1,5 @@
 {
-  "updated": "4 November 2026, 11:45 IST",
+  "updated": "6 November 2026, 10:00 IST",
   "note": "The website itself is finished. Everything left is either moving it to its permanent home, or filling in work that only the family can supply — photographs, and two decisions about what to say about Venuka. Items marked 'on hold' are not counted in the progress figure; they are things worth doing one day, not things holding anything up.",
 
   "phases": [
@@ -16,10 +16,12 @@
       "subs": [
         { "t": "Weigh a subdomain against buying a domain", "s": "c", "n": "Hara asked, 3 Nov 2026. Settled on artbyvenuka.nischayacreativesoft.com — free, and the company domain was already in hand." },
         { "t": "Check what the company domain is actually doing today", "s": "c", "n": "Read live on 3 Nov: GitHub's four addresses on the bare domain, www pointing at the same account, one Google verification line, no email records, no other subdomains. The new subdomain sits beside all of it and disturbs none of it." },
-        { "t": "Settle whether the repository should be private", "s": "c", "n": "Hara decided private, 4 Nov 2026, so the working notes about Venuka are not readable by strangers." },
+        { "t": "Settle whether the repository should be private", "s": "p", "n": "Decided private on 4 Nov, then reopened on 6 Nov. Three decisions had been bundled into one — the host, the privacy and the address — and only the privacy one forces a change of host. The address is available on all three routes, so it is not what is being decided. Still open." },
         { "t": "Confirm what a private repository costs on GitHub", "s": "c", "n": "Checked against GitHub's own documentation, 4 Nov: free accounts can publish a website only from a public repository. Hence the move to Cloudflare." },
         { "t": "Confirm Cloudflare can serve a subdomain without moving the domain", "s": "c", "n": "Checked against Cloudflare's own documentation, 4 Nov: a subdomain needs only one record at GoDaddy. The nameservers stay where they are." },
-        { "t": "Write the decision and the steps down", "s": "c", "n": "DEPLOYMENT.md rewritten end to end, 4 Nov, and committed." }
+        { "t": "Write the decision and the steps down", "s": "c", "n": "DEPLOYMENT.md rewritten end to end, 4 Nov, and committed." },
+        { "t": "Lay the three ways out side by side", "s": "c", "n": "Added to the Diagrams tab on 6 Nov, with what each one costs and what each one leaves readable, so the choice can be looked at rather than argued from memory." },
+        { "t": "Check what a paid GitHub plan actually costs", "s": "n", "n": "The third route — private repository, stay on GitHub Pages, no Cloudflare. Worth a look before ruling it out on price." }
       ]
     },
     {
